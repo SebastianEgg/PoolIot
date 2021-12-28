@@ -1,0 +1,46 @@
+version: '3.4'
+
+services:
+  snqpooliot.webapi:
+    image: "snqpooliotwebapi"
+    container_name: snqpooliot.webapi
+    restart: always
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_CONNECTIONSTRING=Data Source=dbserver; Database=SnQPoolIotDb; User Id=sa;Password=passme!1234
+    ports:
+      - "33785:80"
+      - "443"
+    depends_on:
+      - dbserver
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+  snqpooliot.aspmvc:
+    image: "snqpooliotaspmvc"
+    container_name: snqpooliot.aspmvc
+    restart: always
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_CONNECTIONSTRING=Data Source=dbserver; Database=SnQPoolIotDb; User Id=sa;Password=passme!1234
+    ports:
+      - "33790:80"
+      - "443"
+    depends_on:
+      - dbserver
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+  dbserver:
+    image: "mcr.microsoft.com/mssql/server"
+    container_name: mssqlPoolIot
+    restart: always
+    environment:
+      SA_PASSWORD: "passme!1234"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "14430:1433"
+    volumes:
+      - "C:\\Dimplomarbeit\\iot.net\\Iot.Net\\PoolData:/var/opt/mssql/data/"

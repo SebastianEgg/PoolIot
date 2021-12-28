@@ -1,0 +1,64 @@
+@*@CodeCopy*@
+@*#if ACCOUNT_ON*@
+@*
+@{
+    @using Microsoft.AspNetCore.Mvc.Rendering
+    @using CommonBase.Extensions
+    @using SnQPoolIot.AspMvc.Extensions
+    @using SnQPoolIot.AspMvc.Modules.Session
+    @using SnQPoolIot.AspMvc.Modules.Language
+    @model SnQPoolIot.AspMvc.Models.Business.Account.IdentityUser
+
+    var sessionWrapper = new SessionWrapper(Context.Session);
+    var controller = ViewContext.RouteData.Values["controller"].ToString();
+    var action = ViewContext.RouteData.Values["action"].ToString();
+    Func<string, string> translate = Translator.TranslateIt;
+    Func<string, string> translateFor = pn => translate($"{controller}.{pn}");
+    var options = EnumExtensions.ToList<SnQPoolIot.Contracts.Modules.Common.State>();
+
+    <div class="row">
+        <input asp-for="OneModel.Id" type="hidden" />
+        <input asp-for="OneModel.RowVersion" type="hidden" />
+        <div class="col-md-8">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">@translateFor(nameof(Model.OneItem.Guid))</label>
+                <input asp-for="OneModel.Guid" class="form-control" readonly="readonly" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">@translateFor(nameof(Model.OneItem.Name))</label>
+                <input asp-for="OneModel.Name" class="form-control" />
+                <span asp-validation-for="OneModel.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">@translateFor(nameof(Model.OneItem.Email))</label>
+                <input asp-for="OneModel.Email" class="form-control" />
+                <span asp-validation-for="OneModel.Email" class="text-danger"></span>
+            </div>
+            @if (Model.Id == 0)
+            {
+                <div class="form-group">
+                    <label class="control-label">@translateFor(nameof(Model.OneItem.Password))</label>
+                    <input asp-for="OneModel.Password" class="form-control" />
+                    <span asp-validation-for="OneModel.Password" class="text-danger"></span>
+                </div>
+            }
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="OneModel.EnableJwtAuth" />@translateFor(nameof(Model.OneItem.EnableJwtAuth))
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="control-label">@translateFor(nameof(Model.OneItem.AccessFailedCount))</label>
+                <input asp-for="OneModel.AccessFailedCount" class="form-control" />
+                <span asp-validation-for="OneModel.AccessFailedCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">@translateFor(nameof(Model.OneModel.State))</label>
+                @Html.ToSelect("form-control", string.Empty, "State", options, Model.OneModel.State)
+            </div>
+        </div>
+    </div>
+}
+*@
+@*#endif*@
