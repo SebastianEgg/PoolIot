@@ -14,10 +14,13 @@
         </li>
         @if (sessionWrapper.LoginSession != null)
         {
+            <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="SensorDatassController" asp-action="Index">@translateFor("Show PoolData")</a>
+        </li>
         }
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">@translateFor("Privacy")</a>
-        </li>
+        </li>    
     </ul>
 }
 @*#endif*@
