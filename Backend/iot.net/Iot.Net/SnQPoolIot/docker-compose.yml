@@ -43,4 +43,4 @@ services:
     ports:
       - "14430:1433"
     volumes:
-      - "C:\\Dimplomarbeit\\iot.net\\Iot.Net\\PoolData:/var/opt/mssql/data/"
+      - "C:\\Users\\basti\\Diplom\\Dimplomarbeit\\iot.net\\Iot.Net\\PoolData:/var/opt/mssql/data/"
