@@ -1,0 +1,28 @@
+﻿@*@CodeCopy*@
+@{
+    @model SnQPoolIot.AspMvc.Models.IdentityModel
+
+    var viewBagWrapper = Model.ViewBagInfo;
+    var property = viewBagWrapper.DisplayProperty;
+    var editViewModel = viewBagWrapper.CreateEditViewModel(Model);
+
+    @if (property.CanRead && property.CanWrite)
+    {
+        @if (property.PropertyType.IsEnum)
+        {
+            @Html.DropDownList(editViewModel.GetName(property), Html.GetEnumSelectList(property.PropertyType), editViewModel.GetDisplayValue(property), new { @class = "form-control" })
+        }
+        else
+        {
+            <input class="form-control" type="text" id="@editViewModel.GetId(property)" name="@editViewModel.GetName(property)" value="@editViewModel.GetValue(property)" />
+            <span class="text-danger field-validation-valid" data-valmsg-for="@editViewModel.GetName(property)" data-valmsg-replace="true"></span>
+        }
+    }
+    else if (property.CanRead)
+    {
+        <div class="form-group">
+            <input class="form-control" type="text" id="@editViewModel.GetId(property)" name="@editViewModel.GetName(property)" value="@editViewModel.GetValue(property)" readonly="readonly" />
+        </div>
+    }
+    viewBagWrapper.Handled = true;
+}

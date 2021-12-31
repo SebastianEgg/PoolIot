@@ -1,8 +1,9 @@
-//@CodeCopy
+﻿//@CodeCopy
 //MdStart
 #if ACCOUNT_ON
 using CommonBase.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using SnQPoolIot.AspMvc.Modules.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +14,30 @@ namespace SnQPoolIot.AspMvc.Controllers.Business.Account
 {
     public partial class IdentityUsersController
     {
-        protected override IActionResult ReturnCreateView(Model model)
+        public override Task<IActionResult> CreateAsync()
         {
-            return RedirectToAction("Create", "Identities");
+            var viewBagWrapper = new ViewBagWrapper(ViewBag);
+
+            viewBagWrapper.IgnoreNames = new string[] { $"{nameof(Model.OneModel.Guid)}" };
+            viewBagWrapper.HiddenNames = new string[] { $"{nameof(Model.AnotherModel.IdentityId)}" };
+            return base.CreateAsync();
+        }
+        public override Task<IActionResult> EditAsync(int id)
+        {
+            var viewBagWrapper = new ViewBagWrapper(ViewBag);
+
+            viewBagWrapper.HiddenNames = new string[] { $"{nameof(Model.AnotherModel.IdentityId)}" };
+            viewBagWrapper.IgnoreNames = new string[] { $"{nameof(Model.AnotherModel.IdentityId)}" };
+            return base.EditAsync(id);
         }
 
+        public override Task<IActionResult> ViewDeleteAsync(int id)
+        {
+            var viewBagWrapper = new ViewBagWrapper(ViewBag);
+
+            viewBagWrapper.IgnoreNames = new string[] { $"{nameof(Model.AnotherModel.IdentityId)}" };
+            return base.ViewDeleteAsync(id);
+        }
         #region Export and Import
         protected override string[] CsvHeader => new string[] 
         {
@@ -45,7 +65,10 @@ namespace SnQPoolIot.AspMvc.Controllers.Business.Account
         [ActionName("Import")]
         public ActionResult ImportAsync(string error = null)
         {
-            var model = new Models.Modules.Csv.ImportProtocol() { BackController = ControllerName, ActionError = error };
+            var model = new Models.Modules.Csv.ImportProtocol() { BackController = ControllerName };
+
+            if (error.HasContent())
+                LastViewError = error;
 
             return View(model);
         }

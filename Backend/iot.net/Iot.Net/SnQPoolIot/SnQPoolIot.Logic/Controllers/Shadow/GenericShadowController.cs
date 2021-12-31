@@ -1,4 +1,4 @@
-//@QnSBaseCode
+﻿//@CodeCopy
 //MdStart
 using CommonBase.Extensions;
 using System;

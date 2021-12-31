@@ -1,0 +1,11 @@
+﻿@*@CodeCopy*@
+@{
+    @model SnQPoolIot.AspMvc.Models.IdentityModel
+
+    var viewBagWrapper = Model.ViewBagInfo;
+    var property = viewBagWrapper.DisplayProperty;
+    var displayViewModel = viewBagWrapper.CreateDisplayViewModel(Model);
+
+    @displayViewModel.GetDisplayValue(property)
+    viewBagWrapper.Handled = true;
+}

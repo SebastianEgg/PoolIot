@@ -10,7 +10,7 @@ using SnQPoolIot.Logic.DataContext;
 namespace SnQPoolIot.Logic.Migrations
 {
     [DbContext(typeof(SnQPoolIotDbContext))]
-    [Migration("20211230152111_InitDb")]
+    [Migration("20211231144700_InitDb")]
     partial class InitDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

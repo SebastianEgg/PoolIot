@@ -1,4 +1,4 @@
-//@CodeCopy
+﻿//@CodeCopy
 
 namespace SnQPoolIot.Transfer.Models
 {

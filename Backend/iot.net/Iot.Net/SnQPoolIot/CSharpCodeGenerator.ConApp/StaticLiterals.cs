@@ -1,4 +1,4 @@
-//@CodeCopy
+﻿//@CodeCopy
 using System.Collections.Generic;
 using CommonStaticLiterals = CommonBase.StaticLiterals;
 

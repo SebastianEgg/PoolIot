@@ -1,4 +1,4 @@
-//@CodeCopy
+﻿//@CodeCopy
 //MdStart
 using CSharpCodeGenerator.Logic.Common;
 using System.Collections.Generic;

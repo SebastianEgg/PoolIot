@@ -1,4 +1,4 @@
-//@CodeCopy
+﻿//@CodeCopy
 //MdStart
 using System.Text.Json.Serialization;
 

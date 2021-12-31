@@ -35,12 +35,12 @@ services:
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
   dbserver:
     image: "mcr.microsoft.com/mssql/server"
-    container_name: mssqlPoolIot
+    container_name: mssql
     restart: always
     environment:
       SA_PASSWORD: "passme!1234"
       ACCEPT_EULA: "Y"
     ports:
-      - "14430:1433"
+      - "14330:1433"
     volumes:
       - "C:\\Users\\basti\\Diplom\\Dimplomarbeit\\iot.net\\Iot.Net\\PoolData:/var/opt/mssql/data/"

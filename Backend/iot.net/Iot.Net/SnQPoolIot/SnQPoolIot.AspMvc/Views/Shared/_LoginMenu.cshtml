@@ -1,4 +1,4 @@
-@*@CodeCopy*@
+﻿@*@CodeCopy*@
 @*#if ACCOUNT_ON*@
 @{
     @using Microsoft.AspNetCore.Mvc.Rendering
@@ -15,6 +15,8 @@
     var mnuRoleMngr = translateFor("Role-Management");
     var mnuPwdChange = translateFor("Change password");
     var mnuPwdReset = translateFor("Reset password");
+    var mnuReloadTranslations = translateFor("Reload translations");
+    var mnuExportNoTranslations = translateFor("Export no translations");
     var mnuUser = string.Empty;
 
     if (sessionWrapper.LoginSession != null)
@@ -56,6 +58,11 @@
                         {
                             <li class="dropdown-item">@Html.ActionLink(mnuPwdChange, "ChangePassword", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
                         }
+                        @if (Translator.Instance.HasLoaded)
+                        {
+                            <li class="dropdown-item">@Html.ActionLink(mnuReloadTranslations, "ReloadTranslations", "Translations", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
+                        }
+                        <li class="dropdown-item">@Html.ActionLink(mnuExportNoTranslations, "ExportNoTranslations", "Translations", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
                         <li class="dropdown-item"><a href="javascript:document.getElementById('logoutForm').submit()">@mnuLogout<i style="margin-left: 1em;" class="fas fa-sign-out-alt"></i></a></li>
                     </ul>
                 </li>

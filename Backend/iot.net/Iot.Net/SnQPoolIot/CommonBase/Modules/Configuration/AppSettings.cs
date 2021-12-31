@@ -1,4 +1,4 @@
-//@CodeCopy
+﻿//@CodeCopy
 using Microsoft.Extensions.Configuration;
 
 namespace CommonBase.Modules.Configuration

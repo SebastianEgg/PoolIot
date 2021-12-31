@@ -1,4 +1,4 @@
-//@CodeCopy
+﻿//@CodeCopy
 using CommonBase.Extensions;
 using System;
 using System.Collections.Concurrent;

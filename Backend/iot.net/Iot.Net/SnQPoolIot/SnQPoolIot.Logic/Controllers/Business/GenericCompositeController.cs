@@ -1,4 +1,4 @@
-//@CodeCopy
+﻿//@CodeCopy
 //MdStart
 using CommonBase.Extensions;
 using SnQPoolIot.Logic.Modules.Exception;

@@ -1,4 +1,4 @@
-@*@CodeCopy*@
+﻿@*@CodeCopy*@
 @*#if ACCOUNT_ON*@
 @{
     @using Microsoft.AspNetCore.Mvc.Rendering
@@ -20,7 +20,6 @@
     ViewData["Title"] = title;
 
     <hr />
-
     <div class="vertical-flex-center">
         <div class="container-fluid">
             <div class="row">
@@ -34,26 +33,27 @@
                 <div class="col-sm-8 offset-2 text-center">
                     <div class="account-wall">
                         <span class="profile-img text-center">
-                            <i class="fas fa-user"></i>
+                            <i class="fa fa-user"></i>
                         </span>
+                        <p></p>
                         @using (Html.BeginForm("Logon", "Account", new { returnUrl = "" }, FormMethod.Post, null, new { @class = "form-signin", role = "form" }))
                         {
                             @Html.AntiForgeryToken()
                             @Html.ValidationSummary(true)
                             @Html.HiddenFor(m => m.ReturnUrl)
-                            <input name="@nameof(Model.Email)" type="text" class="form-control" placeholder="Email" required autofocus />
+                            <input name="@nameof(Model.Email)" type="text" class="form-control" placeholder="@translateFor("Email")" required autofocus />
                             <p></p>
-                            <input name="@nameof(Model.Password)" type="password" class="form-control" placeholder="Password" required />
+                            <input name="@nameof(Model.Password)" type="password" class="form-control" placeholder="@translateFor("Password")" required />
                             <p></p>
                             <button class="btn btn-lg btn-primary btn-block" type="submit">
-                                Sign in
+                                @translateFor("Sign in")
                             </button>
                         }
-                        @if (string.IsNullOrEmpty(ErrorHandler.LastError) == false)
+                        @if (string.IsNullOrEmpty(ErrorHandler.LastViewError) == false)
                         {
                             <p></p>
                             <div class="alert alert-danger" role="alert">
-                                @ErrorHandler.GetLastErrorAndClear()
+                                @ErrorHandler.GetLastViewErrorAndClear()
                             </div>
                         }
                     </div>

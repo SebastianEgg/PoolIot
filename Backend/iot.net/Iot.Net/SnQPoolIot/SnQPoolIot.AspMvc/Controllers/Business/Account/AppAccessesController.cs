@@ -5,7 +5,7 @@ namespace SnQPoolIot.AspMvc.Controllers.Business.Account
     using System.Threading.Tasks;
     using TContract = Contracts.Business.Account.IAppAccess;
     using TModel = AspMvc.Models.Business.Account.AppAccess;
-    public partial class AppAccessesController : AspMvc.Controllers.GenericController<TContract, TModel>
+    partial class AppAccessesController : AspMvc.Controllers.GenericController<TContract, TModel>
     {
     }
 }

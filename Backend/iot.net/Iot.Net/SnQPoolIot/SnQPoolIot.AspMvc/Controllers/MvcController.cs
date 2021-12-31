@@ -1,4 +1,4 @@
-//@CodeCopy
+﻿//@CodeCopy
 //MdStart
 using CommonBase.Extensions;
 using Microsoft.AspNetCore.Http;
@@ -16,17 +16,17 @@ namespace SnQPoolIot.AspMvc.Controllers
 {
     public class MvcController : Controller
 	{
-        private string lastError;
-        protected virtual string LastError
+        #region Error
+        protected virtual string LastViewError
         {
-            get => lastError;
+            get => Modules.Handler.ErrorHandler.LastViewError;
             set
             {
-                lastError = value;
-                Modules.Handler.ErrorHandler.LastError = value;
+                Modules.Handler.ErrorHandler.LastViewError = value;
             }
         }
-        protected bool HasError => string.IsNullOrEmpty(LastError) == false;
+        protected bool HasError => string.IsNullOrEmpty(LastViewError) == false;
+        #endregion Error
 
         #region SessionWrapper
         public bool IsSessionAvailable => HttpContext?.Session != null;
@@ -312,7 +312,6 @@ namespace SnQPoolIot.AspMvc.Controllers
             return source.GetError();
         }
         #endregion Error-Helpers
-
     }
 }
 //MdEnd

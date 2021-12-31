@@ -1,4 +1,4 @@
-//@CodeCopy
+﻿//@CodeCopy
 //MdStart
 #if ACCOUNT_ON
 using Microsoft.AspNetCore.Mvc;
@@ -56,7 +56,7 @@ namespace SnQPoolIot.AspMvc.Controllers.Business.Account
 
                 var model = ToModel(entity);
 
-                model.ActionError = error;
+                LastViewError = error;
                 await LoadRolesAsync(model).ConfigureAwait(false);
                 return View("EditRoles", model);
             }
@@ -68,7 +68,7 @@ namespace SnQPoolIot.AspMvc.Controllers.Business.Account
 
                 var model = ToModel(entity);
 
-                model.ActionError = error;
+                LastViewError = error;
                 await LoadRolesAsync(model).ConfigureAwait(false);
                 return View("EditRoles", model);
             }
@@ -139,14 +139,14 @@ namespace SnQPoolIot.AspMvc.Controllers.Business.Account
             return RedirectToAction("Index");
         }
 
-        [ActionName("Details")]
-        public async Task<IActionResult> DetailsAsync(int id)
-        {
-            using var ctrl = CreateController();
-            var entity = await ctrl.GetByIdAsync(id).ConfigureAwait(false);
+        //[ActionName("Details")]
+        //public async Task<IActionResult> DetailsAsync(int id)
+        //{
+        //    using var ctrl = CreateController();
+        //    var entity = await ctrl.GetByIdAsync(id).ConfigureAwait(false);
 
-            return View(entity != null ? ToModel(entity) : entity);
-        }
+        //    return View(entity != null ? ToModel(entity) : entity);
+        //}
 
         // GET: /Delete/5
         [ActionName("Delete")]
@@ -157,7 +157,9 @@ namespace SnQPoolIot.AspMvc.Controllers.Business.Account
             var entity = await ctrl.GetByIdAsync(id).ConfigureAwait(false);
             var model = ToModel(entity);
 
-            model.ActionError = error;
+            if (error.HasContent())
+                LastViewError = error;
+
             return View(model);
         }
 
@@ -205,7 +207,10 @@ namespace SnQPoolIot.AspMvc.Controllers.Business.Account
         [ActionName("Import")]
         public ActionResult ImportAsync(string error = null)
         {
-            var model = new Models.Modules.Csv.ImportProtocol() { BackController = ControllerName, ActionError = error };
+            var model = new Models.Modules.Csv.ImportProtocol() { BackController = ControllerName };
+
+            if (error.HasContent())
+                LastViewError = error;
 
             return View(model);
         }
@@ -230,7 +235,7 @@ namespace SnQPoolIot.AspMvc.Controllers.Business.Account
                         var entity = await ctrl.CreateAsync();
 
                         CopyModels(CsvHeader, item.Model, entity);
-                        item.Model.ManyEntities.ForEach(e => entity.AddManyItem(e));
+                        item.Model.ManyModels.ForEach(e => entity.AddManyItem(e));
                         await ctrl.InsertAsync(entity);
                     }
                     else if (item.Action == Models.Modules.Csv.ImportAction.Update)
@@ -239,7 +244,7 @@ namespace SnQPoolIot.AspMvc.Controllers.Business.Account
 
                         CopyModels(CsvHeader, item.Model, entity);
                         entity.ClearManyItems();
-                        item.Model.ManyEntities.ForEach(e => entity.AddManyItem(e));
+                        item.Model.ManyModels.ForEach(e => entity.AddManyItem(e));
 
                         await ctrl.UpdateAsync(entity);
                     }
@@ -279,7 +284,7 @@ namespace SnQPoolIot.AspMvc.Controllers.Business.Account
 
             foreach (var item in roles)
             {
-                var assigned = model.ManyEntities.SingleOrDefault(r => r.Id == item.Id);
+                var assigned = model.ManyModels.SingleOrDefault(r => r.Id == item.Id);
 
                 if (assigned != null)
                 {
@@ -290,7 +295,7 @@ namespace SnQPoolIot.AspMvc.Controllers.Business.Account
                     var role = new Models.Persistence.Account.Role();
 
                     role.CopyProperties(item);
-                    model.ManyEntities.Add(role);
+                    model.ManyModels.Add(role);
                 }
             }
         }

@@ -1,17 +1,14 @@
-//@CodeCopy
+﻿//@CodeCopy
 //MdStart
+using SnQPoolIot.AspMvc.Modules.View;
 using System.Collections;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace SnQPoolIot.AspMvc.Models
 {
     public class ModelObject
 	{
-        [ScaffoldColumn(false)]
-        public bool HasError => string.IsNullOrEmpty(ActionError) == false;
-        [ScaffoldColumn(false)]
-        public string ActionError { get; set; }
+        public ViewBagWrapper ViewBagInfo { get; set; }
         protected static bool IsEqualsWith(object obj1, object obj2)
         {
             bool result = false;

@@ -1,4 +1,4 @@
-//@CodeCopy
+﻿//@CodeCopy
 
 using System;
 using System.Collections.Generic;
@@ -221,6 +221,24 @@ namespace CommonBase.Extensions
             {
                 GetAllInterfacePropertyInfosRec(item, properties);
             }
+        }
+
+        public static bool IsGenericTypeOf(this Type type, Type genericType)
+        {
+            genericType.CheckArgument(nameof(genericType));
+
+            Type instanceType = type;
+
+            while (instanceType != null)
+            {
+                if (instanceType.IsGenericType &&
+                    instanceType.GetGenericTypeDefinition() == genericType)
+                {
+                    return true;
+                }
+                instanceType = instanceType.BaseType;
+            }
+            return false;
         }
     }
 }

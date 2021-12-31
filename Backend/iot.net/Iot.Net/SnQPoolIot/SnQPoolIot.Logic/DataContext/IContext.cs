@@ -1,4 +1,4 @@
-//@CodeCopy
+﻿//@CodeCopy
 using Microsoft.EntityFrameworkCore;
 using SnQPoolIot.Contracts;
 using SnQPoolIot.Logic.Entities;

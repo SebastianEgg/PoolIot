@@ -1,54 +1,68 @@
-@*@CodeCopy*@
+﻿@*@CodeCopy*@
 @{
     @using CommonBase.Extensions
     @using SnQPoolIot.AspMvc.Modules.Handler
     @using SnQPoolIot.AspMvc.Modules.Language
     @using SnQPoolIot.AspMvc.Modules.Session
+    @using SnQPoolIot.AspMvc.Modules.View
     @using SnQPoolIot.AspMvc.Models.Modules.View
     @model SnQPoolIot.AspMvc.Models.IdentityModel
 
+    var viewBagWrapper = new ViewBagWrapper(ViewBag);
     var sessionWrapper = new SessionWrapper(Context.Session);
-    var controller = ViewContext.RouteData.Values["controller"].ToString();
-    var action = ViewContext.RouteData.Values["action"].ToString();
-    Func<string, string> translate = Translator.TranslateIt;
-    Func<string, string> translateFor = pn => translate($"{controller}.{pn}");
-    var title = translateFor(action);
-    var hiddenProperties = new string[] { "Id", "RowVersion" };
 
-    ViewData["Title"] = title;
+    viewBagWrapper.Translate = Translator.TranslateIt;
+    viewBagWrapper.Controller = ViewContext.RouteData.Values["controller"].ToString();
+    viewBagWrapper.Action = ViewContext.RouteData.Values["action"].ToString();
+    viewBagWrapper.ViewType = Model.GetType();
 
-    <h1>@title</h1>
+    Model.ViewBagInfo = viewBagWrapper;
+    ViewData["Title"] = viewBagWrapper.Title;
+    <h1>@ViewData["Title"]</h1>
 
     <div class="d-flex bg-transparent">
         <div class="p-sm-2 mr-auto">
-            <h4>@translate(controller)</h4>
+            <h4>@viewBagWrapper.TranslateFor("Delete")</h4>
         </div>
     </div>
     <hr />
 
-    @if (string.IsNullOrEmpty(ErrorHandler.LastError) == false)
+    @if (string.IsNullOrEmpty(ErrorHandler.LastViewError) == false)
     {
         <div class="alert alert-danger" role="alert">
-            @ErrorHandler.GetLastErrorAndClear()
+            @ErrorHandler.GetLastViewErrorAndClear()
         </div>
     }
     else
     {
         <div class="alert alert-danger" role="alert">
-            @translateFor("Should the entry be deleted?")
+            @viewBagWrapper.TranslateFor("Should the entry be deleted?")
         </div>
     }
 
     <form asp-action="Delete">
-        @foreach (var item in Model.GetType().GetAllInterfacePropertyInfos())
+        @if (Model.GetType().IsGenericTypeOf(typeof(OneToAnotherModel<,,,>)))
         {
-            if (hiddenProperties.Any(e => e.Equals(item.Name)))
-            {
-                <input type="hidden" id="@item.Name" asp-for="@item.Name" value="@item.GetValue(Model)" />
-            }
+            var oneProperty = Model.GetType().GetProperty("OneModel");
+            var oneModel = oneProperty?.GetValue(Model) as IdentityModel;
+            var anotherProperty = Model.GetType().GetProperty("AnotherModel");
+            var anotherModel = anotherProperty?.GetValue(Model) as IdentityModel;
+            var editViewModel = viewBagWrapper.CreateEditViewModel(oneModel);
+
+            viewBagWrapper.ItemPrefix = "OneModel";
+            oneModel.ViewBagInfo = viewBagWrapper;
+            @await Html.PartialAsync("_DisplayModel", oneModel)
+
+            viewBagWrapper.ItemPrefix = "AnotherModel";
+            anotherModel.ViewBagInfo = viewBagWrapper;
+            @await Html.PartialAsync("_DisplayModel", anotherModel)
         }
-        @await Html.PartialAsync("_DisplayModel", Model)
+        else
+        {
+            Model.ViewBagInfo = viewBagWrapper;
+            @await Html.PartialAsync("_DisplayModel", Model)
+        }
         <hr />
-        @await Html.PartialAsync("_SubmitBack", new SubmitBackCmd() { SubmitText = translateFor("Delete"), BackText = translateFor("Back to List"), SubmitCss = "btn btn-danger", FromSubmitToBack = true })
+        @await Html.PartialAsync("_SubmitBack", new SubmitBackCmd() { SubmitText = viewBagWrapper.TranslateFor("Delete"), BackText = viewBagWrapper.TranslateFor("Back to List"), SubmitCss = "btn btn-danger", FromSubmitToBack = true })
     </form>
 }

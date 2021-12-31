@@ -1,4 +1,4 @@
-//@CodeCopy
+﻿//@CodeCopy
 //MdStart
 #if ACCOUNT_ON
 using System;
@@ -38,14 +38,14 @@ namespace SnQPoolIot.AspMvc.Controllers
             var viewModel = new LogonViewModel()
             {
                 ReturnUrl = returnUrl,
-                ActionError = error,
             };
 
             BeforeLogon(viewModel, ref handled);
             if (handled == false)
             {
-                SessionWrapper.ReturnUrl = viewModel.ReturnUrl;
-                SessionWrapper.Error = viewModel.ActionError;
+                SessionWrapper.ReturnUrl = returnUrl;
+                if (error.HasContent())
+                    LastViewError = error;
             }
             AfterLogon(viewModel, ref viewName);
             return View(viewName, viewModel);
@@ -89,7 +89,7 @@ namespace SnQPoolIot.AspMvc.Controllers
                 }
                 catch (Exception ex)
                 {
-                    viewModel.ActionError = ex.Message;
+                    LastViewError = ex.GetError();
                     return View(viewModel);
                 }
             }
@@ -110,14 +110,14 @@ namespace SnQPoolIot.AspMvc.Controllers
             var viewModel = new LogonViewModel()
             {
                 ReturnUrl = returnUrl,
-                ActionError = error,
             };
 
             BeforeLogonRemote(viewModel, ref handled);
             if (handled == false)
             {
-                SessionWrapper.ReturnUrl = viewModel.ReturnUrl;
-                SessionWrapper.Error = viewModel.ActionError;
+                SessionWrapper.ReturnUrl = returnUrl;
+                if (error.HasContent())
+                    LastViewError = error;
             }
             AfterLogonRemote(viewModel, ref viewName);
             return View(viewName, viewModel);
@@ -147,7 +147,7 @@ namespace SnQPoolIot.AspMvc.Controllers
                 }
                 catch (Exception ex)
                 {
-                    viewModel.ActionError = ex.Message;
+                    LastViewError = ex.GetError();
                     return View(viewModel);
                 }
             }
@@ -235,7 +235,7 @@ namespace SnQPoolIot.AspMvc.Controllers
                 }
                 catch (Exception ex)
                 {
-                    viewModel.ActionError = ex.GetError();
+                    LastViewError = ex.GetError();
                     return View("ChangePassword", viewModel);
                 }
             }
@@ -293,7 +293,7 @@ namespace SnQPoolIot.AspMvc.Controllers
             }
             catch (Exception ex)
             {
-                viewModel.ActionError = ex.GetError();
+                LastViewError = ex.GetError();
                 return View("ResetPassword", viewModel);
             }
             AfterDoResetPassword(viewModel, ref viewName);
@@ -315,7 +315,7 @@ namespace SnQPoolIot.AspMvc.Controllers
             }
             catch (Exception ex)
             {
-                ErrorHandler.LastError = ex.GetError();
+                ErrorHandler.LastViewError = ex.GetError();
                 throw;
             }
         }
@@ -335,7 +335,7 @@ namespace SnQPoolIot.AspMvc.Controllers
             }
             catch (Exception ex)
             {
-                ErrorHandler.LastError = ex.GetError();
+                ErrorHandler.LastViewError = ex.GetError();
                 throw;
             }
         }

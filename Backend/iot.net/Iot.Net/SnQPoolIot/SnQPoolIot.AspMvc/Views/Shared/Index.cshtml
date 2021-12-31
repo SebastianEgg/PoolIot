@@ -1,71 +1,36 @@
-@*@CodeCopy*@
+﻿@*@CodeCopy*@
 @{
-    @using CommonBase.Extensions
     @using SnQPoolIot.AspMvc.Modules.Handler
     @using SnQPoolIot.AspMvc.Modules.Language
     @using SnQPoolIot.AspMvc.Modules.Session
+    @using SnQPoolIot.AspMvc.Modules.View
     @model IEnumerable<SnQPoolIot.AspMvc.Models.IdentityModel>
 
+    var viewBagWrapper = new ViewBagWrapper(ViewBag);
     var sessionWrapper = new SessionWrapper(Context.Session);
-    var controller = ViewContext.RouteData.Values["controller"].ToString();
-    var action = ViewContext.RouteData.Values["action"].ToString();
-    Func<string, string> translate = Translator.TranslateIt;
-    Func<string, string> translateFor = pn => translate($"{controller}.{pn}");
-    var title = translateFor(controller);
 
-    var ignoreProperties = new string[] { "Id", "RowVersion", "ActionError" };
+    viewBagWrapper.Translate = Translator.TranslateIt;
+    viewBagWrapper.Controller = ViewContext.RouteData.Values["controller"].ToString();
+    viewBagWrapper.Action = ViewContext.RouteData.Values["action"].ToString();
+    viewBagWrapper.ViewType = Model != null ? Model.GetType() : null;
 
-    ViewData["Title"] = title;
+    ViewData["Title"] = viewBagWrapper.Title;
+    <h1>@viewBagWrapper.Title</h1>
 
-    <h1>@title</h1>
-
-    @if (string.IsNullOrEmpty(ErrorHandler.LastError) == false)
+    @if (string.IsNullOrEmpty(ErrorHandler.LastViewError) == false)
     {
         <div class="alert alert-danger" role="alert">
-            @ErrorHandler.GetLastErrorAndClear()
+            @ErrorHandler.GetLastViewErrorAndClear()
         </div>
     }
     else
     {
-        var modelSubType = Model.GetType().GetGenericArguments()[0];
-
-        <p style="margin-top: 1em;">
-            <a asp-action="Create" class="btn btn-outline-secondary">@translateFor("Create New")</a>
-        </p>
-
-        <table class="table">
-            <thead>
-                <tr>
-                    @foreach (var headerItem in modelSubType.GetAllInterfacePropertyInfos()
-                                             .Where(p => p.CanRead && ignoreProperties.Any(e => e.Equals(p.Name)) == false))
-                    {
-                        <th>
-                            @translateFor(Html.DisplayName(headerItem.Name))
-                        </th>
-                    }
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        @foreach (var bodyItem in modelSubType.GetAllInterfacePropertyInfos()
-                                               .Where(p => p.CanRead && ignoreProperties.Any(e => e.Equals(p.Name)) == false))
-                        {
-                            var value = bodyItem.GetValue(item);
-
-                            <td>
-                                @(value != null ? value.ToString() : string.Empty)
-                            </td>
-                        }
-                        <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+        @if ((viewBagWrapper.CommandMode & SnQPoolIot.AspMvc.Models.Modules.Common.CommandMode.Edit) > 0)
+        {
+            <p style="margin-top: 1em;">
+                <a asp-action="Create" class="btn btn-outline-secondary">@viewBagWrapper.TranslateFor("Create new...")</a>
+            </p>
+        }
+        @await Html.PartialAsync("_IndexList", Model)
     }
 }

@@ -1,4 +1,4 @@
-namespace SnQPoolIot.AspMvc.Controllers.Persistence.MusicStore
+﻿namespace SnQPoolIot.AspMvc.Controllers.Persistence.MusicStore
 {
     using SnQPoolIot.Contracts.Client;
     using TContract = Contracts.ThirdParty.ITranslation;

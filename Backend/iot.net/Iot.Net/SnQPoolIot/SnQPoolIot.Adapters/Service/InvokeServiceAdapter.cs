@@ -1,6 +1,5 @@
-//@CodeCopy
+﻿//@CodeCopy
 //MdStart
-
 #if ACCOUNT_ON
 using SnQPoolIot.Adapters.Exceptions;
 using SnQPoolIot.Transfer.Models.Modules.Account;

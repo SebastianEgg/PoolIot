@@ -1,4 +1,4 @@
-//@CodeCopy
+﻿//@CodeCopy
 //MdStart
 
 namespace SnQPoolIot.AspMvc.Models.Modules.Csv

@@ -1,4 +1,4 @@
-//@CodeCopy
+﻿//@CodeCopy
 //MdStart
 using CommonBase.Extensions;
 using CSharpCodeGenerator.Logic;
@@ -13,12 +13,22 @@ namespace SolutionPreprocessorHelper.ConApp
 {
     internal partial class Program
     {
-        private static string[] Directives { get; } = new string[]
+        #region Class-Constructors
+        static Program()
         {
-            "ACCOUNT_ON",
-            "LOGGING_OFF",
-            "REVISION_OFF"
-        };
+            ClassConstructing();
+            Directives = new string[]
+            {
+                "ACCOUNT_OFF",
+                "LOGGING_OFF",
+                "REVISION_OFF"
+            };
+            ClassConstructed();
+        }
+        static partial void ClassConstructing();
+        static partial void ClassConstructed();
+        #endregion Class-Constructors
+        private static string[] Directives { get; set; }
 
         private static void Main(/*string[] args*/)
         {
@@ -147,15 +157,15 @@ namespace SolutionPreprocessorHelper.ConApp
                     {
                         if (tag.StartTagIndex > startIndex)
                         {
-                            hasChanged = true;
                             result += text.Partialstring(startIndex, tag.StartTagIndex - 1);
                             result += tag.StartTag;
-                            if (tag.InnerText.StartsWith("@*"))
+                            if (tag.InnerText.Trim().StartsWith("@*"))
                             {
                                 result += tag.InnerText;
                             }
                             else
                             {
+                                hasChanged = true;
                                 result += Environment.NewLine + "@*";
                                 result += tag.InnerText;
                                 result += "*@" + Environment.NewLine;
@@ -195,12 +205,12 @@ namespace SolutionPreprocessorHelper.ConApp
                     {
                         if (tag.StartTagIndex > startIndex)
                         {
-                            hasChanged = true;
                             result += text.Partialstring(startIndex, tag.StartTagIndex - 1);
                             result += tag.StartTag;
                             var innerText = tag.InnerText.Trim(Environment.NewLine.ToCharArray());
-                            if (innerText.StartsWith("@*") && innerText.EndsWith("*@"))
+                            if (innerText.Trim().StartsWith("@*") && innerText.Trim().EndsWith("*@"))
                             {
+                                hasChanged = true;
                                 result += innerText.Partialstring(2, innerText.Length - 5);
                                 result += Environment.NewLine;
                             }

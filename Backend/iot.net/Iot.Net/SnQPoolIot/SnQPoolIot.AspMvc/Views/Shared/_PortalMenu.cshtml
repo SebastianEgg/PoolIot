@@ -1,5 +1,4 @@
-@*@CodeCopy*@
-@*#if ACCOUNT_ON*@
+﻿@*@CodeCopy*@
 @{
     @using SnQPoolIot.AspMvc.Modules.Session
     @using SnQPoolIot.AspMvc.Modules.Language
@@ -12,15 +11,19 @@
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">@translateFor("Home")</a>
         </li>
+@*#if ACCOUNT_ON*@
         @if (sessionWrapper.LoginSession != null)
         {
             <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="SensorDatassController" asp-action="Index">@translateFor("Show PoolData")</a>
+            <a class="nav-link text-dark" asp-area="" asp-controller="SensorDatas" asp-action="Index">@translateFor("Show PoolData")</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="SensorLists" asp-action="Index">@translateFor("Show Sensors")</a>
         </li>
         }
+        @*#endif*@
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">@translateFor("Privacy")</a>
-        </li>    
+            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">@translateFor("Contact")</a>
+        </li>
     </ul>
 }
-@*#endif*@

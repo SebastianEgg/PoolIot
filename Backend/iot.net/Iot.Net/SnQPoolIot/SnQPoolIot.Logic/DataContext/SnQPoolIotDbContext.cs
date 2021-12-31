@@ -1,4 +1,4 @@
-//@CodeCopy
+﻿//@CodeCopy
 using CommonBase.Extensions;
 using Microsoft.EntityFrameworkCore;
 using SnQPoolIot.Contracts;
@@ -22,7 +22,7 @@ namespace SnQPoolIot.Logic.DataContext
 			}
 			if (ConnectionString.IsNullOrEmpty())
 			{
-				ConnectionString = "Data Source=:memory:;Version=3;New=True;;Database=SnQPoolIotDb;Integrated Security=True";
+				ConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Database=SnQPoolIotDb;Integrated Security=True";
 			}
 			ClassConstructed();
 		}

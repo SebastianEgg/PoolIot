@@ -1,4 +1,4 @@
-//@CodeCopy
+﻿//@CodeCopy
 using SnQPoolIot.Contracts.Client;
 
 namespace SnQPoolIot.Logic

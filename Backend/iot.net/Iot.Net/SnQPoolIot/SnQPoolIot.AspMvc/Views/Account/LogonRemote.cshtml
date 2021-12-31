@@ -1,4 +1,4 @@
-@*@CodeCopy*@
+﻿@*@CodeCopy*@
 @*#if ACCOUNT_ON*@
 @{
     @using Microsoft.AspNetCore.Mvc.Rendering
@@ -22,10 +22,10 @@
 
     <hr />
 
-    @if (string.IsNullOrEmpty(ErrorHandler.LastError) == false)
+    @if (string.IsNullOrEmpty(ErrorHandler.LastViewError) == false)
     {
         <div class="alert alert-danger" role="alert">
-            @ErrorHandler.GetLastErrorAndClear()
+            @ErrorHandler.GetLastViewErrorAndClear()
         </div>
     }
 
@@ -57,10 +57,6 @@
                             <button class="btn btn-lg btn-primary btn-block" type="submit">
                                 @translateFor("Sign in")
                             </button>
-                        }
-                        @if (Model.HasError)
-                        {
-                            <span class="field-validation-error" data-valmsg-for="Error" data-valmsg-replace="true">@translate(Model.ActionError)</span>
                         }
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-# Software-Entwicklung mit dem SnQPoolIot 
+﻿# Software-Entwicklung mit dem SnQPoolIot 
 
 ## Erforderliche NuGet-Packages
 ### Module Logic:
