@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SnQPoolIot.Logic.DataContext;
 
 namespace SnQPoolIot.Logic.Migrations
 {
     [DbContext(typeof(SnQPoolIotDbContext))]
-    partial class SnQPoolIotDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220103011655_tryingtofixIdWithGrammar")]
+    partial class tryingtofixIdWithGrammar
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -265,6 +267,148 @@ namespace SnQPoolIot.Logic.Migrations
                     b.ToTable("User", "Account");
                 });
 
+            modelBuilder.Entity("SnQPoolIot.Logic.Entities.Persistence.Menu.Menu", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("Guid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWID()");
+
+                    b.Property<int>("LanguageCode")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("State")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Menu", "Menu");
+                });
+
+            modelBuilder.Entity("SnQPoolIot.Logic.Entities.Persistence.Menu.MenuItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Allergies")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.Property<Guid>("Guid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWID()");
+
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<int>("MenuId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MenuSectionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<int>("State")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MenuId");
+
+                    b.HasIndex("MenuSectionId");
+
+                    b.ToTable("MenuItem", "Menu");
+                });
+
+            modelBuilder.Entity("SnQPoolIot.Logic.Entities.Persistence.Menu.MenuSection", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.Property<Guid>("Guid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWID()");
+
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<int>("MenuId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<int>("State")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MenuId");
+
+                    b.ToTable("MenuSection", "Menu");
+                });
+
             modelBuilder.Entity("SnQPoolIot.Logic.Entities.Persistence.PoolIot.SensorData", b =>
                 {
                     b.Property<int>("Id")
@@ -384,6 +528,36 @@ namespace SnQPoolIot.Logic.Migrations
                     b.Navigation("Identity");
                 });
 
+            modelBuilder.Entity("SnQPoolIot.Logic.Entities.Persistence.Menu.MenuItem", b =>
+                {
+                    b.HasOne("SnQPoolIot.Logic.Entities.Persistence.Menu.Menu", "Menu")
+                        .WithMany("MenuItems")
+                        .HasForeignKey("MenuId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SnQPoolIot.Logic.Entities.Persistence.Menu.MenuSection", "MenuSection")
+                        .WithMany("MenuItems")
+                        .HasForeignKey("MenuSectionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Menu");
+
+                    b.Navigation("MenuSection");
+                });
+
+            modelBuilder.Entity("SnQPoolIot.Logic.Entities.Persistence.Menu.MenuSection", b =>
+                {
+                    b.HasOne("SnQPoolIot.Logic.Entities.Persistence.Menu.Menu", "Menu")
+                        .WithMany("MenuSections")
+                        .HasForeignKey("MenuId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Menu");
+                });
+
             modelBuilder.Entity("SnQPoolIot.Logic.Entities.Persistence.PoolIot.SensorData", b =>
                 {
                     b.HasOne("SnQPoolIot.Logic.Entities.Persistence.PoolIot.SensorList", "SensorList")
@@ -411,6 +585,18 @@ namespace SnQPoolIot.Logic.Migrations
             modelBuilder.Entity("SnQPoolIot.Logic.Entities.Persistence.Account.Role", b =>
                 {
                     b.Navigation("IdentityXRoles");
+                });
+
+            modelBuilder.Entity("SnQPoolIot.Logic.Entities.Persistence.Menu.Menu", b =>
+                {
+                    b.Navigation("MenuItems");
+
+                    b.Navigation("MenuSections");
+                });
+
+            modelBuilder.Entity("SnQPoolIot.Logic.Entities.Persistence.Menu.MenuSection", b =>
+                {
+                    b.Navigation("MenuItems");
                 });
 
             modelBuilder.Entity("SnQPoolIot.Logic.Entities.Persistence.PoolIot.SensorList", b =>

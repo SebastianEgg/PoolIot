@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SnQPoolIot.Logic.DataContext;
 
 namespace SnQPoolIot.Logic.Migrations
 {
     [DbContext(typeof(SnQPoolIotDbContext))]
-    partial class SnQPoolIotDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220103005716_tryIdentity")]
+    partial class tryIdentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -277,7 +279,7 @@ namespace SnQPoolIot.Logic.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
-                    b.Property<int>("SensorListId")
+                    b.Property<int>("SensorListID")
                         .HasColumnType("int");
 
                     b.Property<string>("Timestamp")
@@ -290,8 +292,6 @@ namespace SnQPoolIot.Logic.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("SensorListId");
 
                     b.ToTable("SensorData", "PoolIot");
                 });
@@ -312,11 +312,17 @@ namespace SnQPoolIot.Logic.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
+                    b.Property<int>("SensorID")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Name")
                         .IsUnique()
                         .HasFilter("[Name] IS NOT NULL");
+
+                    b.HasIndex("SensorID")
+                        .IsUnique();
 
                     b.ToTable("SensorList", "PoolIot");
                 });
@@ -384,17 +390,6 @@ namespace SnQPoolIot.Logic.Migrations
                     b.Navigation("Identity");
                 });
 
-            modelBuilder.Entity("SnQPoolIot.Logic.Entities.Persistence.PoolIot.SensorData", b =>
-                {
-                    b.HasOne("SnQPoolIot.Logic.Entities.Persistence.PoolIot.SensorList", "SensorList")
-                        .WithMany("SensorDatas")
-                        .HasForeignKey("SensorListId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("SensorList");
-                });
-
             modelBuilder.Entity("SnQPoolIot.Logic.Entities.Persistence.Account.Identity", b =>
                 {
                     b.Navigation("Accesss");
@@ -411,11 +406,6 @@ namespace SnQPoolIot.Logic.Migrations
             modelBuilder.Entity("SnQPoolIot.Logic.Entities.Persistence.Account.Role", b =>
                 {
                     b.Navigation("IdentityXRoles");
-                });
-
-            modelBuilder.Entity("SnQPoolIot.Logic.Entities.Persistence.PoolIot.SensorList", b =>
-                {
-                    b.Navigation("SensorDatas");
                 });
 #pragma warning restore 612, 618
         }

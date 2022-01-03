@@ -23,7 +23,7 @@ namespace SnQPoolIot.Logic.Entities.Persistence.PoolIot
             get;
             set;
         }
-        public System.Int32 SensorListID
+        public System.Int32 SensorListId
         {
             get;
             set;
@@ -46,7 +46,7 @@ namespace SnQPoolIot.Logic.Entities.Persistence.PoolIot
                 Id = other.Id;
                 RowVersion = other.RowVersion;
                 Value = other.Value;
-                SensorListID = other.SensorListID;
+                SensorListId = other.SensorListId;
                 Timestamp = other.Timestamp;
             }
             AfterCopyProperties(other);
@@ -68,12 +68,12 @@ namespace SnQPoolIot.Logic.Entities.Persistence.PoolIot
                 return false;
             }
             return IsEqualsWith(Value, other.Value)
-            && SensorListID == other.SensorListID
+            && SensorListId == other.SensorListId
             && IsEqualsWith(Timestamp, other.Timestamp);
         }
         public override int GetHashCode()
         {
-            return HashCode.Combine(Value, SensorListID, Timestamp);
+            return HashCode.Combine(Value, SensorListId, Timestamp);
         }
         public static Persistence.PoolIot.SensorData Create()
         {

@@ -98,8 +98,6 @@ namespace SnQPoolIot.Logic.DataContext
             sensorDataBuilder.Property(p => p.Value)
             .IsRequired()
             .HasMaxLength(256);
-            sensorDataBuilder.Property(p => p.SensorListID)
-            .IsRequired();
             sensorDataBuilder.Property(p => p.Timestamp)
             .IsRequired();
             ConfigureEntityType(sensorDataBuilder);
@@ -112,9 +110,6 @@ namespace SnQPoolIot.Logic.DataContext
             .IsUnique();
             sensorListBuilder.Property(p => p.Name)
             .HasMaxLength(128);
-            sensorListBuilder
-            .HasIndex(c => c.SensorID)
-            .IsUnique();
             ConfigureEntityType(sensorListBuilder);
             var accessBuilder = modelBuilder.Entity<Entities.Persistence.Account.Access>();
             accessBuilder.ToTable("Access", "Account")

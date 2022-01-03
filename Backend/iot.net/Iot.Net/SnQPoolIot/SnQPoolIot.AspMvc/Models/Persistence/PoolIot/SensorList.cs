@@ -23,11 +23,6 @@ namespace SnQPoolIot.AspMvc.Models.Persistence.PoolIot
             get;
             set;
         }
-        public System.Int32 SensorID
-        {
-            get;
-            set;
-        }
         public void CopyProperties(SnQPoolIot.Contracts.Persistence.PoolIot.ISensorList other)
         {
             if (other == null)
@@ -41,7 +36,6 @@ namespace SnQPoolIot.AspMvc.Models.Persistence.PoolIot
                 Id = other.Id;
                 RowVersion = other.RowVersion;
                 Name = other.Name;
-                SensorID = other.SensorID;
             }
             AfterCopyProperties(other);
         }

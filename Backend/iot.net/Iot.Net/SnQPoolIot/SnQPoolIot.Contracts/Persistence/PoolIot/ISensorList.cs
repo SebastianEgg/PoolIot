@@ -11,7 +11,5 @@ namespace SnQPoolIot.Contracts.Persistence.PoolIot
     {
         [ContractPropertyInfo(IsUnique = true, MaxLength = 128)]
         string Name { get; set; }
-        [ContractPropertyInfo(IsUnique = true)]
-        int SensorID { get; set; }
     }
 }
