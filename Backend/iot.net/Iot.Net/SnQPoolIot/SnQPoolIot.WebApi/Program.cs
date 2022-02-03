@@ -15,10 +15,11 @@ namespace SnQPoolIot.WebApi
 {
 	public class Program
 	{
-		public static void Main(string[] args)
+		public async Task Main(string[] args)
 		{
 			CreateHostBuilder(args).Build().Run();
 
+            await MQtt();
 		}
 
 		public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -85,6 +86,5 @@ namespace SnQPoolIot.WebApi
             Console.WriteLine($"MQTT Client: Connected with result: {e.ConnectResult.ResultCode}");
         }
         private static void MqttOnDisconnected(MqttClientDisconnectedEventArgs e) => Console.WriteLine($"MQTT Client: Broker connection lost with reason: {e.Reason}.");
-
     }
 }
