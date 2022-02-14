@@ -32,6 +32,7 @@ namespace SnQPoolIot.ConApp
         private static async Task InitAppAccessAsync()
         {
             await Logic.Factory.CreateAccountManager().InitAppAccessAsync(SaUser, SaEmail, SaPwd, true).ConfigureAwait(false);
+
         }
         private static async Task<Contracts.Business.Account.IAppAccess> AddAppAccessAsync(string loginEmail, string loginPwd, string user, string email, string pwd, bool enableJwtAuth, params string[] roles)
         {

@@ -1,5 +1,4 @@
-﻿//@CodeCopy
-//MdStart
+﻿//MdStart
 using CommonBase.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System;

@@ -10,16 +10,18 @@ using SnQPoolIot.Transfer.Models.Persistence.PoolIot;
 using System;
 using System.Text;
 using System.Threading.Tasks;
+using SnQPoolIot.Logic;
 
 namespace SnQPoolIot.WebApi
 {
 	public class Program
 	{
-		public async Task Main(string[] args)
-		{
-			CreateHostBuilder(args).Build().Run();
 
-            await MQtt();
+
+        public static async Task Main(string[] args)
+		{
+            MQtt();
+            CreateHostBuilder(args).Build().Run();
 		}
 
 		public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -58,11 +60,6 @@ namespace SnQPoolIot.WebApi
 
             await mqttClient.SubscribeAsync(new MqttTopicFilterBuilder().WithTopic(topic).WithExactlyOnceQoS().Build());
             await mqttClient.StartAsync(mqttClientOptions);
-            Console.ReadLine();
-            Console.ReadLine();
-
-
-
 
             return Task.FromResult(0);
         }
@@ -70,15 +67,24 @@ namespace SnQPoolIot.WebApi
         private static  void MqttOnNewMessage(MqttApplicationMessageReceivedEventArgs e)
         {
             // Do something with each incoming message from the topic
-            var eggerAgain = Encoding.UTF8.GetString(e.ApplicationMessage.Payload);
-            Console.WriteLine($"MQTT Client: OnNewMessage Topic: {e.ApplicationMessage.Topic} / Message: {eggerAgain}");
+            var mqttPayLoadData = Encoding.UTF8.GetString(e.ApplicationMessage.Payload);
+            string[] datavalue = mqttPayLoadData.Split(new char[] { ':',',','{','}' });
+
+
+            for (int i = 0; i < datavalue.Length; i++)
+            {
+                string data = datavalue[i].Trim();
+                Console.WriteLine(data);
+            }
+            Console.WriteLine($"MQTT Client: OnNewMessage Topic: {e.ApplicationMessage.Topic} / Message: {mqttPayLoadData}");
             SensorData sensorData = new SensorData();
             
             sensorData.Id = 1;
+
             
-            //sensorData.CreateAsync()
 
         }
+
 
         private static void MqttOnConnected(MqttClientConnectedEventArgs e)
         {
