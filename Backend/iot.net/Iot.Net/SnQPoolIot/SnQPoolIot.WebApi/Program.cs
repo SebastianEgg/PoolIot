@@ -11,6 +11,7 @@ using System;
 using System.Text;
 using System.Threading.Tasks;
 using SnQPoolIot.Logic;
+using SnQPoolIot.Contracts.Persistence.PoolIot;
 
 namespace SnQPoolIot.WebApi
 {
@@ -20,9 +21,23 @@ namespace SnQPoolIot.WebApi
 
         public static async Task Main(string[] args)
 		{
+            using var ctrl = Factory.Create<Contracts.Persistence.PoolIot.ISensorData>();
+            var entity = await ctrl.CreateAsync();
+            /*
+            ISensorData sensorData = new SensorData();
+            entity.SensorListId = 1;
+            entity.Timestamp = "test";
+            entity.Value = "test";
+            await ctrl.InsertAsync(entity);
+            await ctrl.SaveChangesAsync();
+            Console.WriteLine(" Test");*/
             MQtt();
             CreateHostBuilder(args).Build().Run();
-		}
+
+            
+            //var factory = new Factory();
+            //var context = factory.CreateContext();
+        }
 
 		public static IHostBuilder CreateHostBuilder(string[] args) =>
 			Host.CreateDefaultBuilder(args)
@@ -54,7 +69,7 @@ namespace SnQPoolIot.WebApi
                         .Build();
 
             Console.WriteLine(mqttClient);
-            mqttClient.ApplicationMessageReceivedHandler = new MqttApplicationMessageReceivedHandlerDelegate(e => MqttOnNewMessage(e));
+            mqttClient.ApplicationMessageReceivedHandler = new MqttApplicationMessageReceivedHandlerDelegate(e => MqttOnNewMessageAsync(e));
             mqttClient.ConnectedHandler = new MqttClientConnectedHandlerDelegate(e => MqttOnConnected(e));
             mqttClient.DisconnectedHandler = new MqttClientDisconnectedHandlerDelegate(e => MqttOnDisconnected(e));
 
@@ -64,24 +79,35 @@ namespace SnQPoolIot.WebApi
             return Task.FromResult(0);
         }
 
-        private static  void MqttOnNewMessage(MqttApplicationMessageReceivedEventArgs e)
+        private static async Task MqttOnNewMessageAsync(MqttApplicationMessageReceivedEventArgs e)
         {
             // Do something with each incoming message from the topic
             var mqttPayLoadData = Encoding.UTF8.GetString(e.ApplicationMessage.Payload);
             string[] datavalue = mqttPayLoadData.Split(new char[] { ':',',','{','}' });
 
+            using var ctrl = Factory.Create<Contracts.Persistence.PoolIot.ISensorData>();
+            var entity = await ctrl.CreateAsync();
+
 
             for (int i = 0; i < datavalue.Length; i++)
             {
-                string data = datavalue[i].Trim();
-                Console.WriteLine(data);
+                if(i == 2)
+                {
+                    entity.Timestamp = datavalue[i].Trim();
+                }
+                else if(i == 4)
+                {
+                    entity.Value = datavalue[i].Trim();
+                }
             }
-            Console.WriteLine($"MQTT Client: OnNewMessage Topic: {e.ApplicationMessage.Topic} / Message: {mqttPayLoadData}");
-            SensorData sensorData = new SensorData();
-            
-            sensorData.Id = 1;
 
-            
+            ISensorData sensorData = new SensorData();
+            entity.SensorListId = 1;
+            await ctrl.InsertAsync(entity);
+            await ctrl.SaveChangesAsync();
+
+
+            Console.WriteLine($"MQTT Client: OnNewMessage Topic: {e.ApplicationMessage.Topic} / Message: {mqttPayLoadData}");  
 
         }
 

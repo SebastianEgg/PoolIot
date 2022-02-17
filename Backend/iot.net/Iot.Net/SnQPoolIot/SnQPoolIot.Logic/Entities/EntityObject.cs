@@ -1,12 +1,11 @@
-﻿//@CodeCopy
-//MdStart
+﻿//MdStart
 using System;
 using System.Collections;
 using System.Linq;
 
 namespace SnQPoolIot.Logic.Entities
 {
-    internal abstract partial class EntityObject
+    public abstract partial class EntityObject
     {
         protected static bool IsEqualsWith(object obj1, object obj2)
         {

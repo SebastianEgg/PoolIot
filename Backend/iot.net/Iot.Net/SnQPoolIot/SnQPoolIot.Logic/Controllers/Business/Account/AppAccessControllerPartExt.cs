@@ -37,7 +37,7 @@ namespace SnQPoolIot.Logic.Controllers.Business.Account
             }
         }
 
-        internal override async Task<AppAccess> InsertEntityAsync(AppAccess entity)
+        public override async Task<AppAccess> InsertEntityAsync(AppAccess entity)
         {
             entity.CheckArgument(nameof(entity));
             entity.OneItem.CheckArgument(nameof(entity.OneItem));

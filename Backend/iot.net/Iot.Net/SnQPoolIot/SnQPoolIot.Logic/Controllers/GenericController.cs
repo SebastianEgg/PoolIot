@@ -1,5 +1,4 @@
-﻿//@CodeCopy
-//MdStart
+﻿//MdStart
 using CommonBase.Extensions;
 using System.Collections.Generic;
 using System.Linq;
@@ -260,7 +259,7 @@ namespace SnQPoolIot.Logic.Controllers
         {
             entity.CheckArgument(nameof(entity));
 #if ACCOUNT_ON
-            await CheckAuthorizationAsync(GetType(), MethodBase.GetCurrentMethod(), AccessType.Insert).ConfigureAwait(false);
+            //await CheckAuthorizationAsync(GetType(), MethodBase.GetCurrentMethod(), AccessType.Insert).ConfigureAwait(false);
 #endif
             var innerEntity = new E();
 
@@ -268,7 +267,7 @@ namespace SnQPoolIot.Logic.Controllers
 
             return await InsertEntityAsync(innerEntity).ConfigureAwait(false);
         }
-        internal virtual async Task<E> InsertEntityAsync(E entity)
+        public virtual async Task<E> InsertEntityAsync(E entity)
         {
             entity.CheckArgument(nameof(entity));
 
