@@ -1,0 +1,8 @@
+pdflatex thesis.tex
+
+cd .\titlepage\
+pdflatex coversheet
+makeglossaries coversheet
+cd ..
+pdflatex thesis.tex
+makeglossaries thesis.aux
