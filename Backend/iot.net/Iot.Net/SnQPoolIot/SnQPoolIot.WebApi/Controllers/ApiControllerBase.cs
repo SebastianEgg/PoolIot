@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 
 namespace SnQPoolIot.WebApi.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public abstract partial class ApiControllerBase : ControllerBase
     {
         static ApiControllerBase()
@@ -28,12 +30,14 @@ namespace SnQPoolIot.WebApi.Controllers
         partial void Constructing();
         partial void Constructed();
 #if ACCOUNT_ON
+        [HttpGet("/api/[controller]/GetSessionTokenAsync")]
         public Task<string> GetSessionTokenAsync()
         {
             var authHeader = HttpContext.Request.Headers["Authorization"];
 
             return GetSessionTokenAsync(authHeader);
         }
+        [HttpGet("/api/[controller]/GetSessionTokenAsync/{authHeader}")]
         public static async Task<string> GetSessionTokenAsync(string authHeader)
         {
             string result = string.Empty;

@@ -31,7 +31,7 @@ namespace SnQPoolIot.WebApi
             await ctrl.InsertAsync(entity);
             await ctrl.SaveChangesAsync();
             Console.WriteLine(" Test");*/
-            MQtt();
+            var res = await StartMqttClientAndRegisterObserverAsync();
             CreateHostBuilder(args).Build().Run();
 
             
@@ -46,7 +46,7 @@ namespace SnQPoolIot.WebApi
 					webBuilder.UseStartup<Startup>();
 				});
 
-        public static async Task<Task<int>> MQtt()
+        public static async Task<Task<int>> StartMqttClientAndRegisterObserverAsync()
         {
 
             Console.WriteLine("SnQPoolIot");
@@ -93,6 +93,7 @@ namespace SnQPoolIot.WebApi
             {
                 if(i == 2)
                 {
+
                     entity.Timestamp = datavalue[i].Trim();
                 }
                 else if(i == 4)

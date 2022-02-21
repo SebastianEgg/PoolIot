@@ -23,6 +23,11 @@ namespace SnQPoolIot.WebApi.Controllers
             result.CopyProperties(loginSession);
             return result;
         }
+        /// <summary>
+        /// Test
+        /// </summary>
+        /// <param name="logon"></param>
+        /// <returns></returns>
         [HttpPost("/api/[controller]/Logon")]
         public async Task<ILoginSession> LogonAsync([FromBody] Logon logon)
         {
@@ -34,6 +39,11 @@ namespace SnQPoolIot.WebApi.Controllers
         {
             return ConvertTo(await AccountManager.LogonAsync(logon.Token).ConfigureAwait(false));
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sessionToken"></param>
+        /// <returns></returns>
         [HttpGet("/api/[controller]/Logout/{sessionToken}")]
         public Task LogoutAsync(string sessionToken)
         {
