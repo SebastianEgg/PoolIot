@@ -2,6 +2,7 @@
 \setauthor{Sebastian Egger}
 
 
+
 \section{MQTT}
 \setauthor{Sebastian Egger}
 
@@ -9,7 +10,50 @@
 \section{.Net}
 \setauthor{Sebastian Egger}
 
+Projekte\\
+Das Backend setzt sich aus 12 Projekten zusammen.
 
-\section{.Net}
-\setauthor{Sebastian Egger}
+\begin{itemize}
+    \item CommoneBase
+\end{itemize}
 
+In CommoneBase befinden Klassen und Methoden, die wiederverwendbar sind um Code verdoppelung zu vermeiden.
+
+\begin{itemize}
+    \item CSharpCodeGenerator.Logic
+\end{itemize}
+
+CSharpCodeGenerator.Logic dient zum automatischen generieren von den Entitäten 
+in SnQPoolIot.Logic, SnQPoolIot.WebApi und SnQPoolIot.AspMvc.
+In SnQPoolIot.Contracts werden Entitäten als Interfaces angegeben.
+Wenn danach die Solution gebuildet wird, werden für die Entitäten Klassen und die dazugehörigen Controller angelegt.
+Es werden auch Beziehung und Keys zwischen den Entitäten generiert.
+
+
+\begin{itemize}
+    \item SnQPoolIot.Adapters
+\end{itemize}
+
+SnQPoolIot.Adapters bietet uns einen direkten Zugriff auf die Logic.
+Der Zugriff auf die Logic kann dadurch entweder direkt erfolgen oder per Rest über die WebApi.
+
+\begin{itemize}
+    \item SnQPoolIot.WebApi
+\end{itemize}
+
+Der Zugriff auf die Messwerte wird durch Rest-Zugriffe in SnQPoolIot.WebApi providet.
+Auf die Daten kann aber nur zugegriffen werden, wenn man sicher vorher mit einem Account einloggt.  
+
+\begin{itemize}
+    \item SnQPoolIot.Contracts
+\end{itemize}
+
+SnQPoolIot.Contracts beinhaltet alle notwendigen Schnittstellen und Enumerationen des Projektes.
+Hier werden die Entitäten als Interfaces angelegt, 
+welche von CSharpCodeGenerator.Logic als Klassen und Controller in den oben genanten Projekten generieren.
+
+\begin{itemize}
+    \item SnQPoolIot.Logic
+\end{itemize}
+
+SnQPoolIot.Logic ist das Kernstück des Projektes. Es beinhaltet 
