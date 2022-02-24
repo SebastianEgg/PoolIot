@@ -5,9 +5,17 @@ using Microsoft.Extensions.Configuration;
 
 namespace SnQPoolIot.WebApi
 {
+    /// <summary>
+    /// Notification per TelegramBot. Die entsprechenden Konfigurationen (apiToken, und Chatid) werden aus den appsettings ausgelesen
+    /// </summary>
     public class MessageNotification
     {
-        public static bool MessageTelegramm(string notification)
+        /// <summary>
+        /// Die Notification wird an Telegram übertragen.
+        /// </summary>
+        /// <param name="notification"></param>
+        /// <returns></returns>
+        public static bool SendMessageByTelegram(string notification)
         {
             var configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.Development.json")

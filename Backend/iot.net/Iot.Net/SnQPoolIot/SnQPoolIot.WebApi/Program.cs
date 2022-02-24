@@ -7,15 +7,17 @@ namespace SnQPoolIot.WebApi
     {
 
 
+
         public static void Main(string[] args)
         {
-            var resNeopixel = MqttActions.StartMqttClientAndRegisterObserverAsync("neopixel/state");
-            var resNoise = MqttActions.StartMqttClientAndRegisterObserverAsync("noise/state");
-            var resTemperature = MqttActions.StartMqttClientAndRegisterObserverAsync("temperature/state");
-            var reshumidity = MqttActions.StartMqttClientAndRegisterObserverAsync("humidity/state");
-            var resPressure = MqttActions.StartMqttClientAndRegisterObserverAsync("pressure/state");
-            var resMotion = MqttActions.StartMqttClientAndRegisterObserverAsync("motion/state");
-            var resCo2 = MqttActions.StartMqttClientAndRegisterObserverAsync("co2/state");
+            var mqttActions = new MqttActions();
+            var resNeopixel = mqttActions.StartMqttClientAndRegisterObserverAsync("neopixel/state");
+            var resNoise = mqttActions.StartMqttClientAndRegisterObserverAsync("noise/state");
+            var resTemperature = mqttActions.StartMqttClientAndRegisterObserverAsync("temperature/state");
+            var reshumidity = mqttActions.StartMqttClientAndRegisterObserverAsync("humidity/state");
+            var resPressure = mqttActions.StartMqttClientAndRegisterObserverAsync("pressure/state");
+            var resMotion = mqttActions.StartMqttClientAndRegisterObserverAsync("motion/state");
+            var resCo2 = mqttActions.StartMqttClientAndRegisterObserverAsync("co2/state");
             CreateHostBuilder(args).Build().Run();
 
 

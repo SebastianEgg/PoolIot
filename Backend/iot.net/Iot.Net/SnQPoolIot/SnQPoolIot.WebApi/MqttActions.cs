@@ -13,11 +13,13 @@ using System.Text;
 using System.Threading.Tasks;
 using SnQPoolIot.Logic;
 using SnQPoolIot.Contracts.Persistence.PoolIot;
+using SnQPoolIot.WebApi.DataTransferObjects;
 
 namespace SnQPoolIot.WebApi
 {
     public class MqttActions
     {
+        public event EventHandler<MqttMeasurmentDto> OnMqttMessageReceived;
         public static async Task<Task<int>> StartMqttClientAndRegisterObserverAsync(string specifiedTopic)
         {
             var configuration = new ConfigurationBuilder()
@@ -64,7 +66,11 @@ namespace SnQPoolIot.WebApi
 
             using var ctrl = Factory.Create<SnQPoolIot.Contracts.Persistence.PoolIot.ISensorData>();
             var entity = await ctrl.CreateAsync();
-            entity.SensorListId = getSensorId(e);
+            var measurment = new MqttMeasurmentDto();
+            
+            entity.SensorListId = getSensorId(e);// Über Datenbank Id Laden oder wenn die Action instansiert wird Dictonary
+            measurment.SensorId = entity.SensorListId;
+            //measurment.SensorName = Name über Datanbank laden
 
             for (int i = 0; i < datavalue.Length; i++)
             {
@@ -72,12 +78,14 @@ namespace SnQPoolIot.WebApi
                 {
 
                     entity.Timestamp = datavalue[i].Trim();
+                    //measurment.Timestamp = CurrentTimeStamp;
                 }
                 else if (i == 4)
                 {                   
                     entity.Value = datavalue[i].Trim();
+                    measurment.Value = entity.Value;
                     //CallRuleEngine(entity.SensorListId, Convert.ToInt32(entity.Value));
-                    MessageNotification.MessageTelegramm(entity.Value);
+                    MessageNotification.SendMessageByTelegram(entity.Value);
                 }
             }
 
