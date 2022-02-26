@@ -19,8 +19,8 @@ namespace SnQPoolIot.WebApi
 {
     public class MqttActions
     {
-        public event EventHandler<MqttMeasurmentDto> OnMqttMessageReceived;
-        public static async Task<Task<int>> StartMqttClientAndRegisterObserverAsync(string specifiedTopic)
+        public event EventHandler<MqttMeasurementDto> OnMqttMessageReceived;
+        public async Task<Task<int>> StartMqttClientAndRegisterObserverAsync(string specifiedTopic)
         {
             var configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.Development.json")
@@ -57,7 +57,7 @@ namespace SnQPoolIot.WebApi
             return Task.FromResult(0);
         }
 
-        private static async Task MqttOnNewMessageAsync(MqttApplicationMessageReceivedEventArgs e)
+        private  async Task MqttOnNewMessageAsync(MqttApplicationMessageReceivedEventArgs e)
         {
 
             
@@ -66,7 +66,7 @@ namespace SnQPoolIot.WebApi
 
             using var ctrl = Factory.Create<SnQPoolIot.Contracts.Persistence.PoolIot.ISensorData>();
             var entity = await ctrl.CreateAsync();
-            var measurment = new MqttMeasurmentDto();
+            var measurment = new MqttMeasurementDto();
             
             entity.SensorListId = getSensorId(e);// Über Datenbank Id Laden oder wenn die Action instansiert wird Dictonary
             measurment.SensorId = entity.SensorListId;
@@ -88,6 +88,8 @@ namespace SnQPoolIot.WebApi
                     MessageNotification.SendMessageByTelegram(entity.Value);
                 }
             }
+
+            OnMqttMessageReceived?.Invoke(this, measurment);
 
             await ctrl.InsertAsync(entity);
             await ctrl.SaveChangesAsync();

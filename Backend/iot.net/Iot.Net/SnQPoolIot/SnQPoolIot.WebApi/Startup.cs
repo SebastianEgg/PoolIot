@@ -23,7 +23,7 @@ namespace SnQPoolIot.WebApi
 			services.AddControllers();
 			services.AddSwaggerGen(c =>
 			{
-				c.SwaggerDoc("v1", new OpenApiInfo { Title = "SnQPoolIot.WebApi", Version = "v1" });
+				c.SwaggerDoc("v1", new OpenApiInfo { Title = "SnQPoolIot.WebApi", Version = "v1", Description = "Api zum einlesen und auslesen von Sensoren und deren Messwerte", });
 			});
 		}
 

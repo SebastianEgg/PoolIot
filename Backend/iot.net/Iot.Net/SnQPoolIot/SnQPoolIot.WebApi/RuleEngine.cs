@@ -22,7 +22,7 @@ namespace SnQPoolIot.WebApi
     public class RuleEngine
     {
 
-        private Dictionary<string, MqttMeasurmentDto> Sensors { get; set; } = new Dictionary<string,MqttMeasurmentDto>();
+        private Dictionary<string, MqttMeasurementDto> Sensors { get; set; } = new Dictionary<string,MqttMeasurementDto>();
 
         private static RuleEngine _ruleEngine = null;
 
@@ -46,7 +46,6 @@ namespace SnQPoolIot.WebApi
 
         private RuleEngine()
         {
-            _ruleEngine = new RuleEngine();
             MqttActions = new MqttActions();
 
             MqttActions.OnMqttMessageReceived += MqttActions_OnMqttMessageReceived;
@@ -54,7 +53,8 @@ namespace SnQPoolIot.WebApi
 
             foreach (var sensorName in Enum.GetNames(typeof(SensorName)))
             {
-                Sensors.Add(sensorName.ToLower(), null);
+                MqttMeasurementDto sensor = new MqttMeasurementDto();
+                Sensors.Add(sensorName.ToLower(), sensor);
                 MqttActions.StartMqttClientAndRegisterObserverAsync($"{sensorName.ToLower()}/state").Wait();
             }
 
@@ -69,7 +69,7 @@ namespace SnQPoolIot.WebApi
 
         }
 
-        private void MqttActions_OnMqttMessageReceived(object sender, DataTransferObjects.MqttMeasurmentDto measurmentDto)
+        private void MqttActions_OnMqttMessageReceived(object sender, DataTransferObjects.MqttMeasurementDto measurmentDto)
         {
             var sensor = Sensors[measurmentDto.SensorName];
             if(sensor != null)
