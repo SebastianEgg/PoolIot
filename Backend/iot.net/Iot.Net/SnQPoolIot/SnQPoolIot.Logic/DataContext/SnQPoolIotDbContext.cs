@@ -165,7 +165,7 @@ namespace SnQPoolIot.Logic.DataContext
 			BeforeOnConfiguring(optionsBuilder, ref handled);
 			if (handled == false)
 			{
-				optionsBuilder.UseSqlServer(ConnectionString);
+				optionsBuilder.UseSqlite(ConnectionString);
 			}
 			AfterOnConfiguring(optionsBuilder);
 
