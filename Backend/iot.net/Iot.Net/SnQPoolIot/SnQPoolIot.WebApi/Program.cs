@@ -11,7 +11,7 @@ namespace SnQPoolIot.WebApi
         public static void Main(string[] args)
         {
 
-            RuleEngine ruleEngine = RuleEngine.Instance;
+           // RuleEngine ruleEngine = RuleEngine.Instance;
 
            /* var mqttActions = new MqttActions();*/
             /*
