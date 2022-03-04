@@ -9,9 +9,9 @@ namespace SnQPoolIot.Logic
             {
                 controller = new Controllers.Persistence.PoolIot.SensorDataController(CreateContext()) as Contracts.Client.IControllerAccess<C>;
             }
-            else if (typeof(C) == typeof(SnQPoolIot.Contracts.Persistence.PoolIot.ISensorList))
+            else if (typeof(C) == typeof(SnQPoolIot.Contracts.Persistence.PoolIot.ISensor))
             {
-                controller = new Controllers.Persistence.PoolIot.SensorListController(CreateContext()) as Contracts.Client.IControllerAccess<C>;
+                controller = new Controllers.Persistence.PoolIot.SensorController(CreateContext()) as Contracts.Client.IControllerAccess<C>;
             }
             else if (typeof(C) == typeof(SnQPoolIot.Contracts.Persistence.Account.IAccess))
             {
@@ -60,9 +60,9 @@ namespace SnQPoolIot.Logic
             {
                 controller = new Controllers.Persistence.PoolIot.SensorDataController(sharedController as Controllers.ControllerObject) as Contracts.Client.IControllerAccess<C>;
             }
-            else if (typeof(C) == typeof(SnQPoolIot.Contracts.Persistence.PoolIot.ISensorList))
+            else if (typeof(C) == typeof(SnQPoolIot.Contracts.Persistence.PoolIot.ISensor))
             {
-                controller = new Controllers.Persistence.PoolIot.SensorListController(sharedController as Controllers.ControllerObject) as Contracts.Client.IControllerAccess<C>;
+                controller = new Controllers.Persistence.PoolIot.SensorController(sharedController as Controllers.ControllerObject) as Contracts.Client.IControllerAccess<C>;
             }
             else if (typeof(C) == typeof(SnQPoolIot.Contracts.Persistence.Account.IAccess))
             {
@@ -116,9 +116,9 @@ namespace SnQPoolIot.Logic
                 }
                 as Contracts.Client.IControllerAccess<C>;
             }
-            else if (typeof(C) == typeof(SnQPoolIot.Contracts.Persistence.PoolIot.ISensorList))
+            else if (typeof(C) == typeof(SnQPoolIot.Contracts.Persistence.PoolIot.ISensor))
             {
-                controller = new Controllers.Persistence.PoolIot.SensorListController(CreateContext())
+                controller = new Controllers.Persistence.PoolIot.SensorController(CreateContext())
                 {
                     SessionToken = sessionToken
                 }

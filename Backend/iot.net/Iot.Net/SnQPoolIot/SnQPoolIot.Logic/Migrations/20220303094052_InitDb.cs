@@ -53,7 +53,7 @@ namespace SnQPoolIot.Logic.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SensorList",
+                name: "Sensor",
                 schema: "PoolIot",
                 columns: table => new
                 {
@@ -64,7 +64,7 @@ namespace SnQPoolIot.Logic.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SensorList", x => x.Id);
+                    table.PrimaryKey("PK_Sensor", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -205,7 +205,7 @@ namespace SnQPoolIot.Logic.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Value = table.Column<string>(type: "TEXT", maxLength: 256, nullable: false),
-                    SensorListId = table.Column<int>(type: "INTEGER", nullable: false),
+                    SensorId = table.Column<int>(type: "INTEGER", nullable: false),
                     Timestamp = table.Column<string>(type: "TEXT", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "BLOB", rowVersion: true, nullable: true)
                 },
@@ -213,10 +213,10 @@ namespace SnQPoolIot.Logic.Migrations
                 {
                     table.PrimaryKey("PK_SensorData", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SensorData_SensorList_SensorListId",
-                        column: x => x.SensorListId,
+                        name: "FK_SensorData_Sensor_SensorId",
+                        column: x => x.SensorId,
                         principalSchema: "PoolIot",
-                        principalTable: "SensorList",
+                        principalTable: "Sensor",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -280,15 +280,15 @@ namespace SnQPoolIot.Logic.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_SensorData_SensorListId",
+                name: "IX_SensorData_SensorId",
                 schema: "PoolIot",
                 table: "SensorData",
-                column: "SensorListId");
+                column: "SensorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SensorList_Name",
+                name: "IX_Sensor_Name",
                 schema: "PoolIot",
-                table: "SensorList",
+                table: "Sensor",
                 column: "Name",
                 unique: true);
 
@@ -331,7 +331,7 @@ namespace SnQPoolIot.Logic.Migrations
                 schema: "Account");
 
             migrationBuilder.DropTable(
-                name: "SensorList",
+                name: "Sensor",
                 schema: "PoolIot");
 
             migrationBuilder.DropTable(

@@ -266,7 +266,7 @@ namespace SnQPoolIot.Logic.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("BLOB");
 
-                    b.Property<int>("SensorListId")
+                    b.Property<int>("SensorId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Timestamp")
@@ -280,12 +280,12 @@ namespace SnQPoolIot.Logic.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SensorListId");
+                    b.HasIndex("SensorId");
 
                     b.ToTable("SensorData", "PoolIot");
                 });
 
-            modelBuilder.Entity("SnQPoolIot.Logic.Entities.Persistence.PoolIot.SensorList", b =>
+            modelBuilder.Entity("SnQPoolIot.Logic.Entities.Persistence.PoolIot.Sensor", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -305,7 +305,7 @@ namespace SnQPoolIot.Logic.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("SensorList", "PoolIot");
+                    b.ToTable("Sensor", "PoolIot");
                 });
 
             modelBuilder.Entity("SnQPoolIot.Logic.Entities.Persistence.Account.Access", b =>
@@ -373,13 +373,13 @@ namespace SnQPoolIot.Logic.Migrations
 
             modelBuilder.Entity("SnQPoolIot.Logic.Entities.Persistence.PoolIot.SensorData", b =>
                 {
-                    b.HasOne("SnQPoolIot.Logic.Entities.Persistence.PoolIot.SensorList", "SensorList")
+                    b.HasOne("SnQPoolIot.Logic.Entities.Persistence.PoolIot.Sensor", "Sensor")
                         .WithMany("SensorDatas")
-                        .HasForeignKey("SensorListId")
+                        .HasForeignKey("SensorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("SensorList");
+                    b.Navigation("Sensor");
                 });
 
             modelBuilder.Entity("SnQPoolIot.Logic.Entities.Persistence.Account.Identity", b =>
@@ -400,7 +400,7 @@ namespace SnQPoolIot.Logic.Migrations
                     b.Navigation("IdentityXRoles");
                 });
 
-            modelBuilder.Entity("SnQPoolIot.Logic.Entities.Persistence.PoolIot.SensorList", b =>
+            modelBuilder.Entity("SnQPoolIot.Logic.Entities.Persistence.PoolIot.Sensor", b =>
                 {
                     b.Navigation("SensorDatas");
                 });

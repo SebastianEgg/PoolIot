@@ -1,16 +1,16 @@
 //@GeneratedCode
 namespace SnQPoolIot.Logic.Controllers.Persistence.PoolIot
 {
-    sealed partial class SensorListController : GenericPersistenceController<SnQPoolIot.Contracts.Persistence.PoolIot.ISensorList, Entities.Persistence.PoolIot.SensorList>
+    sealed partial class SensorController : GenericPersistenceController<SnQPoolIot.Contracts.Persistence.PoolIot.ISensor, Entities.Persistence.PoolIot.Sensor>
     {
-        static SensorListController()
+        static SensorController()
         {
             ClassConstructing();
             ClassConstructed();
         }
         static partial void ClassConstructing();
         static partial void ClassConstructed();
-        internal SensorListController(DataContext.IContext context)
+        internal SensorController(DataContext.IContext context)
         :base(context)
         {
             Constructing();
@@ -18,7 +18,7 @@ namespace SnQPoolIot.Logic.Controllers.Persistence.PoolIot
         }
         partial void Constructing();
         partial void Constructed();
-        internal SensorListController(ControllerObject controller)
+        internal SensorController(ControllerObject controller)
         :base(controller)
         {
             Constructing();

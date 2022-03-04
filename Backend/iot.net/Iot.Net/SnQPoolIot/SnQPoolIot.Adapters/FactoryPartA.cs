@@ -12,9 +12,9 @@ namespace SnQPoolIot.Adapters
                 {
                     result = new Controller.GenericControllerAdapter<SnQPoolIot.Contracts.Persistence.PoolIot.ISensorData>() as Contracts.Client.IAdapterAccess<C>;
                 }
-                else if (typeof(C) == typeof(SnQPoolIot.Contracts.Persistence.PoolIot.ISensorList))
+                else if (typeof(C) == typeof(SnQPoolIot.Contracts.Persistence.PoolIot.ISensor))
                 {
-                    result = new Controller.GenericControllerAdapter<SnQPoolIot.Contracts.Persistence.PoolIot.ISensorList>() as Contracts.Client.IAdapterAccess<C>;
+                    result = new Controller.GenericControllerAdapter<SnQPoolIot.Contracts.Persistence.PoolIot.ISensor>() as Contracts.Client.IAdapterAccess<C>;
                 }
                 else if (typeof(C) == typeof(SnQPoolIot.Contracts.Persistence.Account.IAccess))
                 {
@@ -60,9 +60,9 @@ namespace SnQPoolIot.Adapters
                     result = new Service.GenericServiceAdapter<SnQPoolIot.Contracts.Persistence.PoolIot.ISensorData, Transfer.Models.Persistence.PoolIot.SensorData>(BaseUri, "SensorDatas")
                     as Contracts.Client.IAdapterAccess<C>;
                 }
-                else if (typeof(C) == typeof(SnQPoolIot.Contracts.Persistence.PoolIot.ISensorList))
+                else if (typeof(C) == typeof(SnQPoolIot.Contracts.Persistence.PoolIot.ISensor))
                 {
-                    result = new Service.GenericServiceAdapter<SnQPoolIot.Contracts.Persistence.PoolIot.ISensorList, Transfer.Models.Persistence.PoolIot.SensorList>(BaseUri, "SensorLists")
+                    result = new Service.GenericServiceAdapter<SnQPoolIot.Contracts.Persistence.PoolIot.ISensor, Transfer.Models.Persistence.PoolIot.Sensor>(BaseUri, "Sensors")
                     as Contracts.Client.IAdapterAccess<C>;
                 }
                 else if (typeof(C) == typeof(SnQPoolIot.Contracts.Persistence.Account.IAccess))
@@ -123,9 +123,9 @@ namespace SnQPoolIot.Adapters
                 {
                     result = new Controller.GenericControllerAdapter<SnQPoolIot.Contracts.Persistence.PoolIot.ISensorData>(sessionToken) as Contracts.Client.IAdapterAccess<C>;
                 }
-                else if (typeof(C) == typeof(SnQPoolIot.Contracts.Persistence.PoolIot.ISensorList))
+                else if (typeof(C) == typeof(SnQPoolIot.Contracts.Persistence.PoolIot.ISensor))
                 {
-                    result = new Controller.GenericControllerAdapter<SnQPoolIot.Contracts.Persistence.PoolIot.ISensorList>(sessionToken) as Contracts.Client.IAdapterAccess<C>;
+                    result = new Controller.GenericControllerAdapter<SnQPoolIot.Contracts.Persistence.PoolIot.ISensor>(sessionToken) as Contracts.Client.IAdapterAccess<C>;
                 }
                 else if (typeof(C) == typeof(SnQPoolIot.Contracts.Persistence.Account.IAccess))
                 {
@@ -170,9 +170,9 @@ namespace SnQPoolIot.Adapters
                 {
                     result = new Service.GenericServiceAdapter<SnQPoolIot.Contracts.Persistence.PoolIot.ISensorData, Transfer.Models.Persistence.PoolIot.SensorData>(sessionToken, BaseUri, "SensorDatas") as Contracts.Client.IAdapterAccess<C>;
                 }
-                else if (typeof(C) == typeof(SnQPoolIot.Contracts.Persistence.PoolIot.ISensorList))
+                else if (typeof(C) == typeof(SnQPoolIot.Contracts.Persistence.PoolIot.ISensor))
                 {
-                    result = new Service.GenericServiceAdapter<SnQPoolIot.Contracts.Persistence.PoolIot.ISensorList, Transfer.Models.Persistence.PoolIot.SensorList>(sessionToken, BaseUri, "SensorLists") as Contracts.Client.IAdapterAccess<C>;
+                    result = new Service.GenericServiceAdapter<SnQPoolIot.Contracts.Persistence.PoolIot.ISensor, Transfer.Models.Persistence.PoolIot.Sensor>(sessionToken, BaseUri, "Sensors") as Contracts.Client.IAdapterAccess<C>;
                 }
                 else if (typeof(C) == typeof(SnQPoolIot.Contracts.Persistence.Account.IAccess))
                 {

@@ -68,8 +68,8 @@ namespace SnQPoolIot.WebApi
             var entity = await ctrl.CreateAsync();
             var measurment = new MqttMeasurementDto();
             
-            entity.SensorListId = getSensorId(e);// Über Datenbank Id Laden oder wenn die Action instansiert wird Dictonary
-            measurment.SensorId = entity.SensorListId;
+            entity.SensorId = getSensorId(e);// Über Datenbank Id Laden oder wenn die Action instansiert wird Dictonary
+            measurment.SensorId = entity.SensorId;
             //measurment.SensorName = Name über Datanbank laden
 
             for (int i = 0; i < datavalue.Length; i++)
@@ -84,7 +84,7 @@ namespace SnQPoolIot.WebApi
                 {                   
                     entity.Value = datavalue[i].Trim();
                     measurment.Value = entity.Value;
-                    //CallRuleEngine(entity.SensorListId, Convert.ToInt32(entity.Value));
+                    //CallRuleEngine(entity.SensorId, Convert.ToInt32(entity.Value));
                     MessageNotification.SendMessageByTelegram(entity.Value);
                 }
             }

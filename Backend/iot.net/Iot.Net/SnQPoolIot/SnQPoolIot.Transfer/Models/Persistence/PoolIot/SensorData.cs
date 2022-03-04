@@ -23,7 +23,7 @@ namespace SnQPoolIot.Transfer.Models.Persistence.PoolIot
             get;
             set;
         }
-        public System.Int32 SensorListId
+        public System.Int32 SensorId
         {
             get;
             set;
@@ -46,7 +46,7 @@ namespace SnQPoolIot.Transfer.Models.Persistence.PoolIot
                 Id = other.Id;
                 RowVersion = other.RowVersion;
                 Value = other.Value;
-                SensorListId = other.SensorListId;
+                SensorId = other.SensorId;
                 Timestamp = other.Timestamp;
             }
             AfterCopyProperties(other);

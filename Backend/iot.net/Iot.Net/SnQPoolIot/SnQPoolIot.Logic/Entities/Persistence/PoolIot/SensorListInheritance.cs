@@ -1,7 +1,7 @@
 //@GeneratedCode
 namespace SnQPoolIot.Logic.Entities.Persistence.PoolIot
 {
-    partial class SensorList : VersionEntity
+    partial class Sensor : VersionEntity
     {
     }
 }

@@ -12,7 +12,7 @@ namespace SnQPoolIot.Contracts.Persistence.PoolIot
         [ContractPropertyInfo(Required = true, IsUnique = false, MaxLength = 256)]
         string Value { get; set; }
 
-        int SensorListId { get; set; }
+        int SensorId { get; set; }
 
         [ContractPropertyInfo(Required = true, IsUnique = false)]
         string Timestamp { get; set; }

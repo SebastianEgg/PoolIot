@@ -2,11 +2,11 @@
 namespace SnQPoolIot.WebApi.Controllers.Persistence.PoolIot
 {
     using Microsoft.AspNetCore.Mvc;
-    using TContract = Contracts.Persistence.PoolIot.ISensorList;
-    using TModel = Transfer.Models.Persistence.PoolIot.SensorList;
+    using TContract = Contracts.Persistence.PoolIot.ISensor;
+    using TModel = Transfer.Models.Persistence.PoolIot.Sensor;
     [ApiController]
     [Route("Controller")]
-    public partial class SensorListsController : WebApi.Controllers.GenericController<TContract, TModel>
+    public partial class SensorsController : WebApi.Controllers.GenericController<TContract, TModel>
     {
     }
 }

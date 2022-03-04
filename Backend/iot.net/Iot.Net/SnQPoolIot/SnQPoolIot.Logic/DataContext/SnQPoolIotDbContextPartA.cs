@@ -10,7 +10,7 @@ namespace SnQPoolIot.Logic.DataContext
             get;
             set;
         }
-        protected DbSet<Entities.Persistence.PoolIot.SensorList> SensorListSet
+        protected DbSet<Entities.Persistence.PoolIot.Sensor> SensorSet
         {
             get;
             set;
@@ -56,9 +56,9 @@ namespace SnQPoolIot.Logic.DataContext
             {
                 dbSet = SensorDataSet as DbSet<E>;
             }
-            else if (typeof(I) == typeof(SnQPoolIot.Contracts.Persistence.PoolIot.ISensorList))
+            else if (typeof(I) == typeof(SnQPoolIot.Contracts.Persistence.PoolIot.ISensor))
             {
-                dbSet = SensorListSet as DbSet<E>;
+                dbSet = SensorSet as DbSet<E>;
             }
             else if (typeof(I) == typeof(SnQPoolIot.Contracts.Persistence.Account.IAccess))
             {
@@ -101,16 +101,16 @@ namespace SnQPoolIot.Logic.DataContext
             sensorDataBuilder.Property(p => p.Timestamp)
             .IsRequired();
             ConfigureEntityType(sensorDataBuilder);
-            var sensorListBuilder = modelBuilder.Entity<Entities.Persistence.PoolIot.SensorList>();
-            sensorListBuilder.ToTable("SensorList", "PoolIot")
+            var SensorBuilder = modelBuilder.Entity<Entities.Persistence.PoolIot.Sensor>();
+            SensorBuilder.ToTable("Sensor", "PoolIot")
             .HasKey("Id");
-            modelBuilder.Entity<Entities.Persistence.PoolIot.SensorList>().Property(p => p.RowVersion).IsRowVersion();
-            sensorListBuilder
+            modelBuilder.Entity<Entities.Persistence.PoolIot.Sensor>().Property(p => p.RowVersion).IsRowVersion();
+            SensorBuilder
             .HasIndex(c => c.Name)
             .IsUnique();
-            sensorListBuilder.Property(p => p.Name)
+            SensorBuilder.Property(p => p.Name)
             .HasMaxLength(128);
-            ConfigureEntityType(sensorListBuilder);
+            ConfigureEntityType(SensorBuilder);
             var accessBuilder = modelBuilder.Entity<Entities.Persistence.Account.Access>();
             accessBuilder.ToTable("Access", "Account")
             .HasKey("Id");
@@ -204,7 +204,7 @@ namespace SnQPoolIot.Logic.DataContext
             ConfigureEntityType(userBuilder);
         }
         static partial void ConfigureEntityType(EntityTypeBuilder<Entities.Persistence.PoolIot.SensorData> entityTypeBuilder);
-        static partial void ConfigureEntityType(EntityTypeBuilder<Entities.Persistence.PoolIot.SensorList> entityTypeBuilder);
+        static partial void ConfigureEntityType(EntityTypeBuilder<Entities.Persistence.PoolIot.Sensor> entityTypeBuilder);
         static partial void ConfigureEntityType(EntityTypeBuilder<Entities.Persistence.Account.Access> entityTypeBuilder);
         static partial void ConfigureEntityType(EntityTypeBuilder<Entities.Persistence.Account.ActionLog> entityTypeBuilder);
         static partial void ConfigureEntityType(EntityTypeBuilder<Entities.Persistence.Account.Identity> entityTypeBuilder);

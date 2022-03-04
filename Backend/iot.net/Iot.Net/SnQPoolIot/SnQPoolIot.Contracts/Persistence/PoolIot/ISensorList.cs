@@ -7,7 +7,7 @@ using CommonBase.Attributes;
 
 namespace SnQPoolIot.Contracts.Persistence.PoolIot
 {
-    public interface ISensorList: IVersionable,ICopyable<ISensorList>
+    public interface ISensor: IVersionable,ICopyable<ISensor>
     {
         [ContractPropertyInfo(IsUnique = true, MaxLength = 128)]
         string Name { get; set; }

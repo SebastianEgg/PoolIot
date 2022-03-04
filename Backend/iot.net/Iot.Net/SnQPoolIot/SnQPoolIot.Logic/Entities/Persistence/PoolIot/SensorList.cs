@@ -2,16 +2,16 @@
 namespace SnQPoolIot.Logic.Entities.Persistence.PoolIot
 {
     using System;
-    partial class SensorList : SnQPoolIot.Contracts.Persistence.PoolIot.ISensorList
+    partial class Sensor : SnQPoolIot.Contracts.Persistence.PoolIot.ISensor
     {
-        static SensorList()
+        static Sensor()
         {
             ClassConstructing();
             ClassConstructed();
         }
         static partial void ClassConstructing();
         static partial void ClassConstructed();
-        public SensorList()
+        public Sensor()
         {
             Constructing();
             Constructed();
@@ -23,7 +23,7 @@ namespace SnQPoolIot.Logic.Entities.Persistence.PoolIot
             get;
             set;
         }
-        public void CopyProperties(SnQPoolIot.Contracts.Persistence.PoolIot.ISensorList other)
+        public void CopyProperties(SnQPoolIot.Contracts.Persistence.PoolIot.ISensor other)
         {
             if (other == null)
             {
@@ -39,17 +39,17 @@ namespace SnQPoolIot.Logic.Entities.Persistence.PoolIot
             }
             AfterCopyProperties(other);
         }
-        partial void BeforeCopyProperties(SnQPoolIot.Contracts.Persistence.PoolIot.ISensorList other, ref bool handled);
-        partial void AfterCopyProperties(SnQPoolIot.Contracts.Persistence.PoolIot.ISensorList other);
+        partial void BeforeCopyProperties(SnQPoolIot.Contracts.Persistence.PoolIot.ISensor other, ref bool handled);
+        partial void AfterCopyProperties(SnQPoolIot.Contracts.Persistence.PoolIot.ISensor other);
         public override bool Equals(object obj)
         {
-            if (obj is not SnQPoolIot.Contracts.Persistence.PoolIot.ISensorList instance)
+            if (obj is not SnQPoolIot.Contracts.Persistence.PoolIot.ISensor instance)
             {
                 return false;
             }
             return base.Equals(instance) && Equals(instance);
         }
-        protected bool Equals(SnQPoolIot.Contracts.Persistence.PoolIot.ISensorList other)
+        protected bool Equals(SnQPoolIot.Contracts.Persistence.PoolIot.ISensor other)
         {
             if (other == null)
             {
@@ -61,35 +61,35 @@ namespace SnQPoolIot.Logic.Entities.Persistence.PoolIot
         {
             return HashCode.Combine(Name);
         }
-        public static Persistence.PoolIot.SensorList Create()
+        public static Persistence.PoolIot.Sensor Create()
         {
             BeforeCreate();
-            var result = new Persistence.PoolIot.SensorList();
+            var result = new Persistence.PoolIot.Sensor();
             AfterCreate(result);
             return result;
         }
-        public static Persistence.PoolIot.SensorList Create(object other)
+        public static Persistence.PoolIot.Sensor Create(object other)
         {
             BeforeCreate(other);
             CommonBase.Extensions.ObjectExtensions.CheckArgument(other, nameof(other));
-            var result = new Persistence.PoolIot.SensorList();
+            var result = new Persistence.PoolIot.Sensor();
             CommonBase.Extensions.ObjectExtensions.CopyFrom(result, other);
             AfterCreate(result, other);
             return result;
         }
-        public static Persistence.PoolIot.SensorList Create(SnQPoolIot.Contracts.Persistence.PoolIot.ISensorList other)
+        public static Persistence.PoolIot.Sensor Create(SnQPoolIot.Contracts.Persistence.PoolIot.ISensor other)
         {
             BeforeCreate(other);
-            var result = new Persistence.PoolIot.SensorList();
+            var result = new Persistence.PoolIot.Sensor();
             result.CopyProperties(other);
             AfterCreate(result, other);
             return result;
         }
         static partial void BeforeCreate();
-        static partial void AfterCreate(Persistence.PoolIot.SensorList instance);
+        static partial void AfterCreate(Persistence.PoolIot.Sensor instance);
         static partial void BeforeCreate(object other);
-        static partial void AfterCreate(Persistence.PoolIot.SensorList instance, object other);
-        static partial void BeforeCreate(SnQPoolIot.Contracts.Persistence.PoolIot.ISensorList other);
-        static partial void AfterCreate(Persistence.PoolIot.SensorList instance, SnQPoolIot.Contracts.Persistence.PoolIot.ISensorList other);
+        static partial void AfterCreate(Persistence.PoolIot.Sensor instance, object other);
+        static partial void BeforeCreate(SnQPoolIot.Contracts.Persistence.PoolIot.ISensor other);
+        static partial void AfterCreate(Persistence.PoolIot.Sensor instance, SnQPoolIot.Contracts.Persistence.PoolIot.ISensor other);
     }
 }
