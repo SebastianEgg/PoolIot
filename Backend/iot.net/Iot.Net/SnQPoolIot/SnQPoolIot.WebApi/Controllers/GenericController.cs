@@ -44,14 +44,6 @@ namespace SnQPoolIot.WebApi.Controllers
 			return result;
 		}
 
-		[HttpGet("/api/[controller]/MaxPageSize")]
-		public async Task<int> GetMaxPageSizeAsync()
-		{
-			using var ctrl = await CreateControllerAsync().ConfigureAwait(false);
-
-			return ctrl.MaxPageSize;
-		}
-
 		[HttpGet("/api/[controller]/Count")]
 		public async Task<int> GetCountAsync()
 		{
@@ -80,14 +72,6 @@ namespace SnQPoolIot.WebApi.Controllers
 		{
 			using var ctrl = await CreateControllerAsync().ConfigureAwait(false);
 			var result = await ctrl.GetAllAsync().ConfigureAwait(false);
-
-			return result.Select(e => ToModel(e));
-		}
-		[HttpGet("/api/[controller]/{index}/{size}")]
-		public async Task<IEnumerable<M>> GetPageListAsync(int index, int size)
-		{
-			using var ctrl = await CreateControllerAsync().ConfigureAwait(false);
-			var result = await ctrl.GetPageListAsync(index, size).ConfigureAwait(false);
 
 			return result.Select(e => ToModel(e));
 		}

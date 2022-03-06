@@ -26,6 +26,8 @@ namespace SnQPoolIot.WebApi
 
         private static RuleEngine _ruleEngine = null;
 
+        public Logic.Entities.Business.Logging.LogWriter logWritter = new Logic.Entities.Business.Logging.LogWriter();
+
         public static RuleEngine Instance {
             get
             {
@@ -39,10 +41,6 @@ namespace SnQPoolIot.WebApi
         }
 
         public MqttActions MqttActions { get; }
-
-
-
-
 
         private RuleEngine()
         {
@@ -70,10 +68,14 @@ namespace SnQPoolIot.WebApi
                 {
                     CheckNoiceSensorData(int.Parse(measurmentDto.Value));
                 }
+                else
+                {
+                    logWritter.LogWrite($"Sensor {measurmentDto.SensorName} does not exist");
+                }
             }
             else
             {
-                throw new ApplicationException($"Sensor {measurmentDto.SensorName} does not exist");
+                logWritter.LogWrite($"The Sensor is null!");
             }
 
         }
@@ -81,9 +83,10 @@ namespace SnQPoolIot.WebApi
         public static int CheckNoiceSensorData(int? sensorValue)
         {
             var result = 0;
-
+            var logWritterInStaticMethod = new Logic.Entities.Business.Logging.LogWriter();
             if (sensorValue == null)
             {
+                logWritterInStaticMethod.LogWrite($"The Sensor is null!");
                 return -1;
             }
             else if (sensorValue > 300)
