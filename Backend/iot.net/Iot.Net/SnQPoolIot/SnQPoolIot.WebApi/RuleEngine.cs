@@ -58,15 +58,6 @@ namespace SnQPoolIot.WebApi
                 MqttActions.StartMqttClientAndRegisterObserverAsync($"{sensorName.ToLower()}/state").Wait();
             }
 
-
-            //var resNeopixel = MqttActions.StartMqttClientAndRegisterObserverAsync("neopixel/state");
-            //var resNoise = MqttActions.StartMqttClientAndRegisterObserverAsync("noise/state");
-            //var resTemperature = MqttActions.StartMqttClientAndRegisterObserverAsync("temperature/state");
-            //var reshumidity = MqttActions.StartMqttClientAndRegisterObserverAsync("humidity/state");
-            //var resPressure = MqttActions.StartMqttClientAndRegisterObserverAsync("pressure/state");
-            //var resMotion = MqttActions.StartMqttClientAndRegisterObserverAsync("motion/state");
-            //var resCo2 = MqttActions.StartMqttClientAndRegisterObserverAsync("co2/state");
-
         }
 
         private void MqttActions_OnMqttMessageReceived(object sender, DataTransferObjects.MqttMeasurementDto measurmentDto)

@@ -20,6 +20,7 @@ namespace SnQPoolIot.WebApi
     public class MqttActions
     {
         public event EventHandler<MqttMeasurementDto> OnMqttMessageReceived;
+        public Logic.Entities.Business.Logging.LogWriter logWritter = new Logic.Entities.Business.Logging.LogWriter();
         public async Task<Task<int>> StartMqttClientAndRegisterObserverAsync(string specifiedTopic)
         {
             var configuration = new ConfigurationBuilder()
@@ -94,19 +95,17 @@ namespace SnQPoolIot.WebApi
             await ctrl.InsertAsync(entity);
             await ctrl.SaveChangesAsync();
 
-
-            Console.WriteLine($"MQTT Client: OnNewMessage Topic: {e.ApplicationMessage.Topic} / Message: {mqttPayLoadData}");
+            logWritter.LogWrite($"MQTT Client: OnNewMessage Topic: {e.ApplicationMessage.Topic} / Message: {mqttPayLoadData}");
 
         }
 
 
-        private static void MqttOnConnected(MqttClientConnectedEventArgs e)
+        private void MqttOnConnected(MqttClientConnectedEventArgs e)
         {
-            Console.WriteLine("Test");
-            Console.WriteLine($"MQTT Client: Connected with result: {e.ConnectResult.ResultCode}");
+            logWritter.LogWrite($"MQTT Client: Connected with result: {e.ConnectResult.ResultCode}");
         }
-        private static void MqttOnDisconnected(MqttClientDisconnectedEventArgs e) => Console.WriteLine($"MQTT Client: Broker connection lost with reason: {e.Reason}.");
-
+        private  void MqttOnDisconnected(MqttClientDisconnectedEventArgs e) => logWritter.LogWrite($"MQTT Client: Broker connection lost with reason: {e.Reason}.");
+        
         private static int getSensorId(MqttApplicationMessageReceivedEventArgs e)
         {
             var configuration = new ConfigurationBuilder()
