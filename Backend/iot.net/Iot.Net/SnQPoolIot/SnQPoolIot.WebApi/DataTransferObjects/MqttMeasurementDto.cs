@@ -4,7 +4,7 @@ namespace SnQPoolIot.WebApi.DataTransferObjects
 {
     public class MqttMeasurementDto
     {
-        public event EventHandler OnMeasurementCreated;
+        //public event EventHandler OnMeasurementCreated;
         public int SensorId { get; set; }
 
         public string SensorName { get; set; }

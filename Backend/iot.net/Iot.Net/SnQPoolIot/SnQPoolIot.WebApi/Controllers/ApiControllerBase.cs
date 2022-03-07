@@ -58,7 +58,7 @@ namespace SnQPoolIot.WebApi.Controllers
                     string useridPassword = encoding.GetString(Convert.FromBase64String(encodedUseridPassword));
 
                     int seperatorIndex = useridPassword.IndexOf(':');
-                    var userid = useridPassword.Substring(0, seperatorIndex);
+                    var userid = useridPassword[..seperatorIndex];
                     var password = useridPassword[(seperatorIndex + 1)..];
                     var login = await Logic.Factory.CreateAccountManager().LogonAsync(userid, password, string.Empty).ConfigureAwait(false);
 

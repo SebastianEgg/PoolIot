@@ -11,13 +11,14 @@
 \setauthor{Sebastian Egger}
 
 Projekte\\
-Das Backend setzt sich aus 12 Projekten zusammen.
+
+Das Backend setzt sich aus 12 Projekten zusammen, welche in C\# .Net 5 geschrieben sind.
 
 \begin{itemize}
-    \item CommoneBase
+    \item CommonBase
 \end{itemize}
 
-In CommoneBase befinden Klassen und Methoden, die wiederverwendbar sind um Code verdoppelung zu vermeiden.
+In CommonBase befinden Klassen und Methoden, die wiederverwendbar sind um Code verdoppelung zu vermeiden.
 
 \begin{itemize}
     \item CSharpCodeGenerator.Logic
@@ -56,4 +57,37 @@ welche von CSharpCodeGenerator.Logic als Klassen und Controller in den oben gena
     \item SnQPoolIot.Logic
 \end{itemize}
 
-SnQPoolIot.Logic ist das Kernstück des Projektes. Es beinhaltet 
+SnQPoolIot.Logic ist das Kernstück des Projektes. 
+Durch die Logic können wir alle Daten von der Datenbank holen. 
+Die Datenbank auf welche die Logik zugreift ist ein SqlServer und der Zugriff und das erzeugen der Datenbank wird mittels Entityframework
+
+\begin{itemize}
+    \item SnQPoolIot.Transfer
+\end{itemize}
+
+SnQPoolIot.Transfer verwaltet die Transferobjekte für den Datenaustausch zwischen den Layers.
+
+\begin{itemize}
+    \item SnQPoolIot.AspMvc
+\end{itemize}
+
+SnQPoolIot.AspMvc ist ein Ersatz für das Frontend.
+Hier werden die Funktionen wie zum Beispiel einloggen eines Users oder anzeigen von Messwerten dargestellt.
+
+\begin{itemize}
+    \item SnQPoolIot.ConApp
+\end{itemize}
+
+In SnQPoolIot.ConApp werden User mit verschiedenen Rechten angelegt, die für die Authentifizierung benötigt werden.
+
+.Net 5 vs .Net 6
+Unser Backend wurde wie oben bereits erwähnt mit .Net 5 geschrieben, weil die Umstellung zu .Net 6 einiges mit sich bringt.
+Der Hauptgrund warum wir uns für .Net 5 entschieden haben, ist die Unterscheidung der Nullability von Objekten und die dadurch ausgelösten Warnings.
+In .Net 5 werden durch Objekte die Null sein könnten keine Warnings angezeigt und man ersparrt sich etliche Zeit, wenn man sich nicht durch die Warnings käpfen muss.
+Jedoch im Vergleich zu .Net 5 hat .Net 6 eine bessere Leistung, denn bei einer Ausführung in der Cloud sinkt es die Computekosten, welches ich als riesigen Vorteil sehe.
+Einen weiteren Nachteil finde ich ist die Lesbarkeit des Code.
+Hier ein Beispiel zu diesem Thema:
+
+[Foto von ConApp .Net 5] [Foto von ConApp in .Net 6]
+
+

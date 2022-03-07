@@ -11,7 +11,7 @@ namespace SnQPoolIot.Logic.DataContext
 {
     class BloggingContextFactory : IDesignTimeDbContextFactory<SnQPoolIotDbContext>
     {
-        public SnQPoolIotDbContext CreateDbContext(string[]? args = null)
+        public SnQPoolIotDbContext CreateDbContext(string[] args = null)
         {
             var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 

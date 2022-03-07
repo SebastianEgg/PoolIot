@@ -11,8 +11,23 @@ namespace SnQPoolIot.Logic.Entities.Business.Logging
     public class LogWriter
     {
         private string m_exePath = string.Empty;
-        public LogWriter()
+        private static LogWriter _instance = null;
+
+        public static LogWriter Instance
         {
+            get
+            {
+                if(_instance == null)
+                {
+                    _instance = new LogWriter();
+                }
+                return _instance;
+            }
+        }
+
+        private LogWriter()
+        {
+
         }
         public void LogWrite(string logMessage)
         {
@@ -21,17 +36,15 @@ namespace SnQPoolIot.Logic.Entities.Business.Logging
             m_exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             try
             {
-                using (StreamWriter w = File.AppendText(m_exePath + "\\" + "log.txt"))
-                {
-                    Log(logMessage, w);
-                }
+                using StreamWriter w = File.AppendText(m_exePath + "\\" + "log.txt");
+                Log(logMessage, w);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
         }
 
-        public void Log(string logMessage, TextWriter txtWriter)
+        public static void Log(string logMessage, TextWriter txtWriter)
         {
             try
             {
@@ -41,7 +54,7 @@ namespace SnQPoolIot.Logic.Entities.Business.Logging
                 txtWriter.WriteLine("  :{0}", logMessage);
                 txtWriter.WriteLine("-------------------------------");
             }
-            catch (Exception ex)
+            catch (Exception )
             {
             }
         }

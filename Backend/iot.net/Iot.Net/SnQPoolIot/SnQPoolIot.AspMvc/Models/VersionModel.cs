@@ -32,7 +32,7 @@ namespace SnQPoolIot.AspMvc.Models
             }
             set
             {
-                if (value != null)
+                if (value != null && value != "")
                 {
                     string[] data = value.Split('.');
                     Byte[] ts = new byte[data.Length];

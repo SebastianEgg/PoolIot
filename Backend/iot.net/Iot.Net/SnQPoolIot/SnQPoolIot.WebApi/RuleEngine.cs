@@ -1,4 +1,5 @@
-﻿using SnQPoolIot.Transfer.Models.Persistence.PoolIot;
+﻿using SnQPoolIot.Logic.Entities.Business.Logging;
+using SnQPoolIot.Transfer.Models.Persistence.PoolIot;
 using SnQPoolIot.WebApi.DataTransferObjects;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,6 @@ namespace SnQPoolIot.WebApi
 
         private static RuleEngine _ruleEngine = null;
 
-        public Logic.Entities.Business.Logging.LogWriter logWritter = new Logic.Entities.Business.Logging.LogWriter();
 
         public static RuleEngine Instance {
             get
@@ -70,12 +70,12 @@ namespace SnQPoolIot.WebApi
                 }
                 else
                 {
-                    logWritter.LogWrite($"Sensor {measurmentDto.SensorName} does not exist");
+                    LogWriter.Instance.LogWrite($"Sensor {measurmentDto.SensorName} does not exist");
                 }
             }
             else
             {
-                logWritter.LogWrite($"The Sensor is null!");
+                LogWriter.Instance.LogWrite($"The Sensor is null!");
             }
 
         }
@@ -83,10 +83,9 @@ namespace SnQPoolIot.WebApi
         public static int CheckNoiceSensorData(int? sensorValue)
         {
             var result = 0;
-            var logWritterInStaticMethod = new Logic.Entities.Business.Logging.LogWriter();
             if (sensorValue == null)
             {
-                logWritterInStaticMethod.LogWrite($"The Sensor is null!");
+                LogWriter.Instance.LogWrite($"The Sensor is null!");
                 return -1;
             }
             else if (sensorValue > 300)
