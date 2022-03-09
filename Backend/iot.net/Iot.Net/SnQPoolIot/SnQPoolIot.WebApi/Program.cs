@@ -10,8 +10,7 @@ namespace SnQPoolIot.WebApi
 
         public static void Main(string[] args)
         {
-
-            RuleEngine ruleEngine = RuleEngine.Instance;
+            _ = RuleEngine.Instance;
             CreateHostBuilder(args).Build().Run();
         }
 

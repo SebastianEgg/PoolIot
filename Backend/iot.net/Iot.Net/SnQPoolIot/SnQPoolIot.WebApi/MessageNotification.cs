@@ -33,23 +33,19 @@ namespace SnQPoolIot.WebApi
                 string responseStatus = ((HttpWebResponse)response).StatusDescription;
                 if (responseStatus == "OK")
                 {
-                    using (Stream dataStream = response.GetResponseStream())
+                    using Stream dataStream = response.GetResponseStream();
+                    using StreamReader reader = new(dataStream);
+                    string responseFromServer = reader.ReadToEnd();
+                    if (responseFromServer.Contains("\"ok\":true"))
                     {
-                        using (StreamReader reader = new StreamReader(dataStream))
-                        {
-                            string responseFromServer = reader.ReadToEnd();
-                            if (responseFromServer.Contains("\"ok\":true"))
-                            {
-                                Console.WriteLine("Message text was successfully sent to Telegram :-)");
-                            }
-                            else
-                            {
-                                Console.WriteLine("Failed to send the message text to Telegram :-(");
-                            }
-                            Console.Write(Environment.NewLine);
-                            Console.WriteLine(responseFromServer);
-                        }
+                        Console.WriteLine("Message text was successfully sent to Telegram :-)");
                     }
+                    else
+                    {
+                        Console.WriteLine("Failed to send the message text to Telegram :-(");
+                    }
+                    Console.Write(Environment.NewLine);
+                    Console.WriteLine(responseFromServer);
                 }
                 else
                 {

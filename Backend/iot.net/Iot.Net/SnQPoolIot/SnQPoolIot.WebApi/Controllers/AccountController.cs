@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace SnQPoolIot.WebApi.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public partial class AccountController : ControllerBase
