@@ -9,7 +9,7 @@ using SnQPoolIot.Logic.DataContext;
 namespace SnQPoolIot.Logic.Migrations
 {
     [DbContext(typeof(SnQPoolIotDbContext))]
-    [Migration("20220303094052_InitDb")]
+    [Migration("20220314094138_InitDb")]
     partial class InitDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -257,6 +257,29 @@ namespace SnQPoolIot.Logic.Migrations
                     b.ToTable("User", "Account");
                 });
 
+            modelBuilder.Entity("SnQPoolIot.Logic.Entities.Persistence.PoolIot.Sensor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(128)
+                        .HasColumnType("TEXT");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("BLOB");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Sensor", "PoolIot");
+                });
+
             modelBuilder.Entity("SnQPoolIot.Logic.Entities.Persistence.PoolIot.SensorData", b =>
                 {
                     b.Property<int>("Id")
@@ -285,29 +308,6 @@ namespace SnQPoolIot.Logic.Migrations
                     b.HasIndex("SensorId");
 
                     b.ToTable("SensorData", "PoolIot");
-                });
-
-            modelBuilder.Entity("SnQPoolIot.Logic.Entities.Persistence.PoolIot.Sensor", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("TEXT");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("BLOB");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("Sensor", "PoolIot");
                 });
 
             modelBuilder.Entity("SnQPoolIot.Logic.Entities.Persistence.Account.Access", b =>

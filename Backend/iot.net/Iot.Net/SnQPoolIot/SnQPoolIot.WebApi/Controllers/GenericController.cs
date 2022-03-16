@@ -43,7 +43,10 @@ namespace SnQPoolIot.WebApi.Controllers
 			result.CopyProperties(entity);
 			return result;
 		}
-
+		/// <summary>
+		/// Dieser Request ergibt uns eine Anzahl wie viele Einträge sich in der dazugehörigen Tabelle befinden.
+		/// </summary>
+		/// <returns></returns>
 		[HttpGet("/api/[controller]/Count")]
 		public async Task<int> GetCountAsync()
 		{
@@ -51,6 +54,11 @@ namespace SnQPoolIot.WebApi.Controllers
 
 			return await ctrl.CountAsync().ConfigureAwait(false);
 		}
+		/// <summary>
+		/// Dieser Request ergibt uns eine Anzahl wie viele Einträge sich in der dazugehörigen Tabelle befinden, wenn wir nach einem bestimmten Wort suchen.
+		/// </summary>
+		/// <param name="predicate"></param>
+		/// <returns></returns>
 		[HttpGet("/api/[controller]/Count/{predicate}")]
 		public async Task<int> GetCountByAsync(string predicate)
 		{
@@ -58,7 +66,11 @@ namespace SnQPoolIot.WebApi.Controllers
 
 			return await ctrl.CountByAsync(predicate).ConfigureAwait(false);
 		}
-
+		/// <summary>
+		/// Dieser Request übermittelt den Wert welcher die dazugehörige Id hat
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
 		[HttpGet("/api/[controller]/{id}")]
 		public async Task<M> GetByIdAsync(int id)
 		{
@@ -67,6 +79,10 @@ namespace SnQPoolIot.WebApi.Controllers
 
 			return ToModel(result);
 		}
+		/// <summary>
+		/// Dieser Request übermittelt uns alle Werte der dazugehörigen Tabelle
+		/// </summary>
+		/// <returns></returns>
 		[HttpGet("/api/[controller]")]
 		public async Task<IEnumerable<M>> GetAllAsync()
 		{
@@ -75,7 +91,11 @@ namespace SnQPoolIot.WebApi.Controllers
 
 			return result.Select(e => ToModel(e));
 		}
-
+		/// <summary>
+		/// Dieser Request übermittelt uns die Tabellenspalten der dazugehörigen Tabelle, welche das Suchkriterium erfüllen
+		/// </summary>
+		/// <param name="predicate"></param>
+		/// <returns></returns>
 		[HttpGet("/api/[controller]/Query/{predicate}")]
 		public async Task<IEnumerable<M>> QueryAllBy(string predicate)
 		{
@@ -84,24 +104,11 @@ namespace SnQPoolIot.WebApi.Controllers
 
 			return result.Select(e => ToModel(e));
 		}
-		[HttpGet("/api/[controller]/{predicate}/{index}/{size}")]
-		public async Task<IEnumerable<M>> QueryPageListAsync(string predicate, int index, int size)
-		{
-			using var ctrl = await CreateControllerAsync().ConfigureAwait(false);
-			var result = await ctrl.QueryPageListAsync(predicate, index, size).ConfigureAwait(false);
-
-			return result.Select(e => ToModel(e));
-		}
-
-		[HttpGet("/api/[controller]/Create")]
-		public async Task<M> CreateAsync()
-		{
-			using var ctrl = await CreateControllerAsync().ConfigureAwait(false);
-			var result = await ctrl.CreateAsync().ConfigureAwait(false);
-
-			return ToModel(result);
-		}
-
+		/// <summary>
+		/// Dieser Request erzeugt einen neuen Datenbankeintrag in die Tabelle.
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
 		[HttpPost("/api/[controller]")]
 		public async Task<M> PostAsync([FromBody] M model)
 		{
@@ -111,6 +118,11 @@ namespace SnQPoolIot.WebApi.Controllers
 			await ctrl.SaveChangesAsync().ConfigureAwait(false);
 			return ToModel(result);
 		}
+		/// <summary>
+		/// Dieser Request erzeugt mehrer neue Datenbankeintrag in die Tabelle. 
+		/// </summary>
+		/// <param name="models"></param>
+		/// <returns></returns>
 		[HttpPost("/api/[controller]/Array")]
 		public async Task<IQueryable<M>> PostArrayAsync(IEnumerable<M> models)
 		{
@@ -122,7 +134,11 @@ namespace SnQPoolIot.WebApi.Controllers
 			result.AddRange(entities.Select(e => ToModel(e)));
 			return result.AsQueryable();
 		}
-
+		/// <summary>
+		/// Dieser Request verändert einen Datenbankeintrag in der Tabelle. 
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
 		[HttpPut("/api/[controller]")]
 		public async Task<M> PutAsync([FromBody]M model)
 		{
@@ -132,6 +148,11 @@ namespace SnQPoolIot.WebApi.Controllers
 			await ctrl.SaveChangesAsync().ConfigureAwait(false);
 			return ToModel(result);
 		}
+		/// <summary>
+		/// Dieser Request verändert mehrere Datenbankeintrag in der Tabelle. 
+		/// </summary>
+		/// <param name="models"></param>
+		/// <returns></returns>
 		[HttpPut("/api/[controller]/Array")]
 		public async Task<IQueryable<M>> PutArrayAsync(IEnumerable<M> models)
 		{
@@ -143,7 +164,11 @@ namespace SnQPoolIot.WebApi.Controllers
 			result.AddRange(entities.Select(e => ToModel(e)));
 			return result.AsQueryable();
 		}
-
+		/// <summary>
+		/// Dieser Request löscht einen Datenbankeintrag mit der dazugehörigen Id in der Tabelle.
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
 		[HttpDelete("/api/[controller]/{id}")]
 		public async Task DeleteAsync(int id)
 		{

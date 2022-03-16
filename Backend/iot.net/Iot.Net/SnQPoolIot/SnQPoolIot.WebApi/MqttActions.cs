@@ -85,7 +85,6 @@ namespace SnQPoolIot.WebApi
                 {                   
                     entity.Value = datavalue[i].Trim();
                     measurment.Value = entity.Value;
-                    //CallRuleEngine(entity.SensorId, Convert.ToInt32(entity.Value));
                     MessageNotification.SendMessageByTelegram(entity.Value);
                 }
             }
@@ -113,31 +112,31 @@ namespace SnQPoolIot.WebApi
                 .Build();
             if (e.ApplicationMessage.Topic == (configuration.GetValue<string>("Mqtt:mqttTopic") + "neopixel/state"))
             {
-                return 3;
+                return 1;
             }
             else if (e.ApplicationMessage.Topic == (configuration.GetValue<string>("Mqtt:mqttTopic") + "noise/state"))
             {
-                return 4;
+                return 2;
             }
             else if (e.ApplicationMessage.Topic == (configuration.GetValue<string>("Mqtt:mqttTopic") + "temperature/state"))
             {
-                return 5;
+                return 3;
             }
             else if (e.ApplicationMessage.Topic == (configuration.GetValue<string>("Mqtt:mqttTopic") + "humidity/state"))
             {
-                return 6;
+                return 4;
             }
             else if (e.ApplicationMessage.Topic == (configuration.GetValue<string>("Mqtt:mqttTopic") + "pressure/state"))
             {
-                return 7;
+                return 5;
             }
             else if (e.ApplicationMessage.Topic == (configuration.GetValue<string>("Mqtt:mqttTopic") + "motion/state"))
             {
-                return 8;
+                return 6;
             }
             else if (e.ApplicationMessage.Topic == (configuration.GetValue<string>("Mqtt:mqttTopic") + "co2/state"))
             {
-                return 9;
+                return 7;
             }
             return -1;
         }

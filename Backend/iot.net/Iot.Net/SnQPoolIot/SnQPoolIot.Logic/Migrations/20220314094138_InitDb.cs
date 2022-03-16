@@ -280,17 +280,17 @@ namespace SnQPoolIot.Logic.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_SensorData_SensorId",
-                schema: "PoolIot",
-                table: "SensorData",
-                column: "SensorId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Sensor_Name",
                 schema: "PoolIot",
                 table: "Sensor",
                 column: "Name",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SensorData_SensorId",
+                schema: "PoolIot",
+                table: "SensorData",
+                column: "SensorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_User_IdentityId",

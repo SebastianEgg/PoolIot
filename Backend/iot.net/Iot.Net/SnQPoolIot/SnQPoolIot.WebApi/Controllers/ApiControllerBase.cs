@@ -30,6 +30,10 @@ namespace SnQPoolIot.WebApi.Controllers
         partial void Constructing();
         partial void Constructed();
 #if ACCOUNT_ON
+        /// <summary>
+        /// Dieser Request übermittelt den derzeitgen SessionToken von der aktiven Session.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("/api/[controller]/GetSessionTokenAsync")]
         public Task<string> GetSessionTokenAsync()
         {

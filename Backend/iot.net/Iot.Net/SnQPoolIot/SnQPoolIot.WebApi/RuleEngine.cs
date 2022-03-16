@@ -1,4 +1,5 @@
-﻿using SnQPoolIot.Logic.Entities.Business.Logging;
+﻿using SnQPoolIot.Logic;
+using SnQPoolIot.Logic.Entities.Business.Logging;
 using SnQPoolIot.Transfer.Models.Persistence.PoolIot;
 using SnQPoolIot.WebApi.DataTransferObjects;
 using System;
@@ -51,7 +52,9 @@ namespace SnQPoolIot.WebApi
 
             foreach (var sensorName in Enum.GetNames(typeof(SensorName)))
             {
+                
                 MqttMeasurementDto sensor = new MqttMeasurementDto();
+                var hasInserted = InsertSensors(sensorName);
                 Sensors.Add(sensorName.ToLower(), sensor);
                 MqttActions.StartMqttClientAndRegisterObserverAsync($"{sensorName.ToLower()}/state").Wait();
             }
@@ -94,6 +97,30 @@ namespace SnQPoolIot.WebApi
             }
 
             return result;
+        }
+        public static async Task<bool> InsertSensors(string sensorName)
+        {
+            using var ctrl = Factory.Create<Contracts.Persistence.PoolIot.ISensor>();
+            Sensor addSensor = new Sensor();
+            addSensor.Name = sensorName.ToLower();
+            var sensors = ctrl.GetAllAsync();
+            var sensorsArray = sensors.Result;
+            var isSensorInstered = false;
+            foreach (var item in sensorsArray)
+            {
+                if(item.Name == sensorName)
+                {
+                    isSensorInstered = true;
+                }
+            }
+            if(isSensorInstered == false)
+            {
+                await ctrl.InsertAsync(addSensor);
+                await ctrl.SaveChangesAsync();
+            }
+            
+
+            return true;
         }
     }
 }
