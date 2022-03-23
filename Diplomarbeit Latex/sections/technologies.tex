@@ -1,19 +1,22 @@
 \section{Raspberry Pi}
 \setauthor{Sebastian Egger}
 
-Das Projekt beinhaltet einen Raspberry Pi 4, welcher als MQTT Broker dient und auf diesem Raspberry Pi läuft auch unser Backend mit DotNet, Docker und Samba.
-Der Raspberry Pi hat 4 Gigabyte und eine 32 Gigabyte SSD. 
+Das Projekt beinhaltet einen Raspberry Pi 4, welcher als MQTT Broker dient. Auf diesem Raspberry Pi läuft unser Backend mit DotNet, Docker und Samba.
+Der Raspberry Pi hat 4 Gigabyte RAM und eine 32 Gigabyte SSD. 
 Die Verbindung zwischen dem Raspberry und der SSD wird mit einem USB-Adapter hergestellt. 
 Die SSD wurde unter dem Raspberry mittels einer Platine und Schrauben befestigt. 
-Der Raspberry braucht mindestens 0,5 und maximal 0,7 Watt. 
+Der Raspberry braucht mindestens 3 und maximal 11 Watt. 
+
+(Hier kommt noch ein Foto vom Raspi rein)
+
 \subsection{Samba}
-Unser Raspberry dient als File-Server und zur leichteren Datenübertragung von Windows auf Linux kann man mit Samba von einem Windows Explorer direkt auf den Raspberry Pi zugreifen.
+Der Raspberry dient weiters als File-Server. Für eine leichtere Datenübertragung zwischen Windows und Linux wird mit Hilfe von Samba über den Windows Explorer direkt auf den Raspberry Pi zugegriffen.
 Somit können Files oder Projekte direkt von einem Laptop oder Computer auf den Raspberry PI gelegt werden.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{pics/RaspberrySamba.JPG}
-    \caption{DotNet 6 Nullability von Objekten}
+    \includegraphics[width=0.5\textwidth]{pics/RaspberrySamba.JPG}
+    \caption{Samba auf Laptop}
 \end{figure}
 
 
@@ -22,26 +25,27 @@ Somit können Files oder Projekte direkt von einem Laptop oder Computer auf den 
 Weiteres dient unser Raspberry auch als MQTT-Broker, welcher Messwerte von Sensoren empfängt und an das Backend, welches als MQTT-Client dient, übermittelt. 
 Genaueres wie MQTT aufgebaut ist und in welcher Verbindung der MQTT-Broker zu den MQTT-Clients steht wird im Kapitel MQTT beschrieben.
 
-\subsection {Docker auf dem Raspberry Pi installieren und die Verwendung von Docker auf dem Raspberry:}
+\subsection {Installation und Verwendung von Docker auf dem Raspberry Pi:}
 
-Docker ist eine Software, welche das Management von Container übernimmt. Ein Container enthält alle Dateien, die zum Ausführen einer Software notwendig sind. 
+Docker ist eine Software, welche das Management von Containern übernimmt. Ein Container enthält alle Dateien, die zum Ausführen einer Software notwendig sind. 
 Die Installation von Docker wird über ein Skript durchgeführt. 
 Dieses wird direkt von Docker zur Verfügung gestellt und führt alle Schritte automatisch ohne weitere Eingaben vom Benutzer durch. 
 Nach wenigen Minuten ist Docker betriebsbereit. 
-Weiter ist auch ein Container mit dem Namen Portainer auf unserem Raspberry Pi installiert, welcher uns eine Liste aller Container und deren Informationen anzeigt.
+Weiters ist auch eine zentralisierte Servicebereitstellungsplattform für containerisierte Apps 
+mit dem Namen Portainer auf dem Raspberry Pi installiert, 
+welcher eine Liste aller Container und deren Informationen zur Verfügung stellt.
  
 
 
 \subsection {Remote Access auf einen Raspberry PI:}
-Wenn man auf einen Raspberry PI zugreifen möchte und man hat gerade keinen Monitor zu verfügen , dann kann man mittels SSH von einem Laptop darauf zugreifen.
- Um mittels SSH auf einen Raspberry zugreifen zu können, muss man die Ip-Adresse in einem Netzwerk von dem Raspberry wissen. 
- Falls man eine FRITZ!Box als WLAN-Router nutzt, kann man sich über die Ip-Adresse (192.168.178.1) im Browser auf seiner FRITZ!Box und eine Übersicht der verbundenen Geräte anzeigen lassen, wo auch unter anderem der Raspberry PI connected ist. 
+Bei Verwendung des Raspberry PI ohne direkt angeschlossenen Monitor kann mittels SSH (Secure Socket Shell) Protokoll von einem Laptop zugegriffen werden.
+Dabei muss die IP-Adresse des Raspberry's im Netzwerk bekannt sein. WLAN-Router (FRITZ!Box) bieten über ihre standard IP-Adresse eine Übersicht der verbundenen Geräte, wo auch unter anderem der verbundene Raspberry Pi angezeigt wird. 
 
  \subsection{Was sind Ip-Adressen:}
-Im oberen Kapitel Remote Access ist oft das Wort Ip-Adresse gefallen, deswegen wird in diesem Unterpunkt eine kleine Einführung was Ip-Adressen sind und wofür sie gebraucht werden. 
-Eine Ip-Adresse ist eine Adresse in Computernetzen, welche von dem Router vergeben wird.
+Im oberen Kapitel Remote Access ist oft das Wort Ip-Adresse gefallen, deswegen wird in diesem Unterpunkt eine kleine Einführung über Ip-Adressen und Ihre Verwendung gegeben. 
+Eine Ip-Adresse ist eine Adresse in Computernetzen, welche von einem Router vergeben wird.
  Einem Gerät kann maximal eine Ip-Adresse zugewiesen werden, jedoch kann die Ip-Adresse auch wechseln, wenn sich das Gerät zum Router erneut verbindet. 
- Im Router gibt es aber auch die Funktion, dass ein Gerät immer eine bestimmte Ip-Adresse zugewiesen bekommt. 
+ Im Router gibt es aber auch die Funktionalität, dass ein Gerät immer eine bestimmte Ip-Adresse zugewiesen bekommt. 
 
 
 
@@ -53,8 +57,8 @@ Eine Ip-Adresse ist eine Adresse in Computernetzen, welche von dem Router vergeb
 
 \subsection{Was ist MQTT:}
 MQTT ausgeschrieben Message Queuing  Telemetry Transport ist ein Protokoll, welches Nachrichten von einer Maschine zu einer anderen Maschine schickt. 
-Ein MQTT Netzwerk besteht  aus mindestens einen MQTT-Broker und zwei MQTT-Clients. 
-Wenn ein MQTT-Client eine Message an einen anderen MQTT-Client senden will, sendet er als erstes eine Message zu dem MQTT-Broker, welcher die Message zu einem sogenannten Topic zuweist.
+Ein MQTT Netzwerk besteht  aus mindestens einem MQTT-Broker und zwei MQTT-Clients. 
+Wenn ein MQTT-Client eine Message an einen anderen MQTT-Client senden will, muss als erstes eine Message zu dem MQTT-Broker, welcher die Message zu einem sogenannten Topic zuweist, gesendet werden.
 Ein Topic ist ein Bereich, wo bestimmte Nachrichten aufgelistet werden. 
 Ein Topic in unserem Fall lautet mqtt/noice für den Noice-Sensor.  
 Wenn ein oder mehrere MQTT-Clients diese Nachricht empfangen wollen, dann subscriben diese auf das Topic. 
@@ -62,29 +66,29 @@ Durch das subscriben von den Clients werden diese, sobald eine neue Message an d
 
 \subsection {Verwendung von MQTT in unserem Projekt:}
 Unser Projekt besteht aus 2 MQTT-Clients und 1 MQTT-Broker. 
-Zu einem ist die Sensor Box ein MQTT-Client, welcher die Messwerte an den MQTT-Broker sendet. 
-Der MQTT-Broker ist in unserem Projekt der Raspberry PI. 
-Zum Empfangen der Daten liest unser Backend, welcher der zweite MQTT-Client ist, die Daten vom Raspberry ein.
+Die Sensor Box ein MQTT-Client, welcher die Messwerte an den MQTT-Broker sendet. 
+Der MQTT-Broker ist im Projekt der Raspberry PI. 
+Zum Empfangen der Daten liest das Backend, welches den zweiten MQTT-Client darstellt, die Daten vom Raspberry ein.
 
 \subsection{MQTT-Explorer:}
 MQTT-Explorer ist eine kostenlose Software, welches sich für das Testen einer Connection zwischen MQTT-Client und Broker bestens eignet.
 Der MQTT-Explorer ist ein weiterer MQTT-Client.
-Als erstes loggt man sich mit der Ip-Adresse und Port des Brokers sowie den dazugehörigen Username und Password ein.
+Zur Benutzung und Verbindung mit dem Raspberry ist ein Login mit der Ip-Adresse und Port des Brokers sowie dem dazugehörigen Benutzernamen und Passwort notwendig.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{pics/MQTTExplorerStartScreen.JPG}
-    \caption{DotNet 6 Nullability von Objekten}
+    \caption{MQTT-Explorer Login}
 \end{figure}
 
 
- Wenn eine Verbindung zu einem MQTT-Broker möglich ist, wird ein Screen mit dem Namen des Brokers und den dazugehörigen Topics aufgelistet. 
- In diesem Foto wurde sich für eine grafische Abbildung mit dem MQTT-Broker test.mosquitto.org verbunden.  
+ Sobald eine Verbindung zu einem MQTT-Broker möglich ist, wird ein Screen mit dem Namen des Brokers und den dazugehörigen Topics aufgelistet. 
+ In unten gezeigter Abbildung wurde eine Verbindung mit dem MQTT-Broker test.mosquitto.org hergestellt.  
 
  \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{pics/MQTTExplorerTestDemo.JPG}
-    \caption{DotNet 6 Nullability von Objekten}
+    \caption{MQTT-Explorer nachdem Login}
 \end{figure}
 
 
@@ -97,139 +101,176 @@ Als erstes loggt man sich mit der Ip-Adresse und Port des Brokers sowie den dazu
 \section{.Net}
 \setauthor{Sebastian Egger}
 
-\subsection {Backend Projekte}
 
 
+\subsection{.Net Core und .Net Framework}
 
-Das Backend setzt sich aus 12 Projekten zusammen, welche in C\# .Net 5 geschrieben sind.
+In unserem Projekt verwenden wir .Net Core, eine alternative dazu wäre .NetFramework.
+Beides sind Frameworke, welche für die Erstellung serverseitiger Anwendungen verwendet werden. 
+.Net Core und .Net Framework haben manche funktionale Komponenten gemeinsam, und können Ihren Code auch über die beiden Plattformen hinweg gemeinsam nutzen.
 
-\begin{itemize}
-    \item CommonBase
-\end{itemize}
-
-In CommonBase befinden Klassen und Methoden, die wiederverwendbar sind um Code verdoppelung zu vermeiden.
-
-\begin{itemize}
-    \item CSharpCodeGenerator.Logic
-\end{itemize}
-
-CSharpCodeGenerator.Logic dient zum automatischen generieren von den Entitäten 
-in SnQPoolIot.Logic, SnQPoolIot.WebApi und SnQPoolIot.AspMvc.
-In SnQPoolIot.Contracts werden Entitäten als Interfaces angegeben.
-Wenn danach die Solution gebuildet wird, werden für die Entitäten Klassen und die dazugehörigen Controller angelegt.
-Es werden auch Beziehung und Keys zwischen den Entitäten generiert.
+\subsubsection*{ Was versteht man unter .Net Framework und .Net Core}
+Bisher wurde .NetFramework genützt um .NET Desktop-Anwendungen als auch serverbasierte Anwendungen zu erstellen.
+.NET Core wiederum dient der Erstellung von Serveranwendungen, die unter Windows, Linux und Mac laufen.
+Bei .NET Core handelt es sich in erster Linie um ein Open-Source-Framework mit Multiplattform-Unterstützung.
 
 
-\begin{itemize}
-    \item SnQPoolIot.Adapters
-\end{itemize}
+\subsubsection*{.Net Framework Vorteile}
+Während .NET Core die Zukunft der Anwendungsentwicklung ist und das .NET Framework in der Zukunft ablösen wird, wird der Kater der jahrelangen traditionellen Verwendung von .NET Framework nicht so schnell vergehen!
+Spricht man über .NET Framework vs. .NET Core im heutigen Kontext, so hat .NET Framework immer noch einige praktische .NET-Vorteile.
 
-SnQPoolIot.Adapters bietet uns einen direkten Zugriff auf die Logic.
-Der Zugriff auf die Logic kann dadurch entweder direkt erfolgen oder per Rest über die WebApi.
+.Net Core benötigt derzeit für unerfahrene Programmierer einen größeren Lernaufwand als bei .Net Framework. 
+Ein weiterer Vorteil gegenüber .Net Core ist die Wartung bestehender Anwendungen. 
+Nachdem .Net Framework sich seit Jahren im Einsatz befindet, wurden die meisten .Net Anwendungen mittels .Net Framework geschrieben. 
+Der letzte große Vorteil von .Net Framework ist die Stabilität der Platform. 
 
-\begin{itemize}
-    \item SnQPoolIot.WebApi
-\end{itemize}
+Microsoft hat verkündet, dass die aktuelle Version des Microsoft .NET Framework (Version 4.8) die letzte Version sein wird und es danach kein größeres .NET Framework-Update mehr geben wird.
+Das bedeutet die Entwicklung von .Net Framework schreitet nicht mehr voran, aber somit können auch keine durch Updates verursachten Bugs mehr entstehen.
 
-Der Zugriff auf die Messwerte wird durch Rest-Zugriffe in SnQPoolIot.WebApi providet.
-Auf die Daten kann aber nur zugegriffen werden, wenn man sicher vorher mit einem Account einloggt.  
+\subsubsection*{.Net Core Vorteile}
 
-\begin{itemize}
-    \item SnQPoolIot.Contracts
-\end{itemize}
+Wie bereits oben erwähnt ist .Net Core ein Open-Source-Framework, welches sich kontinuierlich durch offene Beiträge verbessert.
+Ein weiterer Vorteil ist die plattformübergreifende Kompatibilität, damit bei Verwendung eines Computers mit Linux oder macOS als Betriebssystem trotzdem Apps, welche unter Windows laufen verwendet werden können.
+Mit .Net Core entwickelten Apps wird Benutzern die Möglichkeit geboten diese Apps nicht nur unter Windows zu verwenden, sondern auch auf Linux oder macOS. Diese Flexibilität entfällt bei Entwicklungen mit .Net Framework.
 
-SnQPoolIot.Contracts beinhaltet alle notwendigen Schnittstellen und Enumerationen des Projektes.
-Hier werden die Entitäten als Interfaces angelegt, 
-welche von CSharpCodeGenerator.Logic als Klassen und Controller in den oben genanten Projekten generieren.
+Es gibt natürlich noch einige weitere Vorteil von .Net Core, die hier nicht erwähnt wurden.
 
-\begin{itemize}
-    \item SnQPoolIot.Logic
-\end{itemize}
 
-SnQPoolIot.Logic ist das Kernstück des Projektes. 
-Durch die Logic können wir alle Daten von der Datenbank holen. 
-Die Datenbank auf welche die Logik zugreift ist eine Sqlite Datenbank und der Zugriff und das erzeugen der Datenbank wird mittels Entityframework.Sqlite durchgeführt.
+\subsubsection*{Was ist Swagger und Verwendung von Swagger in unserem Projekt}
 
-\begin{itemize}
-    \item SnQPoolIot.Transfer
-\end{itemize}
+Swagger ist eine Sammlung von Open-Source-Werkzeugen, um HTTP-Webservices (auch HTTP API oder REST-like API) zu entwerfen, zu erstellen, 
+zu dokumentieren und zu nutzen.
+In diesem Projekt wurde Swagger verwendet um die API zu beschrieben und zu testen.
+Swagger bietet nicht nur die Zusammenarbeit mit C\# an sondern auch mit anderen Programmiersprachen wie zum Beispiel
+JAVA, JavaScript, Groovy und andere Programmiersprachen an. 
 
-SnQPoolIot.Transfer verwaltet die Transferobjekte für den Datenaustausch zwischen den Layers.
+\subsubsection*{Wie bindet man einen Swagger in C\# ein}
+In C\# kann man Swagger durch ein NuggetPackage Namens Swashbuckle.AspNetCore verwenden.
+Durch dieses NuggetPackage kann ein Swagger nun in eine WebApi, wie im nachfolgenden Abbildung implementiert werden:
 
-\begin{itemize}
-    \item SnQPoolIot.AspMvc
-\end{itemize}
 
-SnQPoolIot.AspMvc ist ein Ersatz für das Frontend.
-Hier werden die Funktionen wie zum Beispiel einloggen eines Users oder anzeigen von Messwerten dargestellt.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{./pics/SwaggerNuggetPackage.JPG}
+    \caption{DotNet6ConApp}
+\end{figure}
 
-\begin{itemize}
-    \item SnQPoolIot.ConApp
-\end{itemize}
 
-In SnQPoolIot.ConApp werden User mit verschiedenen Rechten angelegt, die für die Authentifizierung benötigt werden.
+Die im Projekt verwendete Implementation wird im Unterkapitel Verwendung von Swagger im Projekt dargestellt.
+
 
 \subsection {DotNet 5 vs DotNet 6}
 
-Unser Backend wurde wie oben bereits erwähnt mit DotNet 5 geschrieben, weil die Umstellung zu DotNet 6 einiges mit sich bringt.
-Der Hauptgrund warum wir uns für DotNet 5 entschieden haben, ist die Unterscheidung der Nullability von Objekten und die dadurch ausgelösten Warnings.
-In DotNet 5 werden durch Objekte die Null sein könnten keine Warnings angezeigt und man ersparrt sich etliche Zeit, wenn man sich nicht durch die Warnings käpfen muss.
+Die Entwicklung der Diplomarbeit startete schon mit Sommerbeginn 2021 und .Net6 wurde erst im November 2021 released. 
+Aufgrund der schon vorhandenen Kentnisse in .Net5 und der im .Net6 bei Standardkonfiguration nicht vorhandenen Methoden/Usings Unterstützung (siehe nachfolgende Abbildungen)
+wurde beschlossen, währen der Umsetzung nicht die Entwicklungsumgebung zu ändern.
+
+Eine Migration von .Net5 auf .Net6 umfasst in der Regel dann das Umstellen aller Paketversionen auf die neueste .NetVersion.
+Hier sollten im Bedarfsfall dann nur wenige Änderungen notwendig werden und sollten dann auch aufgrund des längeren Supports von .Net6 
+und der Vorteile rund um Performance, die bei eventueller Ausführung in der Cloud sicherlich auch positive Auswirkungen auf die 
+Bedarfskosten mit sich bringen kann, in Erwägung gezogen werden.
+
+Persönlich empfundener Nachteil bei der Lesbarkeit des Codes:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{pics/DotNet6Nullability.png}
-    \caption{DotNet 6 Nullability von Objekten}
-\end{figure}
-
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\textwidth]{pics/DotNet5Nullability.png}
-    \caption{DotNet 5 keine Warnungs durch Nullability}
-\end{figure}
-
-
-
-
-Jedoch im Vergleich zu DotNet 5 hat DotNet 6 eine bessere Leistung, denn bei einer Ausführung in der Cloud sinkt es die Computekosten, welches ich als riesigen Vorteil sehe.
-Einen weiteren Nachteil finde ich ist die Lesbarkeit des Codes.
-
-Hier ein Beispiel zu diesem Thema:
-
-Hier sieht man eine Consolen Apllication in DotNet 6 und man kann sehen,
-dass es keine Übersicht gibt wie man anfängt. Eine Person welche zum ersten Mal ein Tutorial, welches in DotNet 5 beschrieben wurde, nachprogrammiert, hat keine Ahnung 
-wo man in DotNet 6 die Usings oder die Methoden implementiert. 
-
-
-
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\textwidth]{./pics/DotNet6ConApp.JPG}
+    \includegraphics[width=0.7\textwidth]{./pics/DotNet6ConApp.JPG}
     \caption{DotNet6ConApp}
 \end{figure}
 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{./pics/DotNet5ConApp.JPG}
+    \includegraphics[width=0.7\textwidth]{./pics/DotNet5ConApp.JPG}
     \caption{DotNet5ConApp}
 \end{figure}
 
 
-Im Vergleich zu DotNet 6 kann man hier klar erkennen, wo man die Usings und die Methoden hinschreibt.
+Im Vergleich zu .Net6 ist die Unterstützung bei der Verwendung von Usings und Methoden unter .Net5 klar zu erkennen.
+
+
+\subsubsection*{Was ist eine Datenbank und wofür eignet sich eine Datenbank}
+Eine Datenbank ist eine Sammlung von strukturierten Informationen oder Daten, die typischerweise elektronisch in einem Computersystem gespeichert sind.
+Solch eine Datenbank wird meistens von einem Datenbankverwaltungssystem abgekürzt DBMS gesteuert und sie besteht aus Tabellen, in welchen die Daten gespeichert sind.
+Auf diese gespeicherten Daten kann mittels SQL-Abfragen zugegriffen werden.
 
 
 
+\subsubsection*{Warum Sqlite und nicht SqlServer als Datenbank:}
 
-Warum Sqlite und nicht SqlServer als Datenbank:
+In diesem Projekt wird eine Sqlite-Datenbank verwendet, weil die Datenbank im Vergleich zu einem Microsoft SQL Server eine kleinere
+Version ist und sich sehr gut für Endgeräte eignet, da der Raspberry Pi nur über einen begrenzten Speicher verfügt.
+Weiters muss auch Rücksicht auf die Architektur vom ARM genommen werden, denn die Version muss für die CPU Architektur geeignet sein.
+Hinweis: Microsoft stellte erst mit SQL Server 2017 die erste Version auf Linux zur Verfügung, aber erst mit der Version 2019 sind die meisten
+Funktionen wie unter Windows verfügbar.
 
-In unserem Projekt verwenden wir Sqlite als Datenbank, weil die Datenbank ansonsten nicht auf dem Raspberry Pi laufen würde.
-Unser Raspberry Pi verwendet Linux als Betriebssystem und Microsoft meint, dass ein SqlServer nicht für Linux geeignet sind und deshalb gibt es keinen SqlServer für Raspberry Pi's.
-Weiteres, wenn es einen SqlServer für den Raspberry Pi geben würde, wird wegen dem Speicherplatz noch immer eine Sqlite Datenbank einen großen Vorteil anbieten.
+\subsubsection*{Überprüfung einer Sqlite Datenbank}
+Zum Überpfen einer Sqlite Datenbank eignet sich in Visual Studio Code die Extension "SQLite", 
+welche das Innenleben einer SQLite Datenbank veranschaulicht.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{./pics/SQLiteVSCodeExtension.JPG}
+    \caption{SQLite Extension für Visual Studio Code}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{./pics/SQLiteDatabaseStructure.JPG}
+    \caption{Innenleben unserer SQLite Datenbank}
+\end{figure}
 
 
 
+\subsubsection*{Asynchrone Programmierung und Implementierung in C\#}
+Es sollte wenn möglich immer asynchron programmiert werden, weil es Zeit spart, denn Prozesse können dadurch parallel ausgeführt werden.
+Somit muss ein Prozess nicht mehr auf einen anderen Prozess warten.
+Ein kleines Beispiel hierfür wäre ein Frühstück, denn man wartet ja nicht bis zum Beispiel das Toastbrot fertig ist, um sich danach erst den Kaffee zu machen, dieses Tun sollte parallel möglich sein.
+
+In C\# gibt es die Keywörter async und await. Wenn eine Methode asynchron aufgerufen werden soll, muss die Methode im Methodenkopf als Kennung async aufweisen und einen Task als return Wert festlegen.
+Um diese Methode danach aufrufen zu können, muss await vor dem Methodennamen verwendet werden.
+
+
+\subsubsection*{Keyword partial C\#}
+In C\# gibt es das sogenannte Keyword partial, wodurch die Implementierung von einer Methode in einer Klasse der selben Klasse jedoch in einem anderen File passieren kann.
+Ein Code Beispiel im Projekt wäre die SnQPoolIot.ConApp.
+
+In den nachstehenden 2 Abbildungen wird beschrieben wie eine Implementierung von einer partial Method erfolgt.
+
+Im ersten Foto ist zu erkennen, dass die Klasse Program.cs partial gesetzt wurde und die Methode BeforeRun() auch das Keyword partial beinhaltet.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{./pics/PartialKeyword1.png}
+    \caption{Implementierung partial Class und Method}
+\end{figure}
+
+Für die Implementierung in einem anderen File wird der Name des Files auf einen anderen Namen umbenannt und danach wird die Klasse wieder auf Programm.cs umgeschrieben.
+Nun erkennt C\# das es sich um eine partial Class handelt und somit können nun die Methoden, welche in der Klasse partial sind, aber in einem anderen File liegen, umgeschrieben werden. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{./pics/PartialKeyword2.png}
+    \caption{Implementierung partial Class und Method}
+\end{figure}
+
+
+Begriffserklärungen:
+
+/subsection{C\#}
+
+C\# ist eine objektorentierte Programmiersprache, welche von Microsoft entwickelt
+wurde
+
+/subscriben{ARM}
+ARM stand für Acorn RISC Machines, später für Advanced RISC Machines 
+und ist einer der meistverbreitesten Mikroprozessoren.
 
 
 
+Quellen:
+https://chudovo.de/difference-between-net-core-and-net-framework/
+
+https://www.oracle.com/at/database/what-is-database/
+
+%https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/partial-classes-and-methods#:~:text=The\%20partial\%20keyword\%20indicates\%20that,\%2C\%20private\%20\%2C\%20and\%20so\%20on.
+
+%https://de.wikipedia.org/wiki/Arm-Architektur#:~:text=ARM%20stand%20f%C3%BCr%20Acorn%20RISC,weltweit%20zu%20den%20meistverbreiteten%20Mikroprozessoren.

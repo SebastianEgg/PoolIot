@@ -17,9 +17,6 @@ namespace SnQPoolIot.Logic.DataContext
 
             var optionsBuilder = new DbContextOptionsBuilder<SnQPoolIotDbContext>();
             optionsBuilder
-                // Uncomment the following line if you want to print generated
-                // SQL statements on the console.
-                // .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()))
                 .UseSqlite(configuration["ConnectionStrings:DefaultConnection"]);
 
             return new SnQPoolIotDbContext();

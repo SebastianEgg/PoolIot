@@ -78,8 +78,7 @@ namespace SnQPoolIot.WebApi
                 if (i == 2)
                 {
 
-                    entity.Timestamp = datavalue[i].Trim();
-                    //measurment.Timestamp = CurrentTimeStamp;
+                    measurment.Timestamp = DateTime.Now;
                 }
                 else if (i == 4)
                 {                   

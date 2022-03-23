@@ -24,27 +24,18 @@ namespace SnQPoolIot.WebApi
         {
 
             services.AddControllers();
-            /*services.AddSwaggerGen(c =>
-			{
-				c.SwaggerDoc("v1", new OpenApiInfo { Title = "SnQPoolIot.WebApi", Version = "v1", Description = "Api zum einlesen und auslesen von Sensoren und deren Messwerte", });
-			});*/
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "VaccinationCertificate API",
-                    Description = "An API for managing people and vaccinations",
-                    Contact = new OpenApiContact
-                    {
-                        Name = "HTBLA Leonding",
-                        Url = new Uri("https://www.htl-leonding.at/")
-                    }
+                    Title = "SnQPoolIot.WebApi",
+                    Description = "Api zum einlesen und auslesen von Sensoren und deren Messwerte",
                 });
-                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                options.AddSecurityDefinition("SessionToken", new OpenApiSecurityScheme
                 {
                     In = ParameterLocation.Header,
-                    Description = "Please Bearer and then token in the field",
+                    Description = "Bitte geben Sie SessionToken und den Wert des gültigen SesstionToken in das Feld",
                     Name = "Authorization",
                     Type = SecuritySchemeType.ApiKey
                 });
@@ -57,7 +48,7 @@ namespace SnQPoolIot.WebApi
                     Reference = new OpenApiReference
                     {
                     Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
+                    Id = "SessionToken"
                     }
                     },
                     Array.Empty<string>()

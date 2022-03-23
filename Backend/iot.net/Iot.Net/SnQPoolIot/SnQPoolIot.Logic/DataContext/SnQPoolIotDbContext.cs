@@ -22,7 +22,7 @@ namespace SnQPoolIot.Logic.DataContext
 			}
 			if (ConnectionString.IsNullOrEmpty())
 			{
-				ConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Database=SnQPoolIotDb;Integrated Security=True";
+				ConnectionString = "Data Source=..\\PoolIot.db";
 			}
 			ClassConstructed();
 		}
