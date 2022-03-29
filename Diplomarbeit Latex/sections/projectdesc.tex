@@ -1,3 +1,31 @@
+
+
+
+
+\section{Projektmanagement}
+Unser Projekt ist Hybrid entwickelt worden. Ein Projektentwicklungskonzept, welches in der Diplomarbeit verwendet wurde, ist Scrum.
+
+\subsection{Scrum}
+Scrum ist ein agiles Vorgehensmodell für Projektmanagement
+und kommt zum Einsatz wenn, viele Entwicklungsprojekte zu komplex sind, um sie in einen vollumfassenden Plan zu fassen.
+Aus diesem Grund ist ein wesentlicher Teil der Anforderungen und Lösungen zu Beginn unklar. 
+Diese werden schrittweise erarbeitet, indem Zwischenergebnisse geschaffen werden.
+Durch Scrum wird die Projektlaufzeit in Etappen, so genannte Sprints, eingeteilt und
+am Ende jedes Sprints soll jeweils ein funktionsfähiges Zwischenprodukt stehen.
+Die Einteilung wie lange ein Sprint dauert wird Intern geregelt.
+In diesem Projekt war die Dauer eines Sprintes einen Monat lang.
+
+\subsection{Zusätzliche Vereinbarungen der Diplomarbeit}
+Zusätlich zu den Projektentwicklungskonzepten wurde jede zweite Woche ein Projektbericht veröffentlicht um die Diplomarbeitsbetreuer auf dem Laufenden zu halten.
+In den Projektberichten sind die fertigen Meilensteine und die  Meilensteine an denen gearbeitet wurde, mittels einer Projektampel veranschaulicht.
+Eine Projektampel sagt aus, ob sich ein Projekt in Gefahr, in Verzug oder im grünen Bereich befindet.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{pics/Projektampel.png}
+    \caption{Visualisierung einer Projektampel}
+\end{figure}
+
 \section{Backend Projekt-Überblick}
 \setauthor{Sebastian Egger}
 
@@ -68,6 +96,182 @@ Der Zugriff auf die Logic kann dadurch entweder direkt erfolgen oder per Rest ü
 
 
 
+\subsection{SnQPoolIot.Logic}
+Wie  bereits im Backend Projekt-Überblick beschrieben, befindet sich in SnQPoolIot.Logic die Datenbank mit den Zugriffen.
+Die Datenbank wird mithilfe des NuggetPackage Microsoft.Entityframework.Sqlite, den Befehlen:
+dotnet ef migrations add InitDb und dotnet ef database update, welche in der Developer-PowerShell 
+im Visual Studio ausgeführt werden müssen um Migrations zu erzugen und um die Datenbank mit den erzeugten Migrations upzudaten, 
+und einem DBContext, welcher die Configuration der Datenbank mit sich bringt, automatisch erstellt. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{pics/EntityFrameworkSqlLiteNuggetPackage.JPG}
+    \caption{NuggetPackage für Entityframework mit Sqlite}
+\end{figure}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{pics/DeveloperPowerShellMigration.JPG}
+    \caption{Befehl zum Erzeugen von Migationen}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{pics/MigrationCreated.png}
+    \caption{Erzeugte Migrationen in der Logik}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{pics/DBContext.JPG}
+    \caption{DBContext zum Erzeugen einer Datenbank}
+\end{figure}
+
+Nun zu den Datenbank Zugriffen. Damit auf die Messwerte zugegriffen werden kann muss sich ein User zuerst authentifizieren.
+Damit sich eine User authentifizieren kann benötigt er einen Account mit E-Mail und Passwort, welche in der Datenbank gespeichert sind.
+Für die Authentifizierung werden die nachstehenden Tabellen benötigt:
+
+\begin{itemize}
+    \item Identity
+    In dieser Tabelle befinden sich alle User-Accounts mit E-Mail gehastem Passwort.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.7\textwidth]{pics/IdentityTableStructur.JPG}
+        \caption{Identity Tabelle mit den dazugehörigen Tabellenspalten}
+    \end{figure}
+
+\end{itemize}
+
+
+\begin{itemize}
+    \item Role
+    In dieser Tabelle sind alle Rollen die es gibt vorzufinden.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{pics/RoleTableStructure.JPG}
+        \caption{Role Tabelle mit den dazugehörigen Tabellenspalten}
+    \end{figure}
+
+\end{itemize}
+
+\begin{itemize}
+    \item IdentityXRole
+    Diese Tabelle weißt einem Benutzer eine Rolle zu.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{pics/IdentityXRoleStructure.JPG}
+        \caption{IdentityXRole Tabelle mit den dazugehörigen Tabellenspalten}
+    \end{figure}
+\end{itemize}
+
+
+\begin{itemize}
+    \item LogginSession
+    Diese Tabelle zeigt alle Logins mit dem dazugehörigen User und den SessionToken mit dem sich der User eingeloggt hat an.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{pics/LoginSessionStructure.JPG}
+        \caption{LogginSession Tabelle mit den dazugehörigen Tabellenspalten}
+    \end{figure}
+\end{itemize}
+
+Sobald sich ein User authentifitiert hat wurde zugleich eine neue Session erstellt und wenn die Rechte vom
+dem authentifizierten User hochgenug sind kann er sich nun die Messwerte ansehen.
+Die nachstehenden Tabellen dienen zum Erfassen von den Messwerten:
+
+\begin{itemize}
+    \item Sensor
+    Diese Tabelle beinhaltet den Namen eines Sensors.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{pics/SensorTableStructure.JPG}
+        \caption{Sensor Tabelle mit den dazugehörigen Tabellenspalten}
+    \end{figure}
+\end{itemize}
+
+\begin{itemize}
+    \item Sensor
+    Diese Tabelle beinhaltet die Messwerte aller Sensoren und beinhaltet welcher Messwert zu welchen Sensor gehört.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{pics/SensorDataTableStructure.JPG}
+        \caption{SensorData Tabelle mit den dazugehörigen Tabellenspalten}
+    \end{figure}
+\end{itemize}
+
+
+\subsubsection{Logging in unserem Projekt}
+Um Fehlermeldungen im Projekt zu speichern, wurde eine Klasse mit dem Namen LogWriter programmiert.
+Diese Fehlermeldungen werden in einer .txt gespeichert und können jeder Zeit gelesen werden.
+Im nachstehenden Code ist die LogWriter Klasse zu sehen:
+\\
+\begin{lstlisting}
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SnQPoolIot.Logic.Entities.Business.Logging
+{
+    public class LogWriter
+    {
+        private string m_exePath = string.Empty;
+        private static LogWriter _instance = null;
+
+        public static LogWriter Instance
+        {
+            get
+            {
+                if(_instance == null)
+                {
+                    _instance = new LogWriter();
+                }
+                return _instance;
+            }
+        }
+
+        private LogWriter()
+        {
+
+        }
+        public void LogWrite(string logMessage)
+        {
+            m_exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            try
+            {
+                using StreamWriter w = File.AppendText(m_exePath + "\\" + "log.txt");
+                Log(logMessage, w);
+            }
+            catch (Exception)
+            {
+            }
+        }
+        public static void Log(string logMessage, TextWriter txtWriter)
+        {
+            try
+            {
+                txtWriter.Write("\r\nLog Entry : ");
+                txtWriter.WriteLine("{0} {1}", DateTime.Now.ToLongTimeString(),
+                    DateTime.Now.ToLongDateString());
+                txtWriter.WriteLine("  :{0}", logMessage);
+                txtWriter.WriteLine("-------------------------------");
+            }
+            catch (Exception )
+            {
+            }
+        }
+    }
+}
+\end{lstlisting}
+
+Die Methode LogWrite bekommt eine Fehlermeldungen als Parameter mit 
+und ruft die Methode Log auf, welche wiederum die Fehlermeldungen in eine .txt Datei speichert.
 
 \subsection{SnQPoolIot.WebApi}
 
@@ -181,116 +385,65 @@ Mit Hilfe von Swagger wurden die in den nachstehenden Grafiken ersichtlichen HTT
     \caption{HTTP-Requests des Projektes}
 \end{figure}
 
-
-\subsection{SnQPoolIot.Logic}
-Wie  bereits im Backend Projekt-Überblick beschrieben, befindet sich in SnQPoolIot.Logic die Datenbank mit den Zugriffen.
-Die Datenbank wird mithilfe des NuggetPackage Microsoft.Entityframework.Sqlite, den Befehlen:
-dotnet ef migrations add InitDb und dotnet ef database update, welche in der Developer-PowerShell 
-im Visual Studio ausgeführt werden müssen um Migrations zu erzugen und um die Datenbank mit den erzeugten Migrations upzudaten, 
-und einem DBContext, welcher die Configuration der Datenbank mit sich bringt, automatisch erstellt. 
+\subsubsection{Implementierung von MQTT in unserem Projekt}
+Das Einlesen und Überprüfen von den Messwerten soll stadtfinden, sobald die WebApi läuft.
+Aus diesem Grund wird die RuleEngine, 
+welche den Aufruf für das Einlesen und Überprüfen der Messwerte beinhaltet, instanziert, welche gleichzeitig wie die WebApi startet.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{pics/EntityFrameworkSqlLiteNuggetPackage.JPG}
-    \caption{NuggetPackage für Entityframework mit Sqlite}
-\end{figure}
-
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\textwidth]{pics/DeveloperPowerShellMigration.JPG}
-    \caption{Befehl zum Erzeugen von Migationen}
+    \includegraphics[width=0.6\textwidth]{pics/RuleEngineCall.png}
+    \caption{Aufruf der RuleEngine}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{pics/MigrationCreated.png}
-    \caption{Erzeugte Migrationen in der Logik}
+    \includegraphics[width=0.9\textwidth]{pics/InstanzierenDerRuleEngineUndAufrufenDerMQTTMesswerte.png}
+    \caption{Instanzieren der RuleEngine und der Sensoren zum Einlesen der Messwerte}
 \end{figure}
+
+Die einelnen Sensoren, welche in der obigen Abbildung in die Datenbank gespeichert werden
+befinden sich in dem nachstehenden enum:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{pics/DBContext.JPG}
-    \caption{DBContext zum Erzeugen einer Datenbank}
+    \includegraphics[width=0.9\textwidth]{pics/SensorEnum.JPG}
+    \caption{Liste der Sensoren gespeichert in einem Enum}
 \end{figure}
 
-Nun zu den Datenbank Zugriffen. Damit auf die Messwerte zugegriffen werden kann muss sich ein User zuerst authentifizieren.
-Damit sich eine User authentifizieren kann benötigt er einen Account mit E-Mail und Passwort, welche in der Datenbank gespeichert sind.
-Für die Authentifizierung werden die nachstehenden Tabellen benötigt:
+Auf diese Sensoren wird nun die Methode StartMqttClientAndRegisterObserverAsync angewendet,
+welche in den nachstehenden Abbildungen und Texten beschrieben wird:
 
-\begin{itemize}
-    \item Identity
-    In dieser Tabelle befinden sich alle User-Accounts mit E-Mail gehastem Passwort.
+Damit ein Wert von einem Topic bekommen kann, muss auf diese Topic scubscried werden.
+In C\# gibt es eigene NuggetPackages zum Subscriben. Nachdem die NuggetPackages installiert worden sind,
+kann nun ein MQTT Client mittels einer MQTTFactory erzeugt werden. Damit der MQTT Client auf den richtigen
+Broker subscriben kann, muss er sogenannte MQTTClientOpions, mittels eines MQTTClientOpionsBuilder, mitsich zugewisen bekommen.
+Zu diesen MQTTClientOpions zählt die ClientId, die Adresse, der Username und das Passwort des Brokers, sowie
+der Port auf dem der Broker läuft.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.3\textwidth]{pics/StartMqttClientConnections.JPG}  
+    \caption{MQTT Client Konfiguration}
+\end{figure}
+Sobald die Konfiguration eingetragen wurde, wird dem MQTT Client nun gesagt was er zu tuen hat, 
+wenn sich der MQTT Client connected, disconnected oder eine Nachricht bekommt.
 
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=0.7\textwidth]{pics/IdentityTableStructur.JPG}
-        \caption{Identity Tabelle mit den dazugehörigen Tabellenspalten}
-    \end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.3\textwidth]{pics/StartMqttClientCallMethods.JPG}  
+    \caption{MQTT Cient HandlerDelegate, Subscriben und Starten}
+\end{figure}
 
-\end{itemize}
+Wenn sich ein MQTT Client connected oder disconnected, wird dies 
+,durch die selbstgeschrieben Logging Klasse, mitgeloggt.
 
-
-\begin{itemize}
-    \item Role
-    In dieser Tabelle sind alle Rollen die es gibt vorzufinden.
-
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=1\textwidth]{pics/RoleTableStructure.JPG}
-        \caption{Role Tabelle mit den dazugehörigen Tabellenspalten}
-    \end{figure}
-
-\end{itemize}
-
-\begin{itemize}
-    \item IdentityXRole
-    Diese Tabelle weißt einem Benutzer eine Rolle zu.
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=1\textwidth]{pics/IdentityXRoleStructure.JPG}
-        \caption{IdentityXRole Tabelle mit den dazugehörigen Tabellenspalten}
-    \end{figure}
-\end{itemize}
-
-
-\begin{itemize}
-    \item LogginSession
-    Diese Tabelle zeigt alle Logins mit dem dazugehörigen User und den SessionToken mit dem sich der User eingeloggt hat an.
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=1\textwidth]{pics/LoginSessionStructure.JPG}
-        \caption{LogginSession Tabelle mit den dazugehörigen Tabellenspalten}
-    \end{figure}
-\end{itemize}
-
-Sobald sich ein User authentifitiert hat wurde zugleich eine neue Session erstellt und wenn die Rechte vom
-dem authentifizierten User hochgenug sind kann er sich nun die Messwerte ansehen.
-Die nachstehenden Tabellen dienen zum Erfassen von den Messwerten:
-
-\begin{itemize}
-    \item Sensor
-    Diese Tabelle beinhaltet den Namen eines Sensors.
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=1\textwidth]{pics/SensorTableStructure.JPG}
-        \caption{Sensor Tabelle mit den dazugehörigen Tabellenspalten}
-    \end{figure}
-\end{itemize}
-
-\begin{itemize}
-    \item Sensor
-    Diese Tabelle beinhaltet die Messwerte aller Sensoren und beinhaltet welcher Messwert zu welchen Sensor gehört.
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=1\textwidth]{pics/SensorDataTableStructure.JPG}
-        \caption{SensorData Tabelle mit den dazugehörigen Tabellenspalten}
-    \end{figure}
-\end{itemize}
-
-
-\subsubsection*{Logging in unserem Projekt}
-
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.1\textwidth]{pics/StartMqttClientConnectAndDisconnect.JPG}  
+    \caption{MQTT Cient HandlerDelegate, Subscriben und Starten}
+\end{figure}
 
 \subsection{SnQPoolIot.AspMvc}
 
+Quellen: 
+% https://www.factro.de/blog/projektmanagement-methoden/#scrum

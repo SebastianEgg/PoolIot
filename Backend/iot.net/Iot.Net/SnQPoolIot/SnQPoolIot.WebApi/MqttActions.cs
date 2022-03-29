@@ -30,10 +30,10 @@ namespace SnQPoolIot.WebApi
             Console.WriteLine("SnQPoolIot");
             Guid g = Guid.NewGuid();
             var mqttClientId = Convert.ToString(g);             // Unique ClientId
-            var mqttBrokerAddress = configuration.GetValue<string>("Mqtt:mqttBrokerAddress");         // hostname or IP address of your MQTT broker
-            var mqttBrokerUsername = configuration.GetValue<string>("Mqtt:mqttBrokerUsername");       // Broker Auth username
+            var mqttBrokerAddress = configuration.GetValue<string>("Mqtt:mqttBrokerAddress");     // hostname or IP address of your MQTT broker
+            var mqttBrokerUsername = configuration.GetValue<string>("Mqtt:mqttBrokerUsername");  // Broker Auth username
             var mqttBrokerPassword = configuration.GetValue<string>("Mqtt:mqttPassword");       // Broker Auth password
-            var topic = configuration.GetValue<string>("Mqtt:mqttTopic") + specifiedTopic;                 // topic to subscribe to
+            var topic = configuration.GetValue<string>("Mqtt:mqttTopic") + specifiedTopic;      // topic to subscribe to
 
             var mqttClient = new MqttFactory().CreateManagedMqttClient();
             var mqttClientOptions = new ManagedMqttClientOptionsBuilder()
@@ -41,13 +41,12 @@ namespace SnQPoolIot.WebApi
                         .WithClientOptions(new MqttClientOptionsBuilder()
                             .WithTcpServer(mqttBrokerAddress, 1883)
                             .WithClientId(mqttClientId)
-                            .WithCredentials(mqttBrokerUsername, mqttBrokerPassword)     // Remove this line if no auth
+                            .WithCredentials(mqttBrokerUsername, mqttBrokerPassword)    
                             .WithCleanSession()
                             .Build()
                         )
                         .Build();
 
-            Console.WriteLine(mqttClient);
             mqttClient.ApplicationMessageReceivedHandler = new MqttApplicationMessageReceivedHandlerDelegate(e => MqttOnNewMessageAsync(e));
             mqttClient.ConnectedHandler = new MqttClientConnectedHandlerDelegate(e => MqttOnConnected(e));
             mqttClient.DisconnectedHandler = new MqttClientDisconnectedHandlerDelegate(e => MqttOnDisconnected(e));
@@ -71,7 +70,7 @@ namespace SnQPoolIot.WebApi
             
             entity.SensorId = GetSensorId(e);// Über Datenbank Id Laden oder wenn die Action instansiert wird Dictonary
             measurment.SensorId = entity.SensorId;
-            //measurment.SensorName = Name über Datanbank laden
+            measurment.SensorName = "";//Name über Datanbank laden
 
             for (int i = 0; i < datavalue.Length; i++)
             {
@@ -102,6 +101,7 @@ namespace SnQPoolIot.WebApi
         {
             LogWriter.Instance.LogWrite($"MQTT Client: Connected with result: {e.ConnectResult.ResultCode}");
         }
+
         private static void MqttOnDisconnected(MqttClientDisconnectedEventArgs e) => LogWriter.Instance.LogWrite($"MQTT Client: Broker connection lost with reason: {e.Reason}.");
         
         private static int GetSensorId(MqttApplicationMessageReceivedEventArgs e)

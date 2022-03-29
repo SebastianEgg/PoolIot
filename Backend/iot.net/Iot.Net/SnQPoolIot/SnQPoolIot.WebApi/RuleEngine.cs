@@ -51,11 +51,12 @@ namespace SnQPoolIot.WebApi
 
 
             foreach (var sensorName in Enum.GetNames(typeof(SensorName)))
-            {
-                
+            {             
                 MqttMeasurementDto sensor = new MqttMeasurementDto();
+                // Inserten der Sensoren, welche sich in der SensorBox befinden
                 var hasInserted = InsertSensors(sensorName);
                 Sensors.Add(sensorName.ToLower(), sensor);
+                // Startet das Einlesen der Messwerte
                 MqttActions.StartMqttClientAndRegisterObserverAsync($"{sensorName.ToLower()}/state").Wait();
             }
 

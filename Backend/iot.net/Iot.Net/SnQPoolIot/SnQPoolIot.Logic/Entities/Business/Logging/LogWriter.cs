@@ -29,10 +29,9 @@ namespace SnQPoolIot.Logic.Entities.Business.Logging
         {
 
         }
+        //Diese Methode bekommt eine Fehlermeldungen als Parameter mit und ruft die Methode Log auf.
         public void LogWrite(string logMessage)
         {
-            //   var directory = VisualStudioProvider.TryGetSolutionDirectoryInfo();
-            //m_exePath = directory.FullName;
             m_exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             try
             {

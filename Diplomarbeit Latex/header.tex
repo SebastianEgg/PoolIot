@@ -65,7 +65,8 @@
 
 \renewcommand{\lstlistlistingname}{List of Listings}
 % TODO: define other languages as needed
-\lstset{language=Python,
+\lstset{
+language=csh,
 numbers=left,               
 numberstyle=\tiny,          
 showspaces=false,
@@ -86,7 +87,27 @@ xleftmargin=17pt,
          framexbottommargin=4pt
 }
 \lstset{
-morekeywords={base,var,in,out,dynamic,from,where,select,orderby,function,\$,group,by,into,yield,async,await,@,None,self,as,elif,with}
+morekeywords=
+{abstract, event, new, struct,
+as, explicit, null, switch,
+base, extern, object, this,
+bool, false, operator, throw,
+break, finally, out, true,
+byte, fixed, override, try,
+case, float, params, typeof,
+catch, for, private, uint,
+char, foreach, protected, ulong,
+checked, goto, public, unchecked,
+class, if, readonly, unsafe,
+const, implicit, ref, ushort,
+continue, in, return, using,
+decimal, int, sbyte, virtual,
+default, interface, sealed, volatile,
+delegate, internal, short, void,
+do, is, sizeof, while,
+double, lock, stackalloc,
+else, long, static,
+enum, namespace, string}
 }
 \lstdefinelanguage{TypeScript}{
 	keywords={typeof, new, true, false, catch, function, return, null, switch, var, if, in, while, do, else, case, break, void, number, string, boolean, module, \$, export, for, this},
