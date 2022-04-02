@@ -2,6 +2,7 @@
 using System.Net;
 using System.IO;
 using Microsoft.Extensions.Configuration;
+using SnQPoolIot.Logic.Entities.Business.Logging;
 
 namespace SnQPoolIot.WebApi
 {
@@ -38,27 +39,25 @@ namespace SnQPoolIot.WebApi
                     string responseFromServer = reader.ReadToEnd();
                     if (responseFromServer.Contains("\"ok\":true"))
                     {
-                        Console.WriteLine("Message text was successfully sent to Telegram :-)");
+                        LogWriter.Instance.LogWrite("Message text was successfully sent to Telegram");
                     }
                     else
                     {
-                        Console.WriteLine("Failed to send the message text to Telegram :-(");
+                        LogWriter.Instance.LogWrite("Failed to send the message text to Telegram");
                     }
-                    Console.Write(Environment.NewLine);
-                    Console.WriteLine(responseFromServer);
+                    LogWriter.Instance.LogWrite(responseFromServer);
                 }
                 else
                 {
-                    Console.WriteLine("Failed to send the message text to Telegram :-(");
-                    Console.Write(Environment.NewLine);
-                    Console.WriteLine("Response status: " + responseStatus);
+                    LogWriter.Instance.LogWrite("Failed to send the message text to Telegram");
+                    LogWriter.Instance.LogWrite("Response status: " + responseStatus);
                 }
                 response.Close();
                 return true;
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Failed to send the message text to Telegram :-(");
+                LogWriter.Instance.LogWrite("Failed to send the message text to Telegram");
                 Console.Write(Environment.NewLine);
                 Console.WriteLine(ex.ToString());
 

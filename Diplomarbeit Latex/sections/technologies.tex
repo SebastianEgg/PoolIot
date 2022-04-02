@@ -7,7 +7,12 @@ Die Verbindung zwischen dem Raspberry und der SSD wird mit einem USB-Adapter her
 Die SSD wurde unter dem Raspberry mittels einer Platine und Schrauben befestigt. 
 Der Raspberry braucht mindestens 3 und maximal 11 Watt. 
 
-(Hier kommt noch ein Foto vom Raspi rein)
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{pics/Raspberry.JPG}
+    \caption{Raspberry Pi des Projektes}
+\end{figure}
 
 \subsection{Samba}
 Der Raspberry dient weiters als File-Server. Für eine leichtere Datenübertragung zwischen Windows und Linux wird mit Hilfe von Samba über den Windows Explorer direkt auf den Raspberry Pi zugegriffen.
@@ -33,7 +38,7 @@ Dieses wird direkt von Docker zur Verfügung gestellt und führt alle Schritte a
 Nach wenigen Minuten ist Docker betriebsbereit. 
 Weiters ist auch eine zentralisierte Servicebereitstellungsplattform für containerisierte Apps 
 mit dem Namen Portainer auf dem Raspberry Pi installiert, 
-welcher eine Liste aller Container und deren Informationen zur Verfügung stellt.
+welche eine Liste aller Container und deren Informationen zur Verfügung stellt.
  
 
 
@@ -45,7 +50,7 @@ Dabei muss die IP-Adresse des Raspberry's im Netzwerk bekannt sein. WLAN-Router 
 Im oberen Kapitel Remote Access ist oft das Wort Ip-Adresse gefallen, deswegen wird in diesem Unterpunkt eine kleine Einführung über Ip-Adressen und Ihre Verwendung gegeben. 
 Eine Ip-Adresse ist eine Adresse in Computernetzen, welche von einem Router vergeben wird.
  Einem Gerät kann maximal eine Ip-Adresse zugewiesen werden, jedoch kann die Ip-Adresse auch wechseln, wenn sich das Gerät zum Router erneut verbindet. 
- Im Router gibt es aber auch die Funktionalität, dass ein Gerät immer eine bestimmte Ip-Adresse zugewiesen bekommt. 
+ Im Router gibt es aber auch die Konfigurationsmöglichkeit, dass einem Gerät immer eine bestimmte Ip-Adresse zugewiesen wird. 
 
 
 
@@ -66,7 +71,7 @@ Durch das subscriben von den Clients werden diese, sobald eine neue Message an d
 
 \subsection {Verwendung von MQTT in unserem Projekt:}
 Unser Projekt besteht aus 2 MQTT-Clients und 1 MQTT-Broker. 
-Die Sensor Box ein MQTT-Client, welcher die Messwerte an den MQTT-Broker sendet. 
+Die Sensor Box ist ein MQTT-Client, welcher die Messwerte an den MQTT-Broker sendet. 
 Der MQTT-Broker ist im Projekt der Raspberry PI. 
 Zum Empfangen der Daten liest das Backend, welches den zweiten MQTT-Client darstellt, die Daten vom Raspberry ein.
 
@@ -102,27 +107,26 @@ Zur Benutzung und Verbindung mit dem Raspberry ist ein Login mit der Ip-Adresse 
 \setauthor{Sebastian Egger}
 
 
-
 \subsection{.Net Core und .Net Framework}
 
 In unserem Projekt verwenden wir .Net Core, eine alternative dazu wäre .NetFramework.
-Beides sind Frameworke, welche für die Erstellung serverseitiger Anwendungen verwendet werden. 
-.Net Core und .Net Framework haben manche funktionale Komponenten gemeinsam, und können Ihren Code auch über die beiden Plattformen hinweg gemeinsam nutzen.
+Beides sind Frameworks, welche für die Erstellung serverseitiger Anwendungen verwendet werden. 
+.Net Core und .Net Framework haben manche funktionale Komponenten gemeinsam und können Ihren Code auch über die beiden Plattformen hinweg gemeinsam nutzen.
 
-\subsubsection*{ Was versteht man unter .Net Framework und .Net Core}
-Bisher wurde .NetFramework genützt um .NET Desktop-Anwendungen als auch serverbasierte Anwendungen zu erstellen.
+\subsubsection*{ Was wird unter .Net Framework und .Net Core verstanden}
+Bisher wurde .NetFramework genützt um sowohl .NET Desktop-Anwendungen als auch serverbasierte Anwendungen zu erstellen.
 .NET Core wiederum dient der Erstellung von Serveranwendungen, die unter Windows, Linux und Mac laufen.
 Bei .NET Core handelt es sich in erster Linie um ein Open-Source-Framework mit Multiplattform-Unterstützung.
 
 
 \subsubsection*{.Net Framework Vorteile}
-Während .NET Core die Zukunft der Anwendungsentwicklung ist und das .NET Framework in der Zukunft ablösen wird, wird der Kater der jahrelangen traditionellen Verwendung von .NET Framework nicht so schnell vergehen!
+Während .NET Core die Zukunft der Anwendungsentwicklung ist und das .NET Framework in der Zukunft ablösen wird, wird die jahrelange Verwendung von .NET Framework nicht so schnell vergehen!
 Spricht man über .NET Framework vs. .NET Core im heutigen Kontext, so hat .NET Framework immer noch einige praktische .NET-Vorteile.
 
 .Net Core benötigt derzeit für unerfahrene Programmierer einen größeren Lernaufwand als bei .Net Framework. 
 Ein weiterer Vorteil gegenüber .Net Core ist die Wartung bestehender Anwendungen. 
 Nachdem .Net Framework sich seit Jahren im Einsatz befindet, wurden die meisten .Net Anwendungen mittels .Net Framework geschrieben. 
-Der letzte große Vorteil von .Net Framework ist die Stabilität der Platform. 
+Ein weiterer großer Vorteil von .Net Framework ist die Stabilität der Platform. 
 
 Microsoft hat verkündet, dass die aktuelle Version des Microsoft .NET Framework (Version 4.8) die letzte Version sein wird und es danach kein größeres .NET Framework-Update mehr geben wird.
 Das bedeutet die Entwicklung von .Net Framework schreitet nicht mehr voran, aber somit können auch keine durch Updates verursachten Bugs mehr entstehen.
@@ -130,23 +134,34 @@ Das bedeutet die Entwicklung von .Net Framework schreitet nicht mehr voran, aber
 \subsubsection*{.Net Core Vorteile}
 
 Wie bereits oben erwähnt ist .Net Core ein Open-Source-Framework, welches sich kontinuierlich durch offene Beiträge verbessert.
-Ein weiterer Vorteil ist die plattformübergreifende Kompatibilität, damit bei Verwendung eines Computers mit Linux oder macOS als Betriebssystem trotzdem Apps, welche unter Windows laufen verwendet werden können.
-Mit .Net Core entwickelten Apps wird Benutzern die Möglichkeit geboten diese Apps nicht nur unter Windows zu verwenden, sondern auch auf Linux oder macOS. Diese Flexibilität entfällt bei Entwicklungen mit .Net Framework.
+Ein weiterer Vorteil ist die plattformübergreifende Kompatibilität, damit bei Verwendung eines Computers mit Linux oder macOS als Betriebssystem trotzdem Apps, welche unter Windows laufen, verwendet werden können.
+Mit .Net Core entwickelten Apps wird Benutzern die Möglichkeit geboten, diese Apps nicht nur unter Windows zu verwenden, sondern auch auf Linux oder macOS. Diese Flexibilität entfällt bei Entwicklungen mit .Net Framework.
 
 Es gibt natürlich noch einige weitere Vorteil von .Net Core, die hier nicht erwähnt wurden.
 
+\subsection{Visual Studio Code}
+Visual Studio Code ist ein Code Editor mit vielen Funktionen.
+Wie bereits im Kapitel .Net angesprochen, gibt es sehr viele Extensions
+in diesem Editor, welche zum Beispiel eine Visualisierung von Inhalten einer Sqlite Datenbank
+ermöglicht oder als Latex Editor genutzt werden kann.
+
+\subsection{Visual Studio}
+Visual Studio ist ein Code Editor, welcher von Microsoft entwickelt wurde, um eine
+benutzerfreundliche Programmierumgebung anzubieten. Seit 2008 wird jedes 
+zweite Jahr ein neues Visual Studio mit mehr Funktionen, welche dem Benutzer 
+beim Programmieren das Leben vereinfachen, veröffentlicht. 
 
 \subsubsection*{Was ist Swagger und Verwendung von Swagger in unserem Projekt}
 
 Swagger ist eine Sammlung von Open-Source-Werkzeugen, um HTTP-Webservices (auch HTTP API oder REST-like API) zu entwerfen, zu erstellen, 
 zu dokumentieren und zu nutzen.
-In diesem Projekt wurde Swagger verwendet um die API zu beschrieben und zu testen.
+In diesem Projekt wurde Swagger verwendet, um die API zu beschreiben und zu testen.
 Swagger bietet nicht nur die Zusammenarbeit mit C\# an sondern auch mit anderen Programmiersprachen wie zum Beispiel
-JAVA, JavaScript, Groovy und andere Programmiersprachen an. 
+JAVA, JavaScript, Groovy und noch weitere Programmiersprachen, die hier nicht explizit erwähnt werden. 
 
-\subsubsection*{Wie bindet man einen Swagger in C\# ein}
+\subsubsection*{Wie wird ein Swagger in C\# eingebunden}
 In C\# kann man Swagger durch ein NuggetPackage Namens Swashbuckle.AspNetCore verwenden.
-Durch dieses NuggetPackage kann ein Swagger nun in eine WebApi, wie im nachfolgenden Abbildung implementiert werden:
+Durch dieses NuggetPackage kann ein Swagger nun in eine WebApi, wie in nachfolgender Abbildung implementiert werden:
 
 
 \begin{figure}[H]
@@ -162,7 +177,7 @@ Die im Projekt verwendete Implementation wird im Unterkapitel Verwendung von Swa
 \subsection {DotNet 5 vs DotNet 6}
 
 Die Entwicklung der Diplomarbeit startete schon mit Sommerbeginn 2021 und .Net6 wurde erst im November 2021 released. 
-Aufgrund der schon vorhandenen Kentnisse in .Net5 und der im .Net6 bei Standardkonfiguration nicht vorhandenen Methoden/Usings Unterstützung (siehe nachfolgende Abbildungen)
+Aufgrund der schon vorhandenen Kentnisse in .Net5 und der im .Net6 bei Standardkonfiguration nicht vorhandenen Methoden / Usings Unterstützung (siehe nachfolgende Abbildungen)
 wurde beschlossen, währen der Umsetzung nicht die Entwicklungsumgebung zu ändern.
 
 Eine Migration von .Net5 auf .Net6 umfasst in der Regel dann das Umstellen aller Paketversionen auf die neueste .NetVersion.
@@ -217,7 +232,7 @@ welche das Innenleben einer SQLite Datenbank veranschaulicht.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{./pics/SQLiteDatabaseStructure.JPG}
-    \caption{Innenleben unserer SQLite Datenbank}
+    \caption{Innenleben der SQLite Datenbank}
 \end{figure}
 
 
@@ -225,7 +240,7 @@ welche das Innenleben einer SQLite Datenbank veranschaulicht.
 \subsubsection*{Asynchrone Programmierung und Implementierung in C\#}
 Es sollte wenn möglich immer asynchron programmiert werden, weil es Zeit spart, denn Prozesse können dadurch parallel ausgeführt werden.
 Somit muss ein Prozess nicht mehr auf einen anderen Prozess warten.
-Ein kleines Beispiel hierfür wäre ein Frühstück, denn man wartet ja nicht bis zum Beispiel das Toastbrot fertig ist, um sich danach erst den Kaffee zu machen, dieses Tun sollte parallel möglich sein.
+Ein kleines Beispiel hierfür wäre ein Frühstück, denn eine Person muss eben nicht warten bis das Toastbrot fertig ist, um sich danach erst den Kaffee zu machen, dieses Tun sollte parallel möglich sein.
 
 In C\# gibt es die Keywörter async und await. Wenn eine Methode asynchron aufgerufen werden soll, muss die Methode im Methodenkopf als Kennung async aufweisen und einen Task als return Wert festlegen.
 Um diese Methode danach aufrufen zu können, muss await vor dem Methodennamen verwendet werden.
@@ -253,24 +268,43 @@ Nun erkennt C\# das es sich um eine partial Class handelt und somit können nun 
 \end{figure}
 
 
-Begriffserklärungen:
+\section{Telegram}
+\setauthor{Sebastian Egger}
+Telegram ist ein Messaging-Dienst wie WhatsApp, welcher auf Smartphones und Computer vorzufinden ist.
+In diesem Projekt wird Telegram auch zum Versenden und Empfangen von Messages verwendet, jedoch über einen sogenannten Bot.
+Telegram hat ein eigenes Botnetzwerk, wodurch Messages über das Internet gesendet werden können.
+Um einen Bot für solche Zwecke erzeugen zu können, muss bei dem sogenannten BotFather ein Bot erzeugt werden.
 
-/subsection{C\#}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{./pics/BotFather.JPG}
+    \caption{Erzeugen eines Bots über den BotFather}
+\end{figure}
 
+Sobald der BotFather gestartet wurde, kann über den Befehl /newbot ein neuer Bot erzeugt 
+werden, indem eine Person dem Bot einen Namen und einen nicht existenten Usernamen,der mit bot endet, zuweist.
+Wenn dieser Vorgang durchgeführt wurde, kann auf den Bot über HTTP Requests zugegriffen werden.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{./pics/TelegramBotCreatedToken.png}
+    \caption{Beispiel eines Tokens der zum Zugriff auf die API benötigt wird.}
+\end{figure}
+
+Durch diesen Token kann über das Internet Messages gesendet werden oder auch die ChatId, welche
+eine große Rolle im Backend des Projektes spielt, herausfinden. Der Befehl um die ChatId zu erlangen lautet:
+
+https://api.telegram.org/bot(Token)/getMe 
+\\danach kann eine Message über den Befehl \\
+https://api.telegram.org/bot(Token)/sendMessage?chat\_id=(chatId)\&text=\"Text\" ddddddd 
+\\gesendet werden.
+
+\section{Begriffserklärungen}
+
+\subsection{C\#}
 C\# ist eine objektorentierte Programmiersprache, welche von Microsoft entwickelt
 wurde
 
-/subscriben{ARM}
+\subsection{ARM}
 ARM stand für Acorn RISC Machines, später für Advanced RISC Machines 
-und ist einer der meistverbreitesten Mikroprozessoren.
-
-
-
-Quellen:
-https://chudovo.de/difference-between-net-core-and-net-framework/
-
-https://www.oracle.com/at/database/what-is-database/
-
-%https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/partial-classes-and-methods#:~:text=The\%20partial\%20keyword\%20indicates\%20that,\%2C\%20private\%20\%2C\%20and\%20so\%20on.
-
-%https://de.wikipedia.org/wiki/Arm-Architektur#:~:text=ARM%20stand%20f%C3%BCr%20Acorn%20RISC,weltweit%20zu%20den%20meistverbreiteten%20Mikroprozessoren.
+und ist einer der meistverbreiteten Mikroprozessoren.

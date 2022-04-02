@@ -3,22 +3,39 @@
 
 
 \section{Projektmanagement}
-Unser Projekt ist Hybrid entwickelt worden. Ein Projektentwicklungskonzept, welches in der Diplomarbeit verwendet wurde, ist Scrum.
+Das Projekt ist im Softwarebereich mittels Scrum und im Hardwarebereich mittels einer hybriden Projektentwicklung entwickelt worden.
 
 \subsection{Scrum}
 Scrum ist ein agiles Vorgehensmodell für Projektmanagement
-und kommt zum Einsatz wenn, viele Entwicklungsprojekte zu komplex sind, um sie in einen vollumfassenden Plan zu fassen.
+und kommt zum Einsatz wenn viele Entwicklungsprojekte zu komplex sind, um sie in einen vollumfassenden Plan zu fassen.
 Aus diesem Grund ist ein wesentlicher Teil der Anforderungen und Lösungen zu Beginn unklar. 
 Diese werden schrittweise erarbeitet, indem Zwischenergebnisse geschaffen werden.
 Durch Scrum wird die Projektlaufzeit in Etappen, so genannte Sprints, eingeteilt und
 am Ende jedes Sprints soll jeweils ein funktionsfähiges Zwischenprodukt stehen.
-Die Einteilung wie lange ein Sprint dauert wird Intern geregelt.
+Die Einteilung wie lange ein Sprint dauert wird intern geregelt.
 In diesem Projekt war die Dauer eines Sprintes einen Monat lang.
 
+\subsection{Hybride Projektentwicklung}
+Hybride Projektentwicklung wird meist im Hardwarebereich verwendet.
+Es ermöglicht eine schnellere Produktion von Hardwareteilen.
+In diesem Projekt ist es bei dem Zusammenbau für den Rasbperray verwendet
+und für die Produktion einer Schwimmboje vorgesehen worden.
+
+
+
 \subsection{Zusätzliche Vereinbarungen der Diplomarbeit}
-Zusätlich zu den Projektentwicklungskonzepten wurde jede zweite Woche ein Projektbericht veröffentlicht um die Diplomarbeitsbetreuer auf dem Laufenden zu halten.
+Zusätlich zu den Projektentwicklungskonzepten wurde jede zweite Woche ein Projektbericht veröffentlicht, um die Diplomarbeitsbetreuer auf dem Laufenden zu halten.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{pics/AusschnittProjektberichte.png}
+    \caption{Ausschnitt aus den Projektberichten}
+\end{figure}
+
+
 In den Projektberichten sind die fertigen Meilensteine und die  Meilensteine an denen gearbeitet wurde, mittels einer Projektampel veranschaulicht.
 Eine Projektampel sagt aus, ob sich ein Projekt in Gefahr, in Verzug oder im grünen Bereich befindet.
+
 
 \begin{figure}[H]
     \centering
@@ -29,7 +46,10 @@ Eine Projektampel sagt aus, ob sich ein Projekt in Gefahr, in Verzug oder im gr�
 \section{Backend Projekt-Überblick}
 \setauthor{Sebastian Egger}
 
-Das Backend setzt sich aus 9 Projekten zusammen, welche in C\# .Net 5 entwickelt wurden.
+Das Backend setzt sich aus 9 Projekten zusammen, welches mithilfe des von Herrn DI Professor Gerhard Gehrer zur Verfügung gestellten Frameworkes SmartNQuick entwickelt wurde.
+Das Backend wurde in der Sprache C\# in .Net 5 programmiert und als Code Editor wurde
+Visual Studio 2019 und 2022 verwendet.
+ 
 
 
 \begin{figure}[H]
@@ -74,7 +94,7 @@ Der Zugriff auf die Logic kann dadurch entweder direkt erfolgen oder per Rest ü
     \\
     SnQPoolIot.Logic ist das Kernstück des Projektes. 
     Durch die Logic können alle Daten aus der Datenbank verwendet werden. 
-    Die Logik verbindet sich mit einer Sqlite Datenbank. Der Zugriff und das Erzeugen der Datenbank wird mittels Entityframework.Sqlite durchgeführt.
+    Die Logic verbindet sich mit einer Sqlite Datenbank. Der Zugriff und das Erzeugen der Datenbank wird mittels Entityframework.Sqlite durchgeführt.
 \end{itemize}
 
 \begin{itemize}
@@ -128,12 +148,12 @@ und einem DBContext, welcher die Configuration der Datenbank mit sich bringt, au
     \caption{DBContext zum Erzeugen einer Datenbank}
 \end{figure}
 
-Nun zu den Datenbank Zugriffen. Damit auf die Messwerte zugegriffen werden kann muss sich ein User zuerst authentifizieren.
+Nun zu den Datenbank Zugriffen. Um auf die Messwerte zugreifen zu können, muss sich ein User zuerst authentifizieren.
 Damit sich eine User authentifizieren kann benötigt er einen Account mit E-Mail und Passwort, welche in der Datenbank gespeichert sind.
 Für die Authentifizierung werden die nachstehenden Tabellen benötigt:
 
 \begin{itemize}
-    \item Identity
+    \item Identity\\
     In dieser Tabelle befinden sich alle User-Accounts mit E-Mail gehastem Passwort.
 
     \begin{figure}[H]
@@ -146,8 +166,8 @@ Für die Authentifizierung werden die nachstehenden Tabellen benötigt:
 
 
 \begin{itemize}
-    \item Role
-    In dieser Tabelle sind alle Rollen die es gibt vorzufinden.
+    \item Role\\
+    In dieser Tabelle sind alle Rollen, die es gibt, vorzufinden.
 
     \begin{figure}[H]
         \centering
@@ -158,8 +178,8 @@ Für die Authentifizierung werden die nachstehenden Tabellen benötigt:
 \end{itemize}
 
 \begin{itemize}
-    \item IdentityXRole
-    Diese Tabelle weißt einem Benutzer eine Rolle zu.
+    \item IdentityXRole\\
+    Diese Tabelle weist einem Benutzer eine Rolle zu.
     \begin{figure}[H]
         \centering
         \includegraphics[width=1\textwidth]{pics/IdentityXRoleStructure.JPG}
@@ -169,8 +189,8 @@ Für die Authentifizierung werden die nachstehenden Tabellen benötigt:
 
 
 \begin{itemize}
-    \item LogginSession
-    Diese Tabelle zeigt alle Logins mit dem dazugehörigen User und den SessionToken mit dem sich der User eingeloggt hat an.
+    \item LogginSession\\
+    Diese Tabelle zeigt alle Logins mit dem dazugehörigen User und dem SessionToken, mit dem sich der User eingeloggt hat, an.
     \begin{figure}[H]
         \centering
         \includegraphics[width=1\textwidth]{pics/LoginSessionStructure.JPG}
@@ -178,12 +198,11 @@ Für die Authentifizierung werden die nachstehenden Tabellen benötigt:
     \end{figure}
 \end{itemize}
 
-Sobald sich ein User authentifitiert hat wurde zugleich eine neue Session erstellt und wenn die Rechte vom
-dem authentifizierten User hochgenug sind kann er sich nun die Messwerte ansehen.
-Die nachstehenden Tabellen dienen zum Erfassen von den Messwerten:
+Sobald sich ein User authentifiziert hat, wurde zugleich eine neue Session erstellt. Nur bei ausreichender Berechtigung des authentifizierten Benutzers kann dieser sich nun die Messwerte ansehen.
+Die nachstehenden Tabellen dienen zum Erfassen der Messwerte:
 
 \begin{itemize}
-    \item Sensor
+    \item Sensor\\
     Diese Tabelle beinhaltet den Namen eines Sensors.
     \begin{figure}[H]
         \centering
@@ -193,8 +212,8 @@ Die nachstehenden Tabellen dienen zum Erfassen von den Messwerten:
 \end{itemize}
 
 \begin{itemize}
-    \item Sensor
-    Diese Tabelle beinhaltet die Messwerte aller Sensoren und beinhaltet welcher Messwert zu welchen Sensor gehört.
+    \item SensorData\\
+    Diese Tabelle beinhaltet die Messwerte aller Sensoren und jeder Messwert ist einem Sensor zugeordnet.
     \begin{figure}[H]
         \centering
         \includegraphics[width=1\textwidth]{pics/SensorDataTableStructure.JPG}
@@ -204,9 +223,9 @@ Die nachstehenden Tabellen dienen zum Erfassen von den Messwerten:
 
 
 \subsubsection{Logging in unserem Projekt}
-Um Fehlermeldungen im Projekt zu speichern, wurde eine Klasse mit dem Namen LogWriter programmiert.
-Diese Fehlermeldungen werden in einer .txt gespeichert und können jeder Zeit gelesen werden.
-Im nachstehenden Code ist die LogWriter Klasse zu sehen:
+Um Fehlermeldungen oder Warnungen im Projekt zu speichern, wurde eine Klasse mit dem Namen LogWriter programmiert.
+Diese Meldeungen werden in einer .txt gespeichert und können jederzeit gelesen werden.
+\\Im nachstehenden Code ist die LogWriter Klasse zu sehen:
 \\
 \begin{lstlisting}
 using System;
@@ -270,8 +289,10 @@ namespace SnQPoolIot.Logic.Entities.Business.Logging
 }
 \end{lstlisting}
 
-Die Methode LogWrite bekommt eine Fehlermeldungen als Parameter mit 
-und ruft die Methode Log auf, welche wiederum die Fehlermeldungen in eine .txt Datei speichert.
+Der Methode LogWrite wird durch einen Übergabeparameter die auszugebende Fehlermeldungen übergeben. Nach Ermittlung der Datei wird durch Aufruf der Methode Log 
+die Fehlermeldung inklusive Zeitstempel in der Datei gespeichert.
+\\
+\\
 
 \subsection{SnQPoolIot.WebApi}
 
@@ -280,7 +301,7 @@ und ruft die Methode Log auf, welche wiederum die Fehlermeldungen in eine .txt D
 HTTP ausgeschrieben Hypertext Transfer Protocoll wird zum Laden von Webseiten im Projekt verwendet.
 Die verwendeten HTTP-Requests und das dazugehörige Routing ist im Projekt SnQPoolIot.WebApi implementiert.
 
-Hier ein Ausschnitt von dem Aufbau der WebApi:
+Im Folgenden ist ein Ausschnitt des Aufbaus der WebApi dargestellt:
 
 \begin{figure}[H]
     \centering
@@ -289,7 +310,7 @@ Hier ein Ausschnitt von dem Aufbau der WebApi:
 \end{figure}
 
 
-Das Routing der Websiten wird über die Controller gemanaged. 
+Das Routing der Websiten wird über die Controller gehandelt. 
 Der meist genützte Controller in diesem Projekt ist der GenericController, denn er bietet allen abgeleiteten Controllern seine bereitgestellten Funktionen zur Verwendung an.
 
 \begin{figure}[H]
@@ -299,9 +320,10 @@ Der meist genützte Controller in diesem Projekt ist der GenericController, denn
 \end{figure}
 
 Wie am Beispiel des Codeauszuges zu sehen, beinhaltet der Generic Controller einige Methoden.
-Für die Ermittlung der Daten wird zum Beispiel eine Get-Methode "GetAllAsync" eingesetzt.
-Die Codezeile [HttpGet("/api/[controller]")] drückt aus, dass es sich bei dieser Methode um eine Get-Methode handelt und veranschaulicht auch das Routing der WebApi.
-All jene Methoden, die im GenericController definiert sind stehen demnach allen von ihm abgeleiteten Controllern zur Verfügung und können direkt verwendet werden.
+\\Für die Ermittlung der Daten wird zum Beispiel eine Get-Methode \""GetAllAsync\""  eingesetzt.
+\\Die Codezeile [HttpGet(\""/api/[controller]\"")] drückt aus, dass es sich bei dieser Methode um eine Get-Methode handelt 
+und veranschaulicht auch das Routing der WebApi.
+\\All jene Methoden, die im GenericController definiert sind, stehen demnach allen von ihm abgeleiteten Controllern zur Verfügung und können direkt verwendet werden.
 
 Im nachstehenden Beispiel wird eine Ableitung vom GenericController dargestellt.
 
@@ -386,7 +408,7 @@ Mit Hilfe von Swagger wurden die in den nachstehenden Grafiken ersichtlichen HTT
 \end{figure}
 
 \subsubsection{Implementierung von MQTT in unserem Projekt}
-Das Einlesen und Überprüfen von den Messwerten soll stadtfinden, sobald die WebApi läuft.
+Das Einlesen und Überprüfen von den Messwerten soll stattfinden, sobald die WebApi läuft.
 Aus diesem Grund wird die RuleEngine, 
 welche den Aufruf für das Einlesen und Überprüfen der Messwerte beinhaltet, instanziert, welche gleichzeitig wie die WebApi startet.
 
@@ -402,7 +424,7 @@ welche den Aufruf für das Einlesen und Überprüfen der Messwerte beinhaltet, i
     \caption{Instanzieren der RuleEngine und der Sensoren zum Einlesen der Messwerte}
 \end{figure}
 
-Die einelnen Sensoren, welche in der obigen Abbildung in die Datenbank gespeichert werden
+Die einelnen Sensoren, welche in der obigen Abbildung in die Datenbank gespeichert werden,
 befinden sich in dem nachstehenden enum:
 
 \begin{figure}[H]
@@ -414,18 +436,19 @@ befinden sich in dem nachstehenden enum:
 Auf diese Sensoren wird nun die Methode StartMqttClientAndRegisterObserverAsync angewendet,
 welche in den nachstehenden Abbildungen und Texten beschrieben wird:
 
-Damit ein Wert von einem Topic bekommen kann, muss auf diese Topic scubscried werden.
-In C\# gibt es eigene NuggetPackages zum Subscriben. Nachdem die NuggetPackages installiert worden sind,
+Damit das Backend einen Wert von einem Topic bekommen kann, muss auf dieses Topic scubscribed werden.
+In C\# gibt es eigene NuggetPackages zum Subscriben. \\
+Nachdem die NuggetPackages installiert worden sind,
 kann nun ein MQTT Client mittels einer MQTTFactory erzeugt werden. Damit der MQTT Client auf den richtigen
-Broker subscriben kann, muss er sogenannte MQTTClientOpions, mittels eines MQTTClientOpionsBuilder, mitsich zugewisen bekommen.
-Zu diesen MQTTClientOpions zählt die ClientId, die Adresse, der Username und das Passwort des Brokers, sowie
+Broker subscriben kann, muss er sogenannte MQTTClientOpions, mittels eines MQTTClientOpionsBuilder, auf sich zugewiesen bekommen.
+\\Zu diesen MQTTClientOpions zählt die ClientId, die Adresse, der Username und das Passwort des Brokers, sowie
 der Port auf dem der Broker läuft.
 \begin{figure}[H]
     \centering
     \includegraphics[width=1.3\textwidth]{pics/StartMqttClientConnections.JPG}  
     \caption{MQTT Client Konfiguration}
 \end{figure}
-Sobald die Konfiguration eingetragen wurde, wird dem MQTT Client nun gesagt was er zu tuen hat, 
+Sobald die Konfiguration eingetragen wurde, wird dem MQTT Client nun mitgeteilt, was zu tun ist, 
 wenn sich der MQTT Client connected, disconnected oder eine Nachricht bekommt.
 
 \begin{figure}[H]
@@ -443,7 +466,60 @@ Wenn sich ein MQTT Client connected oder disconnected, wird dies
     \caption{MQTT Cient HandlerDelegate, Subscriben und Starten}
 \end{figure}
 
+Auch beim Empfangen einer neuen Message wird dies durch die Logging Klasse mitgeloggt,
+ jedoch ist dies nicht die Hauptfunktion der Methode MqttOneNewMessage, sondern 
+ das Speichern (Inserten) von Messwerten in die Datenbank.
+
+ \begin{figure}[H]
+    \centering
+    \includegraphics[width=1.1\textwidth]{pics/StartMqttClientMqttOnNewMessageAsync.JPG}  
+    \caption{MQTT Cient beim Empfangen eines neuen Messwertes}
+\end{figure}
+
+Sobald ein Messwert in der Datenbank hinzugefügt wurde, wird die RuleEngine alarmiert,
+welche wiederum eine Überprüfung des Messwertes durchführt. Ein gutes Beispiel hierfür ist die
+Methode CheckNoiceSensorData, welche überprüft, ob der gemessene Wert über 300 db hat.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.1\textwidth]{pics/CheckNoiceData.JPG}  
+    \caption{Kontrollieren eines Messwertes von dem Noicesensor}
+\end{figure}
+
+Sobald die Methode CheckNoiceSensorData ausgeführt wurde und der gemessene Wert über 300 db liegt,
+wird der Benutzer über Telegram verständigt. Aus diesem Grund wurde die Klasse MessageNotification, 
+welche die Methode SendMessageByTelegram beinhaltet, geschrieben. Wie der Name SendMessageByTelegram
+schon sagt, wird in dieser Methode eine Message mittels Telegram über einen Bot versendet.
+Für diesen Vorgang wird der Token, welcher für den Zugriff der HTTP API zuständig ist, und die ChatId benötigt.
+Diese sind in einem appsettings.json File gespeichert und werden über die Variable configuration eingelesen.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.1\textwidth]{pics/MessageTelegramConfiguration.JPG}  
+    \caption{Configuration Daten für das Senden der Benachrichtigung}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{pics/MessageTelegramUsage.JPG}  
+    \caption{Verwendung von der Configuration}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{pics/MessagesÜberSendByTelegram.JPG}  
+    \caption{Veranschaulichung von gesendeten Benachrichtigungen}
+\end{figure}
+
+
 \subsection{SnQPoolIot.AspMvc}
 
-Quellen: 
-% https://www.factro.de/blog/projektmanagement-methoden/#scrum
+Für das Veranschaulichen von Sensoren und gemessenen SensorDaten wurde eine AspMvc-Anwendung programmiert.
+
+Eine Ansicht über aktuelle Sensoren wird folgendermaßen angezeigt:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{pics/SensorenInDerAspMvcAnwendung.JPG}  
+    \caption{Veranschaulichung von den Sensoren in der AspMvc Anwendung}
+\end{figure}

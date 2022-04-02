@@ -89,12 +89,12 @@ namespace SnQPoolIot.WebApi
             var result = 0;
             if (sensorValue == null)
             {
-                LogWriter.Instance.LogWrite($"The Sensor is null!");
+                LogWriter.Instance.LogWrite($"The SensorValue is null!");
                 return -1;
             }
             else if (sensorValue > 300)
             {
-                MessageNotification.SendMessageByTelegram("Achtung es wurden zu Laute Messwerte gemessen bitte schauen Sie noch warum es sich handelt");
+                MessageNotification.SendMessageByTelegram("Achtung es wurden zu Laute Messwerte gemessen bitte schauen Sie nach worum es sich handelt!");
             }
 
             return result;

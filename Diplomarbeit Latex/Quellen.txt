@@ -1,0 +1,9 @@
+https://chudovo.de/difference-between-net-core-and-net-framework/
+
+https://www.oracle.com/at/database/what-is-database/
+
+%https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/partial-classes-and-methods#:~:text=The\%20partial\%20keyword\%20indicates\%20that,\%2C\%20private\%20\%2C\%20and\%20so\%20on.
+
+%https://de.wikipedia.org/wiki/Arm-Architektur#:~:text=ARM%20stand%20f%C3%BCr%20Acorn%20RISC,weltweit%20zu%20den%20meistverbreiteten%20Mikroprozessoren.
+
+% https://www.factro.de/blog/projektmanagement-methoden/#scrum

@@ -21,8 +21,10 @@ namespace SnQPoolIot.WebApi
     public class MqttActions
     {
         public event EventHandler<MqttMeasurementDto> OnMqttMessageReceived;
+        public string currentTopic = "";
         public async Task<Task<int>> StartMqttClientAndRegisterObserverAsync(string specifiedTopic)
         {
+            currentTopic = specifiedTopic;
             var configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.Development.json")
                 .Build();
@@ -41,7 +43,7 @@ namespace SnQPoolIot.WebApi
                         .WithClientOptions(new MqttClientOptionsBuilder()
                             .WithTcpServer(mqttBrokerAddress, 1883)
                             .WithClientId(mqttClientId)
-                            .WithCredentials(mqttBrokerUsername, mqttBrokerPassword)    
+                            .WithCredentials(mqttBrokerUsername, mqttBrokerPassword)
                             .WithCleanSession()
                             .Build()
                         )
@@ -57,20 +59,20 @@ namespace SnQPoolIot.WebApi
             return Task.FromResult(0);
         }
 
-        private  async Task MqttOnNewMessageAsync(MqttApplicationMessageReceivedEventArgs e)
+        private async Task MqttOnNewMessageAsync(MqttApplicationMessageReceivedEventArgs e)
         {
 
-            
+
             var mqttPayLoadData = Encoding.UTF8.GetString(e.ApplicationMessage.Payload);
             string[] datavalue = mqttPayLoadData.Split(new char[] { ':', ',', '{', '}' });
 
             using var ctrl = Factory.Create<SnQPoolIot.Contracts.Persistence.PoolIot.ISensorData>();
             var entity = await ctrl.CreateAsync();
             var measurment = new MqttMeasurementDto();
-            
-            entity.SensorId = GetSensorId(e);// Über Datenbank Id Laden oder wenn die Action instansiert wird Dictonary
+
+            entity.SensorId = GetSensorId(e);
             measurment.SensorId = entity.SensorId;
-            measurment.SensorName = "";//Name über Datanbank laden
+            measurment.SensorName = currentTopic;
 
             for (int i = 0; i < datavalue.Length; i++)
             {
@@ -80,10 +82,9 @@ namespace SnQPoolIot.WebApi
                     measurment.Timestamp = DateTime.Now;
                 }
                 else if (i == 4)
-                {                   
+                {
                     entity.Value = datavalue[i].Trim();
                     measurment.Value = entity.Value;
-                    MessageNotification.SendMessageByTelegram(entity.Value);
                 }
             }
 
@@ -102,8 +103,11 @@ namespace SnQPoolIot.WebApi
             LogWriter.Instance.LogWrite($"MQTT Client: Connected with result: {e.ConnectResult.ResultCode}");
         }
 
-        private static void MqttOnDisconnected(MqttClientDisconnectedEventArgs e) => LogWriter.Instance.LogWrite($"MQTT Client: Broker connection lost with reason: {e.Reason}.");
-        
+        private static void MqttOnDisconnected(MqttClientDisconnectedEventArgs e)
+        {
+            LogWriter.Instance.LogWrite($"MQTT Client: Broker connection lost with reason: {e.Reason}.");
+        }
+
         private static int GetSensorId(MqttApplicationMessageReceivedEventArgs e)
         {
             var configuration = new ConfigurationBuilder()
@@ -139,11 +143,11 @@ namespace SnQPoolIot.WebApi
             }
             return -1;
         }
-        private static void CallRuleEngine(int id, int value)
+        private  void CallRuleEngine(int value)
         {
-            if(id == 4)
+            if (currentTopic == "noise/state")
             {
-              RuleEngine.CheckNoiceSensorData(value);
+                RuleEngine.CheckNoiceSensorData(value);
             }
         }
     }
