@@ -49,28 +49,35 @@ namespace SnQPoolIot.WebApi
 
             MqttActions.OnMqttMessageReceived += MqttActions_OnMqttMessageReceived;
 
-
+            /*
             foreach (var sensorName in Enum.GetNames(typeof(SensorName)))
             {             
                 MqttMeasurementDto sensor = new MqttMeasurementDto();
                 // Inserten der Sensoren, welche sich in der SensorBox befinden
-                var hasInserted = InsertSensors(sensorName);
+                //var hasInserted = InsertSensors(sensorName);
                 Sensors.Add(sensorName.ToLower(), sensor);
                 // Startet das Einlesen der Messwerte
                 MqttActions.StartMqttClientAndRegisterObserverAsync($"{sensorName.ToLower()}/state").Wait();
-            }
-
+            }*/
+            MqttMeasurementDto sensor = new MqttMeasurementDto();
+            Sensors.Add("Noise".ToLower(), sensor);
+            MqttActions.StartMqttClientAndRegisterObserverAsync($"{"Noise".ToLower()}/state").Wait();
         }
 
         private void MqttActions_OnMqttMessageReceived(object sender, DataTransferObjects.MqttMeasurementDto measurmentDto)
         {
-            var sensor = Sensors[measurmentDto.SensorName];
+            var sensorNameFromDto = measurmentDto.SensorName.Split(new char[] { '"', '/'});
+
+            var sensor = Sensors[sensorNameFromDto[0]];
             if(sensor != null)
             {
                 Sensors[measurmentDto.SensorName] = measurmentDto;
-                if(measurmentDto.SensorName == SensorName.Noise.ToString().ToLower())
+                if(sensorNameFromDto[0] == SensorName.Noise.ToString().ToLower())
                 {
-                    CheckNoiceSensorData(int.Parse(measurmentDto.Value));
+                    string value = measurmentDto.Value;
+                    value = value.Replace(".", ",");
+                    double? intval = Convert.ToDouble(value);
+                    CheckNoiceSensorData(intval);
                 }
                 else
                 {
@@ -84,7 +91,7 @@ namespace SnQPoolIot.WebApi
 
         }
 
-        public static int CheckNoiceSensorData(int? sensorValue)
+        public static int CheckNoiceSensorData(double? sensorValue)
         {
             var result = 0;
             if (sensorValue == null)

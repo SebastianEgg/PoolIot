@@ -91,6 +91,15 @@ namespace SnQPoolIot.WebApi.Controllers
 
 			return result.Select(e => ToModel(e));
 		}
+		/*
+		public async Task<IEnumerable<M>> GetAllAsyncInFiles()
+		{
+			using var ctrl = Logic.Factory.Create<I>();
+			var result = await ctrl.GetAllAsync().ConfigureAwait(false);
+
+			return result.Select(e => ToModel(e));
+		}
+		*/
 		/// <summary>
 		/// Dieser Request übermittelt uns die Tabellenspalten der dazugehörigen Tabelle, welche das Suchkriterium erfüllen
 		/// </summary>

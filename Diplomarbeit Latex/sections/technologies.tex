@@ -6,7 +6,7 @@ Der Raspberry Pi hat 4 Gigabyte RAM und eine 32 Gigabyte SSD.
 Die Verbindung zwischen dem Raspberry und der SSD wird mit einem USB-Adapter hergestellt. 
 Die SSD wurde unter dem Raspberry mittels einer Platine und Schrauben befestigt. 
 Der Raspberry braucht mindestens 3 und maximal 11 Watt. 
-
+\cite{RASPPI}
 
 \begin{figure}[H]
     \centering
@@ -50,7 +50,7 @@ Dabei muss die IP-Adresse des Raspberry's im Netzwerk bekannt sein. WLAN-Router 
 Im oberen Kapitel Remote Access ist oft das Wort Ip-Adresse gefallen, deswegen wird in diesem Unterpunkt eine kleine Einführung über Ip-Adressen und Ihre Verwendung gegeben. 
 Eine Ip-Adresse ist eine Adresse in Computernetzen, welche von einem Router vergeben wird.
  Einem Gerät kann maximal eine Ip-Adresse zugewiesen werden, jedoch kann die Ip-Adresse auch wechseln, wenn sich das Gerät zum Router erneut verbindet. 
- Im Router gibt es aber auch die Konfigurationsmöglichkeit, dass einem Gerät immer eine bestimmte Ip-Adresse zugewiesen wird. 
+ Im Router gibt es aber auch die Konfigurationsmöglichkeit, dass einem Gerät immer eine bestimmte Ip-Adresse zugewiesen wird.  \cite{RaSPPIInternetZugriff}
 
 
 
@@ -68,6 +68,7 @@ Ein Topic ist ein Bereich, wo bestimmte Nachrichten aufgelistet werden.
 Ein Topic in unserem Fall lautet mqtt/noice für den Noice-Sensor.  
 Wenn ein oder mehrere MQTT-Clients diese Nachricht empfangen wollen, dann subscriben diese auf das Topic. 
 Durch das subscriben von den Clients werden diese, sobald eine neue Message an das Topic gesendet wurde, benachrichtigt und können diese nun empfangen. 
+\cite{MQTT}
 
 \subsection {Verwendung von MQTT in unserem Projekt:}
 Unser Projekt besteht aus 2 MQTT-Clients und 1 MQTT-Broker. 
@@ -117,7 +118,7 @@ Beides sind Frameworks, welche für die Erstellung serverseitiger Anwendungen ve
 Bisher wurde .NetFramework genützt um sowohl .NET Desktop-Anwendungen als auch serverbasierte Anwendungen zu erstellen.
 .NET Core wiederum dient der Erstellung von Serveranwendungen, die unter Windows, Linux und Mac laufen.
 Bei .NET Core handelt es sich in erster Linie um ein Open-Source-Framework mit Multiplattform-Unterstützung.
-
+\cite{.NetFrameworkvsCore}
 
 \subsubsection*{.Net Framework Vorteile}
 Während .NET Core die Zukunft der Anwendungsentwicklung ist und das .NET Framework in der Zukunft ablösen wird, wird die jahrelange Verwendung von .NET Framework nicht so schnell vergehen!
@@ -128,8 +129,9 @@ Ein weiterer Vorteil gegenüber .Net Core ist die Wartung bestehender Anwendunge
 Nachdem .Net Framework sich seit Jahren im Einsatz befindet, wurden die meisten .Net Anwendungen mittels .Net Framework geschrieben. 
 Ein weiterer großer Vorteil von .Net Framework ist die Stabilität der Platform. 
 
-Microsoft hat verkündet, dass die aktuelle Version des Microsoft .NET Framework (Version 4.8) die letzte Version sein wird und es danach kein größeres .NET Framework-Update mehr geben wird.
-Das bedeutet die Entwicklung von .Net Framework schreitet nicht mehr voran, aber somit können auch keine durch Updates verursachten Bugs mehr entstehen.
+Microsoft hat verkündet, dass die aktuelle Version des Microsoft .NET Frameworks (Version 4.8) die letzte Version sein wird und es danach kein größeres .NET Framework-Update mehr geben wird.
+Das bedeutet die Entwicklung von .Net Framework schreitet nicht mehr voran, somit können auch keine durch Updates verursachten Bugs mehr entstehen, aber es gibt keine Garantie, dass neuere 
+Betriebssysteme auch in Zukunft .Net Framework noch unterstützen werden. \cite{.NetFramework}
 
 \subsubsection*{.Net Core Vorteile}
 
@@ -184,7 +186,6 @@ Eine Migration von .Net5 auf .Net6 umfasst in der Regel dann das Umstellen aller
 Hier sollten im Bedarfsfall dann nur wenige Änderungen notwendig werden und sollten dann auch aufgrund des längeren Supports von .Net6 
 und der Vorteile rund um Performance, die bei eventueller Ausführung in der Cloud sicherlich auch positive Auswirkungen auf die 
 Bedarfskosten mit sich bringen kann, in Erwägung gezogen werden.
-
 Persönlich empfundener Nachteil bei der Lesbarkeit des Codes:
 
 \begin{figure}[H]
@@ -202,13 +203,13 @@ Persönlich empfundener Nachteil bei der Lesbarkeit des Codes:
 
 
 Im Vergleich zu .Net6 ist die Unterstützung bei der Verwendung von Usings und Methoden unter .Net5 klar zu erkennen.
-
+\cite{.Net6}
 
 \subsubsection*{Was ist eine Datenbank und wofür eignet sich eine Datenbank}
 Eine Datenbank ist eine Sammlung von strukturierten Informationen oder Daten, die typischerweise elektronisch in einem Computersystem gespeichert sind.
 Solch eine Datenbank wird meistens von einem Datenbankverwaltungssystem abgekürzt DBMS gesteuert und sie besteht aus Tabellen, in welchen die Daten gespeichert sind.
 Auf diese gespeicherten Daten kann mittels SQL-Abfragen zugegriffen werden.
-
+\cite{Database}
 
 
 \subsubsection*{Warum Sqlite und nicht SqlServer als Datenbank:}
@@ -244,7 +245,7 @@ Ein kleines Beispiel hierfür wäre ein Frühstück, denn eine Person muss eben 
 
 In C\# gibt es die Keywörter async und await. Wenn eine Methode asynchron aufgerufen werden soll, muss die Methode im Methodenkopf als Kennung async aufweisen und einen Task als return Wert festlegen.
 Um diese Methode danach aufrufen zu können, muss await vor dem Methodennamen verwendet werden.
-
+\cite{Async}
 
 \subsubsection*{Keyword partial C\#}
 In C\# gibt es das sogenannte Keyword partial, wodurch die Implementierung von einer Methode in einer Klasse der selben Klasse jedoch in einem anderen File passieren kann.
@@ -266,7 +267,7 @@ Nun erkennt C\# das es sich um eine partial Class handelt und somit können nun 
     \includegraphics[width=1\textwidth]{./pics/PartialKeyword2.png}
     \caption{Implementierung partial Class und Method}
 \end{figure}
-
+\cite{KeywordPartial}
 
 \section{Telegram}
 \setauthor{Sebastian Egger}

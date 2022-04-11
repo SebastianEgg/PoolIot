@@ -158,7 +158,7 @@ namespace SnQPoolIot.Logic.Controllers
         public virtual async Task<IEnumerable<C>> GetAllAsync()
         {
 #if ACCOUNT_ON
-            //await CheckAuthorizationAsync(GetType(), MethodBase.GetCurrentMethod(), AccessType.GetAll).ConfigureAwait(false);
+            await CheckAuthorizationAsync(GetType(), MethodBase.GetCurrentMethod(), AccessType.GetAll).ConfigureAwait(false);
 #endif
             return await GetEntityAllAsync().ConfigureAwait(false);
         }
@@ -259,7 +259,7 @@ namespace SnQPoolIot.Logic.Controllers
         {
             entity.CheckArgument(nameof(entity));
 #if ACCOUNT_ON
-            //await CheckAuthorizationAsync(GetType(), MethodBase.GetCurrentMethod(), AccessType.Insert).ConfigureAwait(false);
+            await CheckAuthorizationAsync(GetType(), MethodBase.GetCurrentMethod(), AccessType.Insert).ConfigureAwait(false);
 #endif
             var innerEntity = new E();
 

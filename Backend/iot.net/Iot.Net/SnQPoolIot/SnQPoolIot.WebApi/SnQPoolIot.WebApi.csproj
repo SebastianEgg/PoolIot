@@ -33,6 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SnQPoolIot.Adapters\SnQPoolIot.Adapters.csproj" />
     <ProjectReference Include="..\SnQPoolIot.Logic\SnQPoolIot.Logic.csproj" />
     <ProjectReference Include="..\SnQPoolIot.Transfer\SnQPoolIot.Transfer.csproj" />
   </ItemGroup>

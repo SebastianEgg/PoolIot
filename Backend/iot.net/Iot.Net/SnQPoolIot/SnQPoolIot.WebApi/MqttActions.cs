@@ -15,6 +15,8 @@ using SnQPoolIot.Logic;
 using SnQPoolIot.Contracts.Persistence.PoolIot;
 using SnQPoolIot.WebApi.DataTransferObjects;
 using SnQPoolIot.Logic.Entities.Business.Logging;
+using SnQPoolIot.Adapters.Modules.Account;
+using System.Linq;
 
 namespace SnQPoolIot.WebApi
 {
@@ -22,6 +24,7 @@ namespace SnQPoolIot.WebApi
     {
         public event EventHandler<MqttMeasurementDto> OnMqttMessageReceived;
         public string currentTopic = "";
+        Controllers.Persistence.PoolIot.SensorsController sensorsController = new Controllers.Persistence.PoolIot.SensorsController();
         public async Task<Task<int>> StartMqttClientAndRegisterObserverAsync(string specifiedTopic)
         {
             currentTopic = specifiedTopic;
@@ -62,15 +65,21 @@ namespace SnQPoolIot.WebApi
         private async Task MqttOnNewMessageAsync(MqttApplicationMessageReceivedEventArgs e)
         {
 
-
+            var accMngr = new AccountManager();
+            var login = await accMngr.LogonAsync("LeoAdmin.SnQPoolIot@gmx.at", "1234LeoAdmin", string.Empty).ConfigureAwait(false);
+            using var facctrl = Factory.Create<Contracts.Business.Account.IAppAccess>(login.SessionToken);
             var mqttPayLoadData = Encoding.UTF8.GetString(e.ApplicationMessage.Payload);
             string[] datavalue = mqttPayLoadData.Split(new char[] { ':', ',', '{', '}' });
 
-            using var ctrl = Factory.Create<SnQPoolIot.Contracts.Persistence.PoolIot.ISensorData>();
+            using var ctrl = Factory.Create<SnQPoolIot.Contracts.Persistence.PoolIot.ISensorData>(login.SessionToken);
             var entity = await ctrl.CreateAsync();
             var measurment = new MqttMeasurementDto();
 
-            entity.SensorId = GetSensorId(e);
+            entity.SensorId = await GetSensorId(e);
+            if(entity.SensorId == -1)
+            {
+                LogWriter.Instance.LogWrite($"The Sensor does not exist in the database");
+            }
             measurment.SensorId = entity.SensorId;
             measurment.SensorName = currentTopic;
 
@@ -78,7 +87,7 @@ namespace SnQPoolIot.WebApi
             {
                 if (i == 2)
                 {
-
+                    entity.Timestamp = Convert.ToString(DateTime.Now);
                     measurment.Timestamp = DateTime.Now;
                 }
                 else if (i == 4)
@@ -93,6 +102,7 @@ namespace SnQPoolIot.WebApi
             await ctrl.InsertAsync(entity);
             await ctrl.SaveChangesAsync();
 
+            await accMngr.LogoutAsync(login.SessionToken).ConfigureAwait(false);
             LogWriter.Instance.LogWrite($"MQTT Client: OnNewMessage Topic: {e.ApplicationMessage.Topic} / Message: {mqttPayLoadData}");
 
         }
@@ -108,40 +118,59 @@ namespace SnQPoolIot.WebApi
             LogWriter.Instance.LogWrite($"MQTT Client: Broker connection lost with reason: {e.Reason}.");
         }
 
-        private static int GetSensorId(MqttApplicationMessageReceivedEventArgs e)
+        private async Task<int> GetSensorId(MqttApplicationMessageReceivedEventArgs e)
         {
+            var accMngr = new AccountManager();
+            var login = await accMngr.LogonAsync("LeoAdmin.SnQPoolIot@gmx.at", "1234LeoAdmin", string.Empty).ConfigureAwait(false);
+            using var ctrl = Factory.Create<SnQPoolIot.Contracts.Persistence.PoolIot.ISensor>(login.SessionToken);
+            var entity = await ctrl.GetAllAsync();
             var configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.Development.json")
                 .Build();
+            int sensorId = -1;
             if (e.ApplicationMessage.Topic == (configuration.GetValue<string>("Mqtt:mqttTopic") + "neopixel/state"))
             {
-                return 1;
+                var sensor = entity.Where(e => e.Name.ToLower() == "neopixel").First();
+                sensorId = sensor.Id;
+                return sensorId;
             }
             else if (e.ApplicationMessage.Topic == (configuration.GetValue<string>("Mqtt:mqttTopic") + "noise/state"))
             {
-                return 2;
+                var sensor = entity.Where(e => e.Name.ToLower() == "noise").First();
+                sensorId = sensor.Id;
+                return sensorId;
             }
             else if (e.ApplicationMessage.Topic == (configuration.GetValue<string>("Mqtt:mqttTopic") + "temperature/state"))
             {
-                return 3;
+                var sensor = entity.Where(e => e.Name.ToLower() == "temperature").First();
+                sensorId = sensor.Id;
+                return sensorId;
             }
             else if (e.ApplicationMessage.Topic == (configuration.GetValue<string>("Mqtt:mqttTopic") + "humidity/state"))
             {
-                return 4;
+                var sensor = entity.Where(e => e.Name.ToLower() == "humidity").First();
+                sensorId = sensor.Id;
+                return sensorId;
             }
             else if (e.ApplicationMessage.Topic == (configuration.GetValue<string>("Mqtt:mqttTopic") + "pressure/state"))
             {
-                return 5;
+                var sensor = entity.Where(e => e.Name.ToLower() == "pressure").First();
+                sensorId = sensor.Id;
+                return sensorId;
             }
             else if (e.ApplicationMessage.Topic == (configuration.GetValue<string>("Mqtt:mqttTopic") + "motion/state"))
             {
-                return 6;
+                var sensor = entity.Where(e => e.Name.ToLower() == "motion").First();
+                sensorId = sensor.Id;
+                return sensorId;
             }
             else if (e.ApplicationMessage.Topic == (configuration.GetValue<string>("Mqtt:mqttTopic") + "co2/state"))
             {
-                return 7;
+                var sensor = entity.Where(e => e.Name.ToLower() == "co2").First();
+                sensorId = sensor.Id;
+                return sensorId;
             }
-            return -1;
+            return sensorId;
         }
         private  void CallRuleEngine(int value)
         {

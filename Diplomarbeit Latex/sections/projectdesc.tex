@@ -14,11 +14,12 @@ Durch Scrum wird die Projektlaufzeit in Etappen, so genannte Sprints, eingeteilt
 am Ende jedes Sprints soll jeweils ein funktionsfähiges Zwischenprodukt stehen.
 Die Einteilung wie lange ein Sprint dauert wird intern geregelt.
 In diesem Projekt war die Dauer eines Sprintes einen Monat lang.
+\cite{Scrum}
 
 \subsection{Hybride Projektentwicklung}
 Hybride Projektentwicklung wird meist im Hardwarebereich verwendet.
 Es ermöglicht eine schnellere Produktion von Hardwareteilen.
-In diesem Projekt ist es bei dem Zusammenbau für den Rasbperray verwendet
+In diesem Projekt ist es bei dem Zusammenbau für den Raspberry verwendet
 und für die Produktion einer Schwimmboje vorgesehen worden.
 
 
@@ -154,7 +155,7 @@ Für die Authentifizierung werden die nachstehenden Tabellen benötigt:
 
 \begin{itemize}
     \item Identity\\
-    In dieser Tabelle befinden sich alle User-Accounts mit E-Mail gehastem Passwort.
+    In dieser Tabelle befinden sich alle User-Accounts mit E-Mail und zugehörigem gehashtem Passwort.
 
     \begin{figure}[H]
         \centering
@@ -227,7 +228,7 @@ Um Fehlermeldungen oder Warnungen im Projekt zu speichern, wurde eine Klasse mit
 Diese Meldeungen werden in einer .txt gespeichert und können jederzeit gelesen werden.
 \\Im nachstehenden Code ist die LogWriter Klasse zu sehen:
 \\
-\begin{lstlisting}
+\begin{lstlisting}[caption={Logwriter Klasse}]
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -311,7 +312,7 @@ Im Folgenden ist ein Ausschnitt des Aufbaus der WebApi dargestellt:
 
 
 Das Routing der Websiten wird über die Controller gehandelt. 
-Der meist genützte Controller in diesem Projekt ist der GenericController, denn er bietet allen abgeleiteten Controllern seine bereitgestellten Funktionen zur Verwendung an.
+Der meist genützte Controller in diesem Projekt ist der GenericController, denn er bietet allen abgeleiteten Controllern seine bereitgestellten Funktionen zur Verwendung an. \cite{Generics}
 
 \begin{figure}[H]
     \centering
@@ -344,7 +345,7 @@ Zum Allgemeinen Überblick aller HTTP-Requests wird Swagger verwendet.
 \end{figure}
 
 In den nachstehenden Zeilen findet sich eine kurze Ablaufbeschreibung des Codes:
-Sobald die Methode ConfigureServices aufgerufen wird, wird dem service ein neuer Controller angelegt und die benötigte Konfiguration des Swaggers mit übergeben. 
+Sobald die Methode ConfigureServices aufgerufen wird, wird dem Service ein neuer Controller angelegt und die benötigte Konfiguration des Swaggers mit übergeben. 
 
 Das options.SwaggerDoc gibt eine kurze Beschreibung über die WebApi an.
 Im darauf folgenden Schritt wird die Authentifizierung im Projekt mittels Swagger durchgeführt. Dadurch wird gewährleistet, dass nur eingeloggte Benutzer die Möglichkeit haben Zugriffe auf HTTP-Requests durchzuführen.

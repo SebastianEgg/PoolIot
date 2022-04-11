@@ -205,7 +205,7 @@ namespace SnQPoolIot.Logic.Controllers
         public virtual async Task<int> SaveChangesAsync()
         {
 #if ACCOUNT_ON
-            //await CheckAuthorizationAsync(GetType(), MethodBase.GetCurrentMethod(), AccessType.Save).ConfigureAwait(false);
+            await CheckAuthorizationAsync(GetType(), MethodBase.GetCurrentMethod(), AccessType.Save).ConfigureAwait(false);
 #endif
             return await ExecuteSaveChangesAsync().ConfigureAwait(false);
         }
