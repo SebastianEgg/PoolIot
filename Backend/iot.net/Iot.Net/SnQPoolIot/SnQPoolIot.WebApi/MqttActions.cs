@@ -23,11 +23,9 @@ namespace SnQPoolIot.WebApi
     public class MqttActions
     {
         public event EventHandler<MqttMeasurementDto> OnMqttMessageReceived;
-        public string currentTopic = "";
         Controllers.Persistence.PoolIot.SensorsController sensorsController = new Controllers.Persistence.PoolIot.SensorsController();
         public async Task<Task<int>> StartMqttClientAndRegisterObserverAsync(string specifiedTopic)
         {
-            currentTopic = specifiedTopic;
             var configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.Development.json")
                 .Build();
@@ -68,6 +66,7 @@ namespace SnQPoolIot.WebApi
             var accMngr = new AccountManager();
             var login = await accMngr.LogonAsync("LeoAdmin.SnQPoolIot@gmx.at", "1234LeoAdmin", string.Empty).ConfigureAwait(false);
             using var facctrl = Factory.Create<Contracts.Business.Account.IAppAccess>(login.SessionToken);
+            using var namectrl = Factory.Create<SnQPoolIot.Contracts.Persistence.PoolIot.ISensor>(login.SessionToken);
             var mqttPayLoadData = Encoding.UTF8.GetString(e.ApplicationMessage.Payload);
             string[] datavalue = mqttPayLoadData.Split(new char[] { ':', ',', '{', '}' });
 
@@ -81,7 +80,8 @@ namespace SnQPoolIot.WebApi
                 LogWriter.Instance.LogWrite($"The Sensor does not exist in the database");
             }
             measurment.SensorId = entity.SensorId;
-            measurment.SensorName = currentTopic;
+            var sensor = await namectrl.GetByIdAsync(measurment.SensorId);
+            measurment.SensorName = sensor.Name;
 
             for (int i = 0; i < datavalue.Length; i++)
             {
@@ -171,13 +171,6 @@ namespace SnQPoolIot.WebApi
                 return sensorId;
             }
             return sensorId;
-        }
-        private  void CallRuleEngine(int value)
-        {
-            if (currentTopic == "noise/state")
-            {
-                RuleEngine.CheckNoiceSensorData(value);
-            }
         }
     }
 }

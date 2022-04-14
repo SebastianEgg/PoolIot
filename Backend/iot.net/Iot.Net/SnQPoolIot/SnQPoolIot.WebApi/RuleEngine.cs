@@ -1,10 +1,12 @@
-﻿using SnQPoolIot.Logic;
+﻿using SnQPoolIot.Adapters.Modules.Account;
+using SnQPoolIot.Logic;
 using SnQPoolIot.Logic.Entities.Business.Logging;
 using SnQPoolIot.Transfer.Models.Persistence.PoolIot;
 using SnQPoolIot.WebApi.DataTransferObjects;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace SnQPoolIot.WebApi
 {
@@ -49,19 +51,16 @@ namespace SnQPoolIot.WebApi
 
             MqttActions.OnMqttMessageReceived += MqttActions_OnMqttMessageReceived;
 
-            /*
+            
             foreach (var sensorName in Enum.GetNames(typeof(SensorName)))
             {             
                 MqttMeasurementDto sensor = new MqttMeasurementDto();
                 // Inserten der Sensoren, welche sich in der SensorBox befinden
-                //var hasInserted = InsertSensors(sensorName);
+                var hasInserted = InsertSensors(sensorName);
                 Sensors.Add(sensorName.ToLower(), sensor);
                 // Startet das Einlesen der Messwerte
                 MqttActions.StartMqttClientAndRegisterObserverAsync($"{sensorName.ToLower()}/state").Wait();
-            }*/
-            MqttMeasurementDto sensor = new MqttMeasurementDto();
-            Sensors.Add("Noise".ToLower(), sensor);
-            MqttActions.StartMqttClientAndRegisterObserverAsync($"{"Noise".ToLower()}/state").Wait();
+            }
         }
 
         private void MqttActions_OnMqttMessageReceived(object sender, DataTransferObjects.MqttMeasurementDto measurmentDto)
@@ -99,7 +98,7 @@ namespace SnQPoolIot.WebApi
                 LogWriter.Instance.LogWrite($"The SensorValue is null!");
                 return -1;
             }
-            else if (sensorValue > 300)
+            else if (sensorValue > 500)
             {
                 MessageNotification.SendMessageByTelegram("Achtung es wurden zu Laute Messwerte gemessen bitte schauen Sie nach worum es sich handelt!");
             }
@@ -108,11 +107,13 @@ namespace SnQPoolIot.WebApi
         }
         public static async Task<bool> InsertSensors(string sensorName)
         {
-            using var ctrl = Factory.Create<Contracts.Persistence.PoolIot.ISensor>();
+            var accMngr = new AccountManager();
+            var login = await accMngr.LogonAsync("LeoAdmin.SnQPoolIot@gmx.at", "1234LeoAdmin", string.Empty).ConfigureAwait(false);
+            using var ctrl = Factory.Create<Contracts.Persistence.PoolIot.ISensor>(login.SessionToken);
             Sensor addSensor = new Sensor();
             addSensor.Name = sensorName.ToLower();
-            var sensors = ctrl.GetAllAsync();
-            var sensorsArray = sensors.Result;
+            var sensors = await ctrl.GetAllAsync();
+            var sensorsArray = sensors.ToArray();
             var isSensorInstered = false;
             foreach (var item in sensorsArray)
             {
